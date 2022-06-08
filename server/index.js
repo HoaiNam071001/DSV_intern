@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const port = 3060;
-//const route = require('./routes');
+const route = require('./routes');
 // const fileUpload = require('express-fileupload');
 // const session = require('express-session');
 // const cookieParser = require('cookie-parser');
@@ -24,11 +24,7 @@ const port = 3060;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/',(req, res) => {
-  console.log('Hello World!');
-  res.send('Hello World!');
-});
-//route(app);
+route(app);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${process.env.PORT || port}`)
