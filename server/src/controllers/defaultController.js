@@ -1,11 +1,11 @@
 const Default = (() => {
-  const getTags = async (req, res) => {
-    res.json({ message: 'get Comments' });
-  };
+    const getTags = async (req, res) => {
+        res.json({ message: 'get Comments' });
+    };
 
-  return {
-    getTags,
-  };
+    return {
+        getTags,
+    };
 })();
 
 module.exports = Default;
