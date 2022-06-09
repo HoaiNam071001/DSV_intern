@@ -15,7 +15,7 @@
   "keywords": [
     "backend"
   ],
-  "lind-staged":{
+  "lint-staged":{
     "src/**/*.{js,jsx,json,scss}":"prettier --single-quote --trailing-comma all --tab-width 4"
   },
   "husky": {
