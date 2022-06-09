@@ -7,7 +7,6 @@ const route = require('./routes');
 // const cookieParser = require('cookie-parser');
 // const path = require('path');
 
-
 // app.use(cookieParser());
 // // For store data in session
 // app.use(session({
@@ -20,12 +19,12 @@ const route = require('./routes');
 // // Directory to views folder
 // app.set('views', path.join(__dirname, 'resources/views'));
 
-// define : post 
+// define : post
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 route(app);
 
 app.listen(process.env.PORT || port, () => {
-  console.log(`Example app listening on port ${process.env.PORT || port}`)
-})
+  console.log(`Example app listening on port ${process.env.PORT || port}`);
+});
