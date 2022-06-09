@@ -15,14 +15,6 @@
   "keywords": [
     "backend"
   ],
-  "lint-staged":{
-    "src/**/*.{js,jsx,json,scss}":"prettier --single-quote --trailing-comma all --tab-width 4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "dependencies": {
     "express": "^4.17.2"
   },
@@ -30,6 +22,7 @@
     "eslint": "^8.17.0",
     "eslint-plugin-react": "^7.30.0",
     "husky": "^8.0.1",
+    "lint-staged": "^13.0.1",
     "nodemon": "^2.0.16",
     "prettier": "2.6.2"
   }
