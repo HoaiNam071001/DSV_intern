@@ -2,6 +2,11 @@ const express = require('express');
 const app = express();
 const port = 3060;
 const route = require('./routes');
+const cors = require('cors');
+const connectDB = require('./Db');
+connectDB.Get();
+app.use(cors());
+
 // const fileUpload = require('express-fileupload');
 // const session = require('express-session');
 // const cookieParser = require('cookie-parser');

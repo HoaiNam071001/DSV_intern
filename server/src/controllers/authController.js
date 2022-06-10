@@ -1,8 +1,8 @@
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 // const config = require('config');
 // const { validationResult } = require('express-validator');
-// const User = require('../models/User');
+const User = require('../models/User');
 
 const users = (() => {
     //   const getAuthUser = async (req, res) => {
@@ -15,7 +15,10 @@ const users = (() => {
     //     }
     //   };
     const login = async (req, res) => {
-        res.json({ message: 'login' });
+        //res.json({ message: 'login' });
+        let user = await User.findOne({ username: 'username' });
+        let id = String(user._id);
+        res.json({ user, id });
         //     const { username, password } = req.body;
         //     try{
 
@@ -38,41 +41,61 @@ const users = (() => {
         //     }
     };
     const register = async (req, res) => {
-        res.json({ message: 'register' });
-        //     const errors = validationResult(req);
-        //     if (!errors.isEmpty()) {
-        //       return res.status(400).json({ errors: errors.array() });
-        //     }
-        //     const { username, password } = req.body;
+        
+        const { username, email, password } = req.body;
+        try {
+            let _username = await User.findOne({ username });
+            let _email = await User.findOne({ email });
 
-        //     try {
-        //       let user = await User.findOne({ username });
+            if (_username && _email)
+                throw {"email":["has already been taken"],"username":["has already been taken"]};
+            
+            if (_username ) 
+                throw {"username":["has already been taken"]};
+        
+            if (_email) 
+                throw {"username":["has already been taken"]};
+            
+            let user = new User({
+                username,
+                email,
+                password,
+            });
 
-        //       if (!user) {
-        //         // return res.status(400).send({ errors: [{ msg: 'Invalid Credentials' }] });
-        //         return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        //       }
+            const salt = await bcrypt.genSalt(10);
 
-        //       const isMatch = await bcrypt.compare(password, user.password);
+            user.password = await bcrypt.hash(password, salt);
 
-        //       if (!isMatch) {
-        //         return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-        //       }
+            await user.save();
 
-        //       const payload = {
-        //         user: {
-        //           id: user.id,
-        //         },
-        //       };
+            const payload = {
+                user: {
+                    email: user.id,
+                    username,
+                    bio: null,
+                    image: null,
+                    token: "ff"   
+                }
+            };
 
-        //       jwt.sign(payload, config.get('jwtSecret'), { expiresIn: 36000 }, (err, token) => {
-        //         if (err) throw err;
-        //         res.json({ token });
-        //       });
-        //     } catch (err) {
-        //       console.error(err.message);
-        //       res.status(500).send('Server error');
-        //     }
+            jwt.sign(
+                payload,
+                config.get('JWTsecret'),
+                { expiresIn: 36000 },
+                (err, token) => {
+                    if (err) throw err;
+                    res.json({user: {
+                        email: user.id,
+                        username,
+                        bio: null,
+                        image: null,
+                        token  
+                    }});
+                },
+            );
+        } catch (err) {
+            res.status(422).json({"errors":err});
+        }
     };
     //   const uploadAvatar = async (req, res) => {
     //     const { username,imageUrl} = req.body;
