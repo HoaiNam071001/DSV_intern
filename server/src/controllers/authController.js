@@ -22,7 +22,7 @@ const users = (() => {
                 throw { password: ['is invalid'] };
             }
             jwt.sign(
-                { email },
+                { _id: user._id },
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {
@@ -71,14 +71,13 @@ const users = (() => {
                 avatar_img: '',
                 bio: '',
             });
-
             const salt = await bcrypt.genSalt(10);
             user.password = await bcrypt.hash(password, salt);
 
             await user.save();
 
             jwt.sign(
-                { email },
+                { _id: user._id },
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {

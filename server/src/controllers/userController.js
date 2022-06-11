@@ -10,10 +10,10 @@ const user = (() => {
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            let CurrentUser = req.query.email;
-            CurrentUser = await User.findOne({ CurrentUser });
+            const id = { _id: req.query._id };
+            let CurrentUser = await User.findOne(id);
             jwt.sign(
-                { email: CurrentUser.email },
+                id,
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {
@@ -39,22 +39,20 @@ const user = (() => {
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
+            const id = { _id: req.query._id };
 
             const { email, username, bio, image } =
                 req.body.user || req.params.user || req.query.user;
 
-            await User.updateOne(
-                { email },
-                {
-                    username,
-                    email,
-                    avatar_img: image,
-                    bio,
-                },
-            );
+            await User.updateOne(id, {
+                username,
+                email,
+                avatar_img: image,
+                bio,
+            });
 
             jwt.sign(
-                { email },
+                id,
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {
