@@ -12,7 +12,7 @@ var DbConnection = () => {
                 useUnifiedTopology: true,
             });
 
-            console.log('MongoDB Connected...🎄');
+            console.log('MongoDB Connected...');
             return connect;
         } catch (e) {
             console.error(err.message);

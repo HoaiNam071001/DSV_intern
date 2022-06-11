@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+var slug = require('mongoose-slug-generator');
+
+mongoose.plugin(slug);
 
 const ArticleSchema = new mongoose.Schema({
     IdAuthor: {
@@ -37,6 +40,11 @@ const ArticleSchema = new mongoose.Schema({
     Favorite: {
         type: Array,
         default: [],
+    },
+    slug: {
+        type: String,
+        slug: 'Title',
+        unique: true,
     },
 });
 

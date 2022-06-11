@@ -1,46 +1,53 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
-// const { validationResult } = require('express-validator');
+const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
 const users = (() => {
-    //   const getAuthUser = async (req, res) => {
-    //     try {
-    //       const user = await User.findById(req.user.id).select('-password');
-    //       res.json(user);
-    //     } catch (err) {
-    //       console.error(err.message);
-    //       res.status(500).send('Server Error');
-    //     }
-    //   };
     const login = async (req, res) => {
-        let user = await User.findOne({ username: 'username' });
-        let id = String(user._id);
-        res.json({ user, id });
-        //     const { username, password } = req.body;
-        //     try{
-
-        //       //check exist
-        //       let user = await User.findOne({ username });
-        //       if (!user) {
-        //         return res.json({ userError: 'User do not exist! Please try again.', passError:'' });
-        //       }
-        //       //check right pwd
-        //       const isMatch = await bcrypt.compare(password, user.password);
-        //       if (!isMatch) {
-        //         return res.json({ userError:'',passError: 'Not correct password! Please try again' });
-        //       }
-        //       //return no fault
-        //        return res.json({userError:'',passError: ''});
-        //     }
-        //     catch{
-        //       console.error(err.message);
-        //       res.status(500).send('Server Error');
-        //     }
+        try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
+            const { email, password } = req.body.user;
+            if (email == null || password == null) throw 'Info not valid';
+            let user = await User.findOne({ email });
+            if (!user) {
+                throw { Email: ['is invalid'] };
+            }
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (!isMatch) {
+                throw { password: ['is invalid'] };
+            }
+            jwt.sign(
+                { email },
+                config.get('JWTsecret'),
+                { expiresIn: 36000 },
+                (err, token) => {
+                    if (err) throw 'err';
+                    res.json({
+                        user: {
+                            email: user.email,
+                            username: user.username,
+                            bio: user.bio,
+                            image: user.avatar_img,
+                            token,
+                        },
+                    });
+                },
+            );
+        } catch (err) {
+            res.status(422).json({ errors: err });
+        }
     };
     const register = async (req, res) => {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return res.status(400).json({ errors: errors.array() });
+            }
             const { username, email, password } = req.body.user;
             if (username == null || email == null || password == null)
                 throw 'Info not valid';
@@ -55,12 +62,11 @@ const users = (() => {
 
             if (_username) throw { username: ['has already been taken'] };
 
-            if (_email) throw { username: ['has already been taken'] };
+            if (_email) throw { email: ['has already been taken'] };
 
             let user = new User({
                 username,
                 email,
-                token: '',
                 password,
                 avatar_img: '',
                 bio: '',
@@ -72,7 +78,7 @@ const users = (() => {
             await user.save();
 
             jwt.sign(
-                { username, email, password },
+                { email },
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {
@@ -92,24 +98,6 @@ const users = (() => {
             res.status(422).json({ errors: err });
         }
     };
-    //   const uploadAvatar = async (req, res) => {
-    //     const { username,imageUrl} = req.body;
-    //     try {
-    //       let user = await User.findOne({ username });
-
-    //       if (!user) {
-    //         return res.status(400).json({ errors: [{ msg: 'Invalid Credentials' }] });
-    //       }
-    //       const update={
-    //         $set:{"avatar_img":imageUrl}
-    //       }
-    //       const result=await User.updateOne({username:username},update);
-    //       res.json({ imageUrl });
-    //     } catch (err) {
-    //       console.error(err.message);
-    //       res.status(500).send('Server error');
-    //     }
-    //   };
 
     return {
         login,
