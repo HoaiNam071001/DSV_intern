@@ -1,6 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-// const config = require('config');
+const config = require('config');
 // const { validationResult } = require('express-validator');
 const User = require('../models/User');
 
@@ -15,7 +15,6 @@ const users = (() => {
     //     }
     //   };
     const login = async (req, res) => {
-        //res.json({ message: 'login' });
         let user = await User.findOne({ username: 'username' });
         let id = String(user._id);
         res.json({ user, id });
@@ -41,60 +40,56 @@ const users = (() => {
         //     }
     };
     const register = async (req, res) => {
-        
-        const { username, email, password } = req.body;
         try {
+            const { username, email, password } = req.body.user;
+            if (username == null || email == null || password == null)
+                throw 'Info not valid';
             let _username = await User.findOne({ username });
             let _email = await User.findOne({ email });
 
             if (_username && _email)
-                throw {"email":["has already been taken"],"username":["has already been taken"]};
-            
-            if (_username ) 
-                throw {"username":["has already been taken"]};
-        
-            if (_email) 
-                throw {"username":["has already been taken"]};
-            
+                throw {
+                    email: ['has already been taken'],
+                    username: ['has already been taken'],
+                };
+
+            if (_username) throw { username: ['has already been taken'] };
+
+            if (_email) throw { username: ['has already been taken'] };
+
             let user = new User({
                 username,
                 email,
+                token: '',
                 password,
+                avatar_img: '',
+                bio: '',
             });
 
             const salt = await bcrypt.genSalt(10);
-
             user.password = await bcrypt.hash(password, salt);
 
             await user.save();
 
-            const payload = {
-                user: {
-                    email: user.id,
-                    username,
-                    bio: null,
-                    image: null,
-                    token: "ff"   
-                }
-            };
-
             jwt.sign(
-                payload,
+                { username, email, password },
                 config.get('JWTsecret'),
                 { expiresIn: 36000 },
                 (err, token) => {
-                    if (err) throw err;
-                    res.json({user: {
-                        email: user.id,
-                        username,
-                        bio: null,
-                        image: null,
-                        token  
-                    }});
+                    if (err) throw 'err';
+                    res.json({
+                        user: {
+                            email,
+                            username,
+                            bio: '',
+                            image: '',
+                            token,
+                        },
+                    });
                 },
             );
         } catch (err) {
-            res.status(422).json({"errors":err});
+            res.status(422).json({ errors: err });
         }
     };
     //   const uploadAvatar = async (req, res) => {
