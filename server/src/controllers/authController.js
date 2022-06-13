@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const { validationResult } = require('express-validator');
-const User = require('../models/User');
+const UserModel = require('../models/User');
 
 const users = (() => {
     const login = async (req, res) => {
@@ -13,7 +13,7 @@ const users = (() => {
             }
             const { email, password } = req.body.user;
             if (email == null || password == null) throw 'Info not valid';
-            let user = await User.findOne({ email });
+            let user = await UserModel.findOne({ email });
             if (!user) {
                 throw { Email: ['is invalid'] };
             }
@@ -51,8 +51,8 @@ const users = (() => {
             const { username, email, password } = req.body.user;
             if (username == null || email == null || password == null)
                 throw 'Info not valid';
-            let _username = await User.findOne({ username });
-            let _email = await User.findOne({ email });
+            let _username = await UserModel.findOne({ username });
+            let _email = await UserModel.findOne({ email });
 
             if (_username && _email)
                 throw {
@@ -64,7 +64,7 @@ const users = (() => {
 
             if (_email) throw { email: ['has already been taken'] };
 
-            let user = new User({
+            let user = new UserModel({
                 username,
                 email,
                 password,

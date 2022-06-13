@@ -11,7 +11,7 @@ const VerifyToken = (req, res, next) => {
         // Verify token
         jwt.verify(xtoken[1], config.get('JWTsecret'), function (err, decoded) {
             if (err) throw 'Unauthorized';
-            req.query = decoded;
+            req.query.token = decoded;
         });
 
         next();
@@ -38,7 +38,7 @@ const CheckToken = (req, res, next) => {
                 next();
                 return;
             }
-            req.query = decoded;
+            req.query.token = decoded;
             next();
         });
     } catch (err) {

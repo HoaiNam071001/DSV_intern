@@ -12,15 +12,11 @@ const ArticleSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    description: {
+    Description: {
         type: String,
         default: '',
     },
-    Content: {
-        type: String,
-        default: '',
-    },
-    Image: {
+    Body: {
         type: String,
         default: '',
     },

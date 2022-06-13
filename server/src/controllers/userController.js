@@ -1,4 +1,4 @@
-const User = require('../models/User');
+const UserModel = require('../models/User');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
@@ -10,8 +10,8 @@ const user = (() => {
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            const id = { _id: req.query._id };
-            let CurrentUser = await User.findOne(id);
+            const id = { _id: req.query.token._id };
+            let CurrentUser = await UserModel.findOne(id);
             jwt.sign(
                 id,
                 config.get('JWTsecret'),
@@ -39,12 +39,11 @@ const user = (() => {
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
-            const id = { _id: req.query._id };
+            const id = { _id: req.query.token._id };
 
             const { email, username, bio, image } =
                 req.body.user || req.params.user || req.query.user;
-
-            await User.updateOne(id, {
+            await UserModel.updateOne(id, {
                 username,
                 email,
                 avatar_img: image,

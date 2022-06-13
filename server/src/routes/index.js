@@ -22,7 +22,7 @@ function route(app) {
     app.use('/api/user', user);
     app.use('/api/profiles', profile);
     app.use('/api/articles', articles);
-    app.use('/api/tags', defaults);
+    app.use('/api/', defaults);
     app.get('/', (req, res) => {
         res.send('Hello World');
     });
