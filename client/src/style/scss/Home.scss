@@ -2,10 +2,12 @@ $bg-blog: #0d6efd;
 
 .btn-home-title {
     border: 0px;
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
+    padding: 5px;
     color: #000;
     width: 100%;
     font-size: 17px;
+    margin: 2px;
 }
 .btn-home-title:hover {
     transform: scale(1.04, 1.04);
@@ -16,7 +18,7 @@ $bg-blog: #0d6efd;
     border: 1px solid #fff;
     width: 100%;
     height: 1px;
-    margin-top: 3px;
+    margin-top: 0px;
     margin-bottom: 0px;
     background-color: rgb(255, 255, 255);
     opacity: 1;
@@ -44,5 +46,6 @@ $bg-blog: #0d6efd;
         margin-right: 5px;
         margin-bottom: 10px;
         background-color: rgb(226, 226, 226);
+        color: rgb(0, 0, 0);
     }
 }

@@ -52,6 +52,16 @@ const ArticleItem = ({ article }) => {
                                 {article.body}
                             </div>
                         </Link>
+                        <div>
+                            {article.tagList.map((tag) => (
+                                <span
+                                    key={tag}
+                                    className="p-1 bg-light m-1 rounded-pill border float-end"
+                                >
+                                    {tag}
+                                </span>
+                            ))}
+                        </div>
                     </div>
                     <div className="col-2">
                         <button

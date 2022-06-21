@@ -16,10 +16,12 @@
 
 .btn-home-title {
   border: 0px;
-  background-color: #fff;
+  background-color: white;
+  padding: 5px;
   color: #000;
   width: 100%;
-  font-size: 17px; }
+  font-size: 17px;
+  margin: 2px; }
 
 .btn-home-title:hover {
   transform: scale(1.04, 1.04);
@@ -29,7 +31,7 @@
   border: 1px solid #fff;
   width: 100%;
   height: 1px;
-  margin-top: 3px;
+  margin-top: 0px;
   margin-bottom: 0px;
   background-color: white;
   opacity: 1; }
@@ -56,7 +58,8 @@
   .tag-container .tag-item {
     margin-right: 5px;
     margin-bottom: 10px;
-    background-color: #e2e2e2; }
+    background-color: #e2e2e2;
+    color: black; }
 
 .feed-container {
   padding: 5px; }
@@ -96,8 +99,7 @@
   font-size: 15px;
   color: #939393;
   overflow: hidden;
-  height: 25px;
-  margin-bottom: 10px; }
+  height: 25px; }
 
 .btn-favorate {
   width: 100%;
@@ -139,9 +141,29 @@
   .btn-favorate {
     width: 80%; } }
 
+.container-avt-img {
+  padding: 5px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid #cacaca; }
+  .container-avt-img .avt-img {
+    width: 100%;
+    height: 100%; }
+
+.item-link-profile {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px;
+  width: 100%;
+  background-color: white;
+  color: black; }
+
+.item-link-profile:hover {
+  background-color: #e2faff;
+  color: black; }
+
 .container-app {
   margin-top: 20px; }
 
 .link-nodecoration {
-  text-decoration: none;
-  color: black; }
+  text-decoration: none; }
