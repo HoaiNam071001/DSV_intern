@@ -1,11 +1,15 @@
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 3060;
-const route = require('./routes');
-const cors = require('cors');
-const connectDB = require('./Db');
+const route = require("./routes");
+const cors = require("cors");
+var morgan = require("morgan");
+
+const connectDB = require("./Db");
 connectDB.Get();
+
 app.use(cors());
+app.use(morgan("combined"));
 
 // const fileUpload = require('express-fileupload');
 // const session = require('express-session');
@@ -31,5 +35,5 @@ app.use(express.urlencoded({ extended: true }));
 route(app);
 
 app.listen(process.env.PORT || port, () => {
-    console.log(`Example app listening on port ${process.env.PORT || port}`);
+  console.log(`Example app listening on port ${process.env.PORT || port}`);
 });
