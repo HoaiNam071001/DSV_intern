@@ -33,8 +33,7 @@ authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmE0YzBiMW
 {"user": {"email": "nam222222222222@.scom", "bio": "bio2", "image": "img", "username": "nam12836772"}}
 
 ###
-GET http://localhost:3060/api/profiles/nam1262
-authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmE1OTY2MDlmOTFhYzVkMjFiZWRjOTAiLCJpYXQiOjE2NTUwMTkxMTUsImV4cCI6MTY1NTA1NTExNX0.vxXapWrPxpnItsAD1Y-3yYrms7n3o6qo05TQzTueyvA
+GET http://localhost:3060/api/profiles/hoainam07
 
 ###
 POST http://localhost:3060/api/profiles/nam1262/follow

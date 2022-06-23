@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Loading from './components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './components/Auth/authSlice';
-
 import './style/App.css';
 
 const Login = lazy(() => import('./pages/login'));
@@ -12,6 +11,7 @@ const Register = lazy(() => import('./pages/register'));
 const Home = lazy(() => import('./pages/home'));
 const Article = lazy(() => import('./pages/article'));
 const Profile = lazy(() => import('./pages/profile'));
+const EditArticle = lazy(() => import('./pages/EditArticle'));
 
 function App() {
     const dispatch = useDispatch();
@@ -30,7 +30,13 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/article/:slug" element={<Article />} />
-                        <Route path="/@:slug" element={<Profile />} />
+                        <Route path="/@:username" element={<Profile />} />
+                        <Route
+                            path="/@:username/favorites"
+                            element={<Profile favorite />}
+                        />
+                        <Route path="/editor" element={<EditArticle />} />
+                        <Route path="/editor/:slug" element={<EditArticle />} />
                     </Routes>
                 </Suspense>
             </div>

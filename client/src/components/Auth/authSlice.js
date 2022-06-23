@@ -25,6 +25,7 @@ const authSlice = createSlice({
         setToken(state, action) {
             state.token = action.payload;
         },
+        translate: (state, action) => (state.errors = undefined),
     },
     extraReducers(builder) {
         builder
@@ -123,7 +124,7 @@ export const updateUser = createAsyncThunk(
     }
 );
 
-export const { setToken, logout } = authSlice.actions;
+export const { setToken, logout, translate } = authSlice.actions;
 
 // Get auth slice
 const selectAuthSlice = (state) => state.auth;

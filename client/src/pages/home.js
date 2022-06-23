@@ -5,6 +5,7 @@ import { selectIsAuthenticated } from '../components/Auth/authSlice';
 import {
     getAllArticles,
     selectByTag,
+    homePageUnloaded,
 } from '../components/ArticlesList/articleListSlice';
 import TagsSidebar from '../components/Tags/tagsSideBar';
 const Home = () => {
@@ -21,6 +22,9 @@ const Home = () => {
     useEffect(() => {
         if (tag) setfeed(2);
     }, [tag]);
+
+    useEffect(() => () => dispatch(homePageUnloaded()), [dispatch]);
+
     return (
         <div className="container my-3">
             <div className="row">

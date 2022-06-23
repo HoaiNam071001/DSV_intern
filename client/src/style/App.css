@@ -159,8 +159,20 @@
   color: black; }
 
 .item-link-profile:hover {
-  background-color: #e2faff;
-  color: black; }
+  background-color: #46bbfe;
+  color: white; }
+
+.bg-tab-active {
+  background-color: #2473fb;
+  color: white; }
+
+.tag-item-article {
+  cursor: pointer;
+  background-color: #1cbbff;
+  color: white; }
+
+.tag-item-article:hover {
+  opacity: 0.6; }
 
 .container-app {
   margin-top: 20px; }

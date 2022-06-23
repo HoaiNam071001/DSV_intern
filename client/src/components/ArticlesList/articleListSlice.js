@@ -130,9 +130,9 @@ export const getArticlesByTag = createAsyncThunk(
 
 export const getFavoriteArticles = createAsyncThunk(
     'articleList/getFavoriteArticles',
-    async ({ favorited }, thunkApi) => {
+    async ({ username }, thunkApi) => {
         try {
-            const result = await API.getArticles({ favorited });
+            const result = await API.getArticles({ favorited: username });
             const { articles, articlesCount } = result.data;
             return { articles, articlesCount };
         } catch (error) {

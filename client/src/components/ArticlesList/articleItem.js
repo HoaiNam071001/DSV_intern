@@ -1,12 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { favoriteArticle, unfavoriteArticle } from './articleListSlice';
+import { selectUser } from '../Auth/authSlice';
 const ArticleItem = ({ article }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const currentUser = useSelector(selectUser);
+
     const handleClick = (event) => {
         event.preventDefault();
-
+        if (!currentUser) {
+            navigate(`/login`);
+            return;
+        }
         if (article.favorited) {
             dispatch(unfavoriteArticle(article.slug));
         } else {
@@ -23,7 +30,10 @@ const ArticleItem = ({ article }) => {
                                 <Link to={`/@${article.author.username}`}>
                                     <img
                                         className="img-thumbnail"
-                                        src={article.author.image}
+                                        src={
+                                            article.author.image ||
+                                            require('../../Assets/avatar-thumbnail.jpg')
+                                        }
                                         alt="author"
                                     />
                                 </Link>
@@ -36,10 +46,11 @@ const ArticleItem = ({ article }) => {
                                     {article.author.username}
                                 </Link>
                                 <div className="item-author-date">
-                                    <span>Create: </span>
-                                    {new Date(
-                                        article.createdAt
-                                    ).toLocaleString()}
+                                    <time dateTime={article.createdAt}>
+                                        {new Date(
+                                            article.createdAt
+                                        ).toDateString()}
+                                    </time>
                                 </div>
                             </div>
                         </div>

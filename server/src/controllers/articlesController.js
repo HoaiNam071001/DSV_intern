@@ -71,7 +71,6 @@ const Articles = (() => {
         isfollow = null,
         isfavorite = null,
         result = [];
-
       // Get data
       if (tag) obj.Tags = { $in: [tag] };
       if (author && favorited) {
@@ -80,11 +79,13 @@ const Articles = (() => {
           articlesCount: 0,
         });
       } else if (author) {
-        Author = await UserModel.findOne({ usename: author });
+        Author = await UserModel.findOne({ username: author });
+        console.log(Author);
+
         Author = String(Author._id);
         obj.IdAuthor = Author;
       } else if (favorited) {
-        Author = await UserModel.findOne({ usename: favorited });
+        Author = await UserModel.findOne({ username: favorited });
         Author = String(Author._id);
         obj.Favorite = { $in: [Author] };
       }
@@ -133,8 +134,10 @@ const Articles = (() => {
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
+      console.log(req.body);
 
       const { title, description, body, tagList } = req.body.article;
+
       const article = new ArticleModel({
         IdAuthor: client,
         Title: title,
@@ -197,7 +200,7 @@ const Articles = (() => {
         ? Articles.Favorite.find((res) => res === client)
         : null;
       const result = {
-        articles: {
+        article: {
           slug: Articles.slug,
           title: Articles.Title,
           description: Articles.Description,
@@ -251,7 +254,7 @@ const Articles = (() => {
         ? Articles.Favorite.find((res) => res === client)
         : null;
       const result = {
-        articles: {
+        article: {
           slug: Articles.slug,
           title: Articles.Title,
           description: Articles.Description,
@@ -269,7 +272,7 @@ const Articles = (() => {
           },
         },
       };
-
+      console.log(result);
       res.json(result);
     } catch (error) {
       res.status(422).json({ errors: { article: [error] } });
@@ -286,7 +289,7 @@ const Articles = (() => {
       });
 
       if (!Articles) throw "Not Found Article in database!";
-      if (Articles.IdAuthor != client)
+      if (Articles.IdAuthor === client)
         throw "missing authentication credentials!";
 
       await ArticleModel.deleteOne({

@@ -24,19 +24,18 @@ export const API = {
     updateUser: (data) => axios.get(`${API_SERVER_URL}/api/user`, config),
 
     getProfile: (username) =>
-        axios.get(`${API_SERVER_URL}/api/profile/${username}`, config),
+        axios.get(`${API_SERVER_URL}/api/profiles/${username}`, config),
 
     followUser: (username) =>
         axios.post(
-            `${API_SERVER_URL}/api/profile/${username}/follow`,
+            `${API_SERVER_URL}/api/profiles/${username}/follow`,
             {},
             config
         ),
 
     unfollowUser: (username) =>
         axios.delete(
-            `${API_SERVER_URL}/api/profile/${username}/follow`,
-            {},
+            `${API_SERVER_URL}/api/profiles/${username}/follow`,
             config
         ),
 
@@ -67,8 +66,12 @@ export const API = {
     getArticle: (slug) =>
         axios.get(`${API_SERVER_URL}/api/articles/${slug}`, config),
 
-    updateArticle: (slug, data) =>
-        axios.put(`${API_SERVER_URL}/api/articles/${slug}`, data, config),
+    updateArticle: (data) =>
+        axios.put(
+            `${API_SERVER_URL}/api/articles/${data.slug}`,
+            { article: data.article },
+            config
+        ),
 
     deleteArticle: (slug) =>
         axios.delete(`${API_SERVER_URL}/api/articles/${slug}`, {}, config),

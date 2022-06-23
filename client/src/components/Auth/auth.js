@@ -5,6 +5,7 @@ import {
     selectErrors,
     selectIsLoading,
     selectIsSuccess,
+    translate,
 } from './authSlice';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -82,6 +83,8 @@ const Auth = ({ isRegister }) => {
     useEffect(() => {
         if (isSuccess) navigate('/');
     }, [isSuccess, navigate]);
+
+    useEffect(() => dispatch(translate()), [dispatch]);
     return (
         <div className="container">
             <div className="row col-md-6 offset-md-3 col-xs-12 shadow-lg bg-body rounded">
