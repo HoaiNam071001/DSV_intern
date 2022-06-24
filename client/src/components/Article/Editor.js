@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Toast from '../Toast';
 import ListErrors from '../ListErrors';
 import {
     getArticle,
@@ -9,19 +9,19 @@ import {
     articlePageUnloaded,
     selectArticle,
 } from './articleSlice';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 function EditArticle() {
     const dispatch = useDispatch();
-    const { article, errors, inProgress } = useSelector(selectArticle);
+    const { article, errors, inProgress, success } = useSelector(selectArticle);
     const { slug } = useParams();
-    const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [body, setBody] = useState('');
     const [tagIn, setTagin] = useState('');
     const [tagList, setTagList] = useState([]);
+    const [toast, setToast] = useState(false);
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -50,18 +50,14 @@ function EditArticle() {
         dispatch(
             slug ? updateArticle({ slug, article }) : createArticle(article)
         );
-
-        if (!errors && !inProgress) navigate('/');
     };
 
     useEffect(() => {
-        console.log(slug);
         if (slug) {
             dispatch(getArticle({ slug }));
         }
     }, [slug, dispatch]);
     useEffect(() => {
-        console.log(article);
         if (slug && article) {
             setTitle(article.title);
             setDescription(article.description);
@@ -69,10 +65,19 @@ function EditArticle() {
             setTagList(article.tagList);
         }
     }, [article, slug]);
+
+    useEffect(() => {
+        if (success) {
+            setToast(true);
+            setTimeout(() => setToast(false), 4000);
+        }
+    }, [success, dispatch]);
+
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     return (
         <div className="container my-3">
-            <div className="row col-md-10 offset-md-1 col-xs-12 p-2">
+            <div className="row col-md-10 offset-md-1 col-12 col-lg-8 offset-md-2 p-2">
+                {toast && <Toast setToast={setToast} />}
                 <ListErrors errors={errors} />
                 <div className="text-center fs-2 m-4 fw-bold">
                     {slug ? 'Update Article' : 'Create a New Article'}

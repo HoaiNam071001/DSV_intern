@@ -21,7 +21,7 @@ export const API = {
 
     getUser: () => axios.get(`${API_SERVER_URL}/api/user`, config),
 
-    updateUser: (data) => axios.get(`${API_SERVER_URL}/api/user`, config),
+    updateUser: (data) => axios.put(`${API_SERVER_URL}/api/user`, data, config),
 
     getProfile: (username) =>
         axios.get(`${API_SERVER_URL}/api/profiles/${username}`, config),

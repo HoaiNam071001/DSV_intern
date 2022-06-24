@@ -84,7 +84,7 @@ const Auth = ({ isRegister }) => {
         if (isSuccess) navigate('/');
     }, [isSuccess, navigate]);
 
-    useEffect(() => dispatch(translate()), [dispatch]);
+    useEffect(() => () => dispatch(translate()), [dispatch]);
     return (
         <div className="container">
             <div className="row col-md-6 offset-md-3 col-xs-12 shadow-lg bg-body rounded">

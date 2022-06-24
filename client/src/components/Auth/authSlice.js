@@ -8,10 +8,17 @@ import { failureReducer, isApiError, Status } from '../../common/utils';
 
 const initialState = {
     status: Status.IDLE,
+    statusUpdate: Status.IDLE,
 };
 
 function successReducer(state, action) {
     state.status = Status.SUCCESS;
+    state.token = action.payload.token;
+    state.user = action.payload.user;
+    delete state.errors;
+}
+function successUpdateReducer(state, action) {
+    state.statusUpdate = Status.SUCCESS;
     state.token = action.payload.token;
     state.user = action.payload.user;
     delete state.errors;
@@ -26,20 +33,24 @@ const authSlice = createSlice({
             state.token = action.payload;
         },
         translate: (state, action) => (state.errors = undefined),
+        setIdle: (state, action) => (state.statusUpdate = undefined),
     },
     extraReducers(builder) {
         builder
             .addCase(login.fulfilled, successReducer)
             .addCase(register.fulfilled, successReducer)
             .addCase(getUser.fulfilled, successReducer)
-            .addCase(updateUser.fulfilled, successReducer);
-
+            .addCase(updateUser.fulfilled, successUpdateReducer);
+        builder.addCase(updateUser.pending, (state, action) => {
+            state.statusUpdate = Status.LOADING;
+        });
         builder
             .addCase(login.rejected, failureReducer)
             .addCase(register.rejected, failureReducer)
             .addCase(updateUser.rejected, failureReducer);
     },
 });
+export const { setToken, logout, translate, setIdle } = authSlice.actions;
 
 export const register = createAsyncThunk(
     'auth/register',
@@ -124,8 +135,6 @@ export const updateUser = createAsyncThunk(
     }
 );
 
-export const { setToken, logout, translate } = authSlice.actions;
-
 // Get auth slice
 const selectAuthSlice = (state) => state.auth;
 
@@ -142,6 +151,9 @@ export const selectIsLoading = (state) =>
 // Get is success
 export const selectIsSuccess = (state) =>
     selectAuthSlice(state).status === Status.SUCCESS;
+
+export const selectIsSuccessUpdate = (state) =>
+    selectAuthSlice(state).statusUpdate === Status.SUCCESS;
 
 // Get is authenticated
 export const selectIsAuthenticated = createSelector(

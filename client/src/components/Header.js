@@ -43,8 +43,8 @@ const HeaderLogin = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/changepassword" className="dropdown-item">
-                            Change Password
+                        <Link to="/settings" className="dropdown-item">
+                            Settings
                         </Link>
                     </li>
                     <li>

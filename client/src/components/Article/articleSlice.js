@@ -7,6 +7,7 @@ const initialState = {
     article: undefined,
     inProgress: false,
     errors: undefined,
+    success: undefined,
 };
 
 const articleSlice = createSlice({
@@ -14,6 +15,7 @@ const articleSlice = createSlice({
     initialState,
     reducers: {
         articlePageUnloaded: () => initialState,
+        setSuccess: (state, action) => (state.success = undefined),
     },
     extraReducers: (builder) => {
         builder.addCase(getArticle.fulfilled, (state, action) => {
@@ -23,6 +25,7 @@ const articleSlice = createSlice({
 
         builder.addCase(createArticle.fulfilled, (state) => {
             state.inProgress = false;
+            state.success = true;
         });
 
         builder.addCase(createArticle.rejected, (state, action) => {
@@ -32,6 +35,7 @@ const articleSlice = createSlice({
 
         builder.addCase(updateArticle.fulfilled, (state) => {
             state.inProgress = false;
+            state.success = true;
         });
 
         builder.addCase(updateArticle.rejected, (state, action) => {
@@ -43,6 +47,7 @@ const articleSlice = createSlice({
             (action) => action.type.endsWith('/pending'),
             (state) => {
                 state.inProgress = true;
+                state.success = undefined;
             }
         );
 
@@ -121,4 +126,5 @@ export const updateArticle = createAsyncThunk(
     { serializeError }
 );
 export const selectArticle = (state) => state.article;
+
 export default articleSlice.reducer;

@@ -8,10 +8,11 @@ import './style/App.css';
 
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
+const Settings = lazy(() => import('./pages/settings'));
 const Home = lazy(() => import('./pages/home'));
 const Article = lazy(() => import('./pages/article'));
 const Profile = lazy(() => import('./pages/profile'));
-const EditArticle = lazy(() => import('./pages/EditArticle'));
+const EditArticle = lazy(() => import('./pages/edit'));
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
                         <Route exact path="/" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/settings" element={<Settings />} />
                         <Route path="/article/:slug" element={<Article />} />
                         <Route path="/@:username" element={<Profile />} />
                         <Route
