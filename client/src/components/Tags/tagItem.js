@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { getArticlesByTag } from '../ArticlesList/articleListSlice';
 import { useDispatch } from 'react-redux';
 
-function TagsList({ tag }) {
+function TagItem({ tag }) {
     const dispatch = useDispatch();
     const handleClickTag = () => {
         dispatch(getArticlesByTag({ tag }));
@@ -16,14 +16,7 @@ function TagsList({ tag }) {
         >
             {tag}
         </Link>
-        // <ul className="tag-list">
-        //     {tags.map((tag) => (
-        //         <li className="tag-default tag-pill tag-outline" key={tag}>
-        //             {tag}
-        //         </li>
-        //     ))}
-        // </ul>
     );
 }
 
-export default TagsList;
+export default TagItem;

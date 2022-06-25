@@ -26,18 +26,18 @@ const ArticleItem = ({ article }) => {
                 <div className="row">
                     <div className="col-10">
                         <div className="item-author row d-flex align-items-center">
-                            <div className="col-ss-1 col-2 col-sm-2 col-md-15 col-lg-2 col-xl-x05">
-                                <Link to={`/@${article.author.username}`}>
-                                    <img
-                                        className="img-thumbnail"
-                                        src={
-                                            article.author.image ||
-                                            require('../../Assets/avatar-thumbnail.jpg')
-                                        }
-                                        alt="author"
-                                    />
-                                </Link>
-                            </div>
+                            <Link to={`/@${article.author.username}`}>
+                                <img
+                                    width="60"
+                                    height="60"
+                                    className="img-thumbnail"
+                                    src={
+                                        article.author.image ||
+                                        require('../../Assets/avatar-thumbnail.jpg')
+                                    }
+                                    alt="author"
+                                />
+                            </Link>
                             <div className="col-9">
                                 <Link
                                     to={`/@${article.author.username}`}

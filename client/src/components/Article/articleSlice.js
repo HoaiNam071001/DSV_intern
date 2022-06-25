@@ -8,6 +8,7 @@ const initialState = {
     inProgress: false,
     errors: undefined,
     success: undefined,
+    deleted: undefined,
 };
 
 const articleSlice = createSlice({
@@ -18,24 +19,40 @@ const articleSlice = createSlice({
         setSuccess: (state, action) => (state.success = undefined),
     },
     extraReducers: (builder) => {
-        builder.addCase(getArticle.fulfilled, (state, action) => {
-            state.article = action.payload.article;
-            state.inProgress = false;
-        });
-
-        builder.addCase(createArticle.fulfilled, (state) => {
-            state.inProgress = false;
-            state.success = true;
-        });
+        builder
+            .addCase(getArticle.fulfilled, (state, action) => {
+                state.article = action.payload.article;
+                state.inProgress = false;
+            })
+            .addCase(createArticle.fulfilled, (state) => {
+                state.inProgress = false;
+                state.success = true;
+            })
+            .addCase(updateArticle.fulfilled, (state) => {
+                state.inProgress = false;
+                state.success = true;
+            })
+            .addCase(deleteArticle.fulfilled, (state) => {
+                state.deleted = true;
+            })
+            .addCase(follow.fulfilled, (state, action) => {
+                state.article.author.following =
+                    action.payload.profile.following;
+            })
+            .addCase(unfollow.fulfilled, (state, action) => {
+                state.article.author.following =
+                    action.payload.profile.following;
+            })
+            .addCase(favorite.fulfilled, (state, action) => {
+                state.article = action.payload.article;
+            })
+            .addCase(unfavorite.fulfilled, (state, action) => {
+                state.article = action.payload.article;
+            });
 
         builder.addCase(createArticle.rejected, (state, action) => {
             state.errors = action.error.errors;
             state.inProgress = false;
-        });
-
-        builder.addCase(updateArticle.fulfilled, (state) => {
-            state.inProgress = false;
-            state.success = true;
         });
 
         builder.addCase(updateArticle.rejected, (state, action) => {
@@ -56,7 +73,6 @@ const articleSlice = createSlice({
         });
     },
 });
-
 export const { articlePageUnloaded } = articleSlice.actions;
 function serializeError(error) {
     if (error instanceof Error) {
@@ -124,6 +140,73 @@ export const updateArticle = createAsyncThunk(
         }
     },
     { serializeError }
+);
+
+export const deleteArticle = createAsyncThunk(
+    'article/deleteArticle',
+    async (data, thunkApi) => {
+        try {
+            await API.deleteArticle(data);
+            return {};
+        } catch (error) {
+            if (isApiError(error.response.data)) {
+                return thunkApi.rejectWithValue(error.response.data);
+            }
+            throw error;
+        }
+    },
+    { serializeError }
+);
+
+export const follow = createAsyncThunk(
+    'article/follow',
+    async ({ username }, thunkApi) => {
+        try {
+            const result = await API.followUser(username);
+            const { profile } = result.data;
+            return { profile };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
+export const unfollow = createAsyncThunk(
+    'article/unfollow',
+    async ({ username }, thunkApi) => {
+        try {
+            const result = await API.unfollowUser(username);
+            const { profile } = result.data;
+            return { profile };
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+export const favorite = createAsyncThunk(
+    'article/favorite',
+    async (title, thunkApi) => {
+        try {
+            const result = await API.favoriteArticle(title);
+            const article = result.data;
+            return article;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
+export const unfavorite = createAsyncThunk(
+    'article/unfavorite',
+    async (title, thunkApi) => {
+        try {
+            const result = await API.unfavoriteArticle(title);
+            const article = result.data;
+            return article;
+        } catch (error) {
+            console.log(error);
+        }
+    }
 );
 export const selectArticle = (state) => state.article;
 

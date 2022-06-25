@@ -5,13 +5,14 @@ const API_SERVER_URL = 'http://localhost:3060';
 const config = {
     headers: {
         'Content-Type': 'application/json',
-        Authorization: `Token ${window.localStorage.getItem('jwt') ?? ''}`,
     },
 };
 
-// export const setAuthorization = (token) => {
-//     axios.defaults.headers.common['Authorization'] = token;
-// };
+export const setAuthorization = (token) => {
+    axios.defaults.headers.common['Authorization'] = token
+        ? 'Token ' + token
+        : '';
+};
 
 export const API = {
     login: (data) =>
@@ -74,7 +75,7 @@ export const API = {
         ),
 
     deleteArticle: (slug) =>
-        axios.delete(`${API_SERVER_URL}/api/articles/${slug}`, {}, config),
+        axios.delete(`${API_SERVER_URL}/api/articles/${slug}`, config),
 
     getComments: (slug) =>
         axios.get(`${API_SERVER_URL}/api/articles/${slug}/comments`, config),

@@ -11,7 +11,7 @@ import {
 } from './articleSlice';
 import { useParams } from 'react-router';
 
-function EditArticle() {
+const EditArticle = () => {
     const dispatch = useDispatch();
     const { article, errors, inProgress, success } = useSelector(selectArticle);
     const { slug } = useParams();
@@ -25,14 +25,11 @@ function EditArticle() {
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-
             if (tagIn && !tagList.includes(tagIn))
                 setTagList([...tagList, tagIn]);
-
             setTagin('');
         }
     };
-
     const removeTag = (e) => {
         setTagList((pre) =>
             pre.filter((value) => value !== e.target.outerText)
@@ -46,7 +43,6 @@ function EditArticle() {
             body,
             tagList,
         };
-
         dispatch(
             slug ? updateArticle({ slug, article }) : createArticle(article)
         );
@@ -161,6 +157,6 @@ function EditArticle() {
             </div>
         </div>
     );
-}
+};
 
 export default EditArticle;

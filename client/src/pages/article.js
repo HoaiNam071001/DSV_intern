@@ -1,7 +1,16 @@
-//import AuthComponent from '../components/Auth/auth';
+import React from 'react';
+import Article from '../components/Article/detailArticle';
+import Comment from '../components/Comments/comment';
 
-function GetArticle() {
-    return <div>Article</div>;
+function detailArticle() {
+    return (
+        <div className="container">
+            <div className="row col-12 col-md-10 offset-md-1 detail-article">
+                <Article />
+                <Comment />
+            </div>
+        </div>
+    );
 }
 
-export default GetArticle;
+export default detailArticle;
