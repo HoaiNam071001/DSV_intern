@@ -229,6 +229,22 @@
   color: white;
   border-color: #c2000d; }
 
+.comment-item .comment-item-info {
+  background-color: #9cd8ff;
+  padding: 10px; }
+  .comment-item .comment-item-info .info-username {
+    padding-left: 10px;
+    padding-right: 5px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #000746; }
+  .comment-item .comment-item-info .date-posted {
+    color: #7b7b7b; }
+
+.comment-item .comment-item-body {
+  padding: 0px 0px 0px 15px;
+  margin: 10px; }
+
 .container-app {
   margin-top: 20px; }
 

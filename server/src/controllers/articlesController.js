@@ -80,7 +80,6 @@ const Articles = (() => {
         });
       } else if (author) {
         Author = await UserModel.findOne({ username: author });
-        console.log(Author);
 
         Author = String(Author._id);
         obj.IdAuthor = Author;
@@ -134,7 +133,6 @@ const Articles = (() => {
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
-      console.log(req.body);
 
       const { title, description, body, tagList } = req.body.article;
 
@@ -226,7 +224,7 @@ const Articles = (() => {
   };
   const updateArticle = async (req, res) => {
     try {
-      const { title, description, body } = req.body.article,
+      const { title, description, body, tagList } = req.body.article,
         slug_article = req.params.slug_article,
         client = req.query.token._id;
       var Author = null,
@@ -242,12 +240,14 @@ const Articles = (() => {
         throw "missing authentication credentials!";
       Author = { _id: Articles._id };
 
-      Articles = await ArticleModel.findOneAndUpdate(Author, {
+      Articles = await ArticleModel.updateOne(Author, {
         Title: title,
         Description: description,
         Body: body,
+        Tags: tagList,
         updatedAt: Date.now(),
       });
+      Articles = await ArticleModel.findOne(Author);
       // config data
       Author = await UserModel.findById(Articles.IdAuthor);
       isfavorite = client
@@ -272,7 +272,6 @@ const Articles = (() => {
           },
         },
       };
-      console.log(result);
       res.json(result);
     } catch (error) {
       res.status(422).json({ errors: { article: [error] } });
@@ -289,7 +288,7 @@ const Articles = (() => {
       });
 
       if (!Articles) throw "Not Found Article in database!";
-      if (Articles.IdAuthor === client)
+      if (Articles.IdAuthor !== client)
         throw "missing authentication credentials!";
 
       await ArticleModel.deleteOne({

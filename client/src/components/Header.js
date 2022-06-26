@@ -16,8 +16,16 @@ const HeaderLogin = () => {
         navigate('/');
     };
     return (
-        <React.Fragment>
-            <div className="p-1 px-3">
+        <>
+            <div className="p-1 px-4">
+                <Link
+                    to="/"
+                    className="p-2 fs-4 rounded-pill fw-semibold link-nodecoration"
+                >
+                    Home
+                </Link>
+            </div>
+            <div className="p-1 px-4">
                 <Link
                     to="/editor"
                     className="p-2 btn btn-outline-primary rounded-pill"
@@ -27,13 +35,23 @@ const HeaderLogin = () => {
             </div>
             <div className="p-1">
                 <div
-                    className="nav-link dropdown-toggle"
+                    className="nav-link d-flex align-items-center"
                     role="button"
                     data-bs-toggle="dropdown"
                 >
-                    {currentUser?.username}
+                    <img
+                        width="40"
+                        height="40"
+                        className="rounded-circle"
+                        alt="avatar"
+                        src={
+                            currentUser.image ||
+                            require('../Assets/avatar-thumbnail.jpg')
+                        }
+                    />
                 </div>
-                <ul className="dropdown-menu">
+
+                <ul className="dropdown-menu dropdown-menu-end">
                     <li>
                         <Link
                             to={`/@${currentUser?.username}`}
@@ -57,7 +75,7 @@ const HeaderLogin = () => {
                     </li>
                 </ul>
             </div>
-        </React.Fragment>
+        </>
     );
 };
 const HeaderLogout = () => {

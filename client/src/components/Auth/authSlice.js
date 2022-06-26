@@ -103,7 +103,6 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
 
         return { token, user };
     } catch (error) {
-        console.log(error);
         //window.localStorage.removeItem('jwt');
     }
 });

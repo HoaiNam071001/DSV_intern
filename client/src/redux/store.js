@@ -6,6 +6,7 @@ import articlesSlice from '../components/ArticlesList/articleListSlice';
 import tagsSlice from '../components/Tags/tagsSlice';
 import profileSlice from '../components/Profile/profileSlice';
 import articleSlice from '../components/Article/articleSlice';
+import commentsSlice from '../components/Comments/commentsSlice';
 
 export function makeStore(preloadedState) {
     return configureStore({
@@ -15,6 +16,7 @@ export function makeStore(preloadedState) {
             tags: tagsSlice,
             profile: profileSlice,
             article: articleSlice,
+            comments: commentsSlice,
         },
         devTools: true,
         preloadedState,
