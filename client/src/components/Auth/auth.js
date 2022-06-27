@@ -4,7 +4,7 @@ import {
     register,
     selectErrors,
     selectIsLoading,
-    selectIsSuccess,
+    selectIsAuthenticated,
     translate,
 } from './authSlice';
 import { Link } from 'react-router-dom';
@@ -18,7 +18,7 @@ const Auth = ({ isRegister }) => {
     const navigate = useNavigate();
     const errors = useSelector(selectErrors);
     const inProgress = useSelector(selectIsLoading);
-    const isSuccess = useSelector(selectIsSuccess);
+    const isSuccess = useSelector(selectIsAuthenticated);
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -29,7 +29,6 @@ const Auth = ({ isRegister }) => {
     const CheckUsername = (e) => {
         if (!isRegister) return true;
         if (username === '') {
-            console.log(_username.current.classList);
             _username.current.classList.remove('valid');
             _username.current.classList.add('not-valid');
             return false;

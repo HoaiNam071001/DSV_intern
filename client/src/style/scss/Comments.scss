@@ -1,16 +1,39 @@
 .comment-item {
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    & .comment-item-user {
+        background: linear-gradient(
+            90deg,
+            rgb(54, 175, 255) 0%,
+            rgb(231, 231, 231) 100%
+        );
+        border-radius: 0 0 20px 20px;
+        & .info-username {
+            color: rgb(255, 255, 255);
+        }
+    }
+
+    & .comment-item-write {
+        border-radius: 20px;
+    }
+
     & .comment-item-info {
-        background-color: rgb(156, 216, 255);
-        padding: 10px;
+        background: linear-gradient(
+            90deg,
+            rgb(44, 167, 255) 0%,
+            rgb(255, 165, 248) 100%
+        );
+        border-radius: 20px 20px 0 0;
+        padding: 5px;
         & .info-username {
             padding-left: 10px;
             padding-right: 5px;
             font-size: 20px;
             text-decoration: none;
-            color: rgb(0, 7, 70);
+            color: rgb(255, 255, 255);
         }
         & .date-posted {
-            color: rgb(123, 123, 123);
+            color: rgb(234, 234, 234);
         }
     }
     & .comment-item-body {

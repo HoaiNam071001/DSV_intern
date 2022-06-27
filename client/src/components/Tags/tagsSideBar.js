@@ -17,7 +17,7 @@ function TagsSidebar() {
     }, [dispatch]);
 
     return (
-        <React.Fragment>
+        <>
             <div className="tag-title fs-3">Popular Tags</div>
             <div className="tag-container">
                 {isLoading ? (
@@ -26,7 +26,7 @@ function TagsSidebar() {
                     tags?.map((tag) => <TagItem tag={tag} key={tag} />)
                 )}
             </div>
-        </React.Fragment>
+        </>
     );
 }
 

@@ -18,8 +18,8 @@ function App() {
     const dispatch = useDispatch();
     const isAuthenticated = useSelector(selectIsAuthenticated);
     if (window.localStorage.getItem('jwt') && !isAuthenticated) {
-        dispatch(getUser());
         setAuthorization(window.localStorage.getItem('jwt'));
+        dispatch(getUser());
     }
 
     return (

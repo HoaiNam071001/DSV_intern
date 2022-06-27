@@ -13,14 +13,14 @@ const initialState = {
 
 function successReducer(state, action) {
     state.status = Status.SUCCESS;
-    state.token = action.payload.token;
-    state.user = action.payload.user;
+    state.token = action.payload?.token;
+    state.user = action.payload?.user;
     delete state.errors;
 }
 function successUpdateReducer(state, action) {
     state.statusUpdate = Status.SUCCESS;
-    state.token = action.payload.token;
-    state.user = action.payload.user;
+    state.token = action.payload?.token;
+    state.user = action.payload?.user;
     delete state.errors;
 }
 
@@ -100,9 +100,9 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
         const {
             user: { token, ...user },
         } = result.data;
-
         return { token, user };
     } catch (error) {
+        throw error;
         //window.localStorage.removeItem('jwt');
     }
 });

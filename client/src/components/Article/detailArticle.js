@@ -29,12 +29,15 @@ const OptionArticle = ({ slug, deleted }) => {
     }, [deleted, navigate]);
     return (
         <div className="d-flex align-items-center mx-1">
-            <Link to={`/editor/${slug}`} className="btn btn-outline-secondary">
+            <Link
+                to={`/editor/${slug}`}
+                className="btn-editor-article btn-article"
+            >
                 Editor Article
             </Link>
             <button
                 type="button"
-                className="btn btn-outline-danger"
+                className="btn-delete-article btn-article"
                 data-bs-toggle="modal"
                 data-bs-target="#deleteModal"
             >
@@ -73,7 +76,12 @@ const OptionArticle = ({ slug, deleted }) => {
                             >
                                 Delete
                             </button>
-                            <button type="button" className="btn btn-secondary">
+                            <button
+                                type="button"
+                                data-bs-dismiss="modal"
+                                aria-label="Close"
+                                className="btn btn-secondary"
+                            >
                                 Cancel
                             </button>
                         </div>
@@ -115,8 +123,8 @@ const InteractArticle = ({ username, following, slug, favorited, count }) => {
     return (
         <div className="d-flex align-items-center mx-1">
             <button
-                className={`btn btn-outline-success d-flex align-items-center ${
-                    following ? 'btn-green-active' : ''
+                className={`d-flex align-items-center btn-article btn-follow-article ${
+                    following ? 'btn-follow-article-active' : ''
                 }`}
                 onClick={handleClickFollow}
             >
@@ -125,7 +133,7 @@ const InteractArticle = ({ username, following, slug, favorited, count }) => {
                     width="16"
                     height="16"
                     fill="currentColor"
-                    className="bi bi-award-fill"
+                    className="bi bi-award-fill "
                     viewBox="0 0 16 16"
                 >
                     <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z" />
@@ -135,8 +143,8 @@ const InteractArticle = ({ username, following, slug, favorited, count }) => {
             </button>
 
             <button
-                className={`btn btn-outline-danger d-flex align-items-center mx-2 ${
-                    favorited ? 'btn-danger-active' : ''
+                className={`d-flex align-items-center justify-content-center  btn-article btn-favorite-article ${
+                    favorited ? 'btn-favorite-article-active' : ''
                 }`}
                 onClick={handleClickFavorite}
             >
@@ -185,20 +193,30 @@ const Detail = () => {
             </div>
         );
     }
-
     return (
-        <div>
+        <>
             <div className="header-article">
                 <h1>{article.title} </h1>
                 <div className="author-article d-flex">
-                    <img
-                        src={require('../../Assets/avatar-thumbnail.jpg')}
-                        alt="avatar_img"
-                        width="50"
-                        height="50"
-                    />
+                    <Link to={`/@${article?.author?.username}`}>
+                        <img
+                            src={
+                                article?.author?.image ||
+                                require('../../Assets/avatar-thumbnail.jpg')
+                            }
+                            alt="avatar_img"
+                            width="50"
+                            height="50"
+                        />
+                    </Link>
+
                     <div className="author-detail">
-                        <div className="author">{article.author.username}</div>
+                        <Link
+                            to={`/@${article?.author?.username}`}
+                            className="author"
+                        >
+                            {article.author.username}
+                        </Link>
                         <div className="create-article">
                             <time dateTime={article.createdAt}>
                                 {new Date(article.createdAt).toDateString()}
@@ -206,17 +224,19 @@ const Detail = () => {
                         </div>
                     </div>
 
-                    {user.username === article.author.username ? (
-                        <OptionArticle slug={slug} deleted={deleted} />
-                    ) : (
-                        <InteractArticle
-                            username={article.author.username}
-                            following={article.author.following}
-                            slug={slug}
-                            favorited={article.favorited}
-                            count={article.favoritesCount}
-                        />
-                    )}
+                    {user ? (
+                        user.username === article.author.username ? (
+                            <OptionArticle slug={slug} deleted={deleted} />
+                        ) : (
+                            <InteractArticle
+                                username={article.author.username}
+                                following={article.author.following}
+                                slug={slug}
+                                favorited={article.favorited}
+                                count={article.favoritesCount}
+                            />
+                        )
+                    ) : null}
                 </div>
             </div>
             <div className="script-article">
@@ -238,7 +258,7 @@ const Detail = () => {
             <hr />
             <div className="content-article">{article.body}</div>
             <hr />
-        </div>
+        </>
     );
 };
 

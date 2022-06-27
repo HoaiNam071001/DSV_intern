@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import ArticleList from '../ArticlesList/articleList';
@@ -18,7 +18,7 @@ function EditProfileSettings() {
     return (
         <Link
             to="/settings"
-            className="float-end btn btn-outline-light d-flex align-items-center"
+            className="float-end btn-edit-profile d-flex align-items-center"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,13 +40,6 @@ function FollowUserButton({ username, following }) {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
-    let textMessage;
-
-    if (following) {
-        textMessage = `Unfollow ${username}`;
-    } else {
-        textMessage = `Follow ${username}`;
-    }
 
     const handleClick = () => {
         if (!currentUser) {
@@ -64,7 +57,9 @@ function FollowUserButton({ username, following }) {
     return (
         <button
             onClick={handleClick}
-            className="float-end btn btn-outline-light d-flex align-items-center"
+            className={`float-end d-flex align-items-center btn-follow-profile ${
+                following ? 'btn-follow-profile-active' : ''
+            }`}
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +72,7 @@ function FollowUserButton({ username, following }) {
                 <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z" />
                 <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z" />
             </svg>
-            {textMessage}
+            {following ? 'Unfollow' : 'Follow'}
         </button>
     );
 }
@@ -85,10 +80,9 @@ function FollowUserButton({ username, following }) {
 function UserInfo({ profile }) {
     const currentUser = useSelector(selectUser);
     const isCurrentUser = profile.username === currentUser?.username;
-    const [img, setImg] = useState('#52D4FF');
 
     return (
-        <div className="p-3 rounded-bottom" style={{ backgroundColor: img }}>
+        <div className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
                 <div className="rounded-circle text-center container-avt-img">
                     <img
@@ -102,15 +96,10 @@ function UserInfo({ profile }) {
                 </div>
             </div>
             <div className="text-center m-2">
-                <div className="fs-3 fw-semibold">{profile.username}</div>
-                <div className="fs-5">{profile.bio}</div>
+                <div className="fs-3 username-profile">{profile.username}</div>
+                <div className="fs-5 bio-profile">{profile.bio}</div>
             </div>
-            <input
-                type="color"
-                className="form-control form-control-color d-inline-flex"
-                value={img}
-                onChange={(e) => setImg(e.target.value)}
-            />
+
             {isCurrentUser ? (
                 <EditProfileSettings />
             ) : (
@@ -125,8 +114,8 @@ function UserInfo({ profile }) {
 
 function ProfileTabs({ username, isFavorites }) {
     return (
-        <div className="row">
-            <div className="col-4 col-lg-3 col-sm-4 text-center">
+        <div className="row nav-link-profile">
+            <div className="col-4 col-lg-3 col-sm-4 text-center ">
                 <Link
                     to={`/@${username}`}
                     className={`link-nodecoration item-link-profile ${
@@ -146,7 +135,6 @@ function ProfileTabs({ username, isFavorites }) {
                     My Favorites
                 </Link>
             </div>
-            <hr />
         </div>
     );
 }

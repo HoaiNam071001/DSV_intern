@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { favoriteArticle, unfavoriteArticle } from './articleListSlice';
 import { selectUser } from '../Auth/authSlice';
-const ArticleItem = ({ article }) => {
+
+const Favorite = ({ article }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const currentUser = useSelector(selectUser);
@@ -21,46 +22,66 @@ const ArticleItem = ({ article }) => {
         }
     };
     return (
+        <button
+            className={`${
+                article.favorited ? 'btn-favorate-active' : ''
+            } btn-favorate d-flex align-items-center justify-content-center`}
+            onClick={handleClick}
+        >
+            <img
+                src="https://static.xx.fbcdn.net/images/emoji.php/v9/tf9/1.5/32/2764.png"
+                alt="tym"
+            />
+            <div className="text-truncate">{article.favoritesCount}</div>
+        </button>
+    );
+};
+
+const ArticleItem = ({ article }) => {
+    return (
         <React.Fragment>
             <div key={article.slug} className="feed-item">
                 <div className="row">
-                    <div className="col-10">
-                        <div className="item-author row d-flex align-items-center">
-                            <Link to={`/@${article.author.username}`}>
-                                <img
-                                    width="60"
-                                    height="60"
-                                    className="img-thumbnail"
-                                    src={
-                                        article.author.image ||
-                                        require('../../Assets/avatar-thumbnail.jpg')
-                                    }
-                                    alt="author"
-                                />
+                    <div className="col-8 col-sm-10 item-author d-flex align-items-center">
+                        <Link to={`/@${article.author.username}`}>
+                            <img
+                                className="img-thumbnail"
+                                src={
+                                    article.author.image ||
+                                    require('../../Assets/avatar-thumbnail.jpg')
+                                }
+                                alt="author"
+                            />
+                        </Link>
+                        <div className="col-auto">
+                            <Link
+                                to={`/@${article.author.username}`}
+                                className="item-author-name"
+                            >
+                                {article.author.username}
                             </Link>
-                            <div className="col-9">
-                                <Link
-                                    to={`/@${article.author.username}`}
-                                    className="item-author-name"
-                                >
-                                    {article.author.username}
-                                </Link>
-                                <div className="item-author-date">
-                                    <time dateTime={article.createdAt}>
-                                        {new Date(
-                                            article.createdAt
-                                        ).toDateString()}
-                                    </time>
-                                </div>
+                            <div className="item-author-date">
+                                <time dateTime={article.createdAt}>
+                                    {new Date(article.createdAt).toDateString()}
+                                </time>
                             </div>
                         </div>
+                    </div>
+
+                    <div className="col-4 col-sm-2">
+                        <Favorite article={article} />
+                    </div>
+
+                    <div className="col-8 col-sm-10">
                         <Link
                             to={`/article/${article.slug}`}
                             className="link-nodecoration"
                         >
-                            <div className="item-title"> {article.title} </div>
+                            <div className="item-title text-truncate">
+                                {article.title}
+                            </div>
                             <div className="item-content text-truncate">
-                                {article.body}
+                                {article.description}
                             </div>
                         </Link>
                         <div>
@@ -73,20 +94,6 @@ const ArticleItem = ({ article }) => {
                                 </span>
                             ))}
                         </div>
-                    </div>
-                    <div className="col-2">
-                        <button
-                            className={`${
-                                article.favorited ? 'btn-favorate-active' : ''
-                            } btn-favorate d-flex align-items-center justify-content-center`}
-                            onClick={handleClick}
-                        >
-                            <img
-                                src="https://static.xx.fbcdn.net/images/emoji.php/v9/tf9/1.5/32/2764.png"
-                                alt="tym"
-                            />
-                            <div>{article.favoritesCount}</div>
-                        </button>
                     </div>
                 </div>
             </div>

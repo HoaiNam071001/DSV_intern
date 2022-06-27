@@ -1,36 +1,29 @@
-$bg-blog: #0d6efd;
+$bg-blog: #003c97;
 
+.tab-home-head {
+    margin-bottom: 30px;
+}
 .btn-home-title {
     border: 0px;
     background-color: rgb(255, 255, 255);
-    padding: 5px;
+    padding: 8px 10px;
     color: #000;
     width: 100%;
-    font-size: 17px;
-    margin: 2px;
+    font-size: 20px;
+    font-weight: bold;
+    transition: transform 0.5s, box-shadow 0.5s;
 }
 .btn-home-title:hover {
-    transform: scale(1.04, 1.04);
-    color: $bg-blog;
+    transform: translateY(-2px);
+    opacity: 0.8;
+    box-shadow: 0px 5px 5px 0px rgb(137, 137, 137);
 }
 
-.hr-bottom-hometitle {
-    border: 1px solid #fff;
-    width: 100%;
-    height: 1px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    background-color: rgb(255, 255, 255);
-    opacity: 1;
+.btn-home-title-active {
+    color: $bg-blog;
+    box-shadow: 0px 1px 1px 0px rgb(137, 137, 137);
 }
-.hr-bottom {
-    margin-top: 0px;
-    margin-bottom: 10px;
-}
-.hr-active {
-    border: 1px solid $bg-blog;
-    background-color: $bg-blog;
-}
+
 .tag-title {
     color: rgb(0, 0, 0);
     padding: 5px;
@@ -45,7 +38,13 @@ $bg-blog: #0d6efd;
     & .tag-item {
         margin-right: 5px;
         margin-bottom: 10px;
-        background-color: rgb(226, 226, 226);
+        background-color: rgb(255, 255, 255);
         color: rgb(0, 0, 0);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    & .tag-item:hover {
+        color: rgb(0, 19, 160);
+        transform: translateY(-1px);
+        box-shadow: 0px 1px 5px 1px rgb(193, 193, 193);
     }
 }

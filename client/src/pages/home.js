@@ -29,60 +29,50 @@ const Home = () => {
         <div className="container my-3">
             <div className="row">
                 <div className="col-sm-12 col-lg-9">
-                    <div className="row d-flex">
+                    <div className="row d-flex tab-home-head">
                         {isAuthenticated ? (
-                            <div className="col-4 col-lg-3 col-sm-4">
+                            <div className="col-6 col-md-4 col-lg-3 col-sm-4">
                                 <button
-                                    className="btn-home-title"
+                                    className={`btn-home-title rounded-pill m-1 ${
+                                        tag
+                                            ? ''
+                                            : feed === 0
+                                            ? 'btn-home-title-active'
+                                            : ''
+                                    }`}
                                     onClick={() => setfeed(0)}
                                 >
                                     Your Feed
                                 </button>
-                                <hr
-                                    id="hrYourFeed"
-                                    className={
-                                        'hr-bottom-hometitle ' +
-                                        (tag
-                                            ? ''
-                                            : feed === 0
-                                            ? 'hr-active'
-                                            : '')
-                                    }
-                                />
                             </div>
                         ) : null}
 
-                        <div className="col-4 col-lg-3 col-sm-4">
+                        <div className="col-6 col-md-4 col-lg-3 col-sm-4">
                             <button
-                                className="btn-home-title"
+                                className={`btn-home-title rounded-pill  m-1 ${
+                                    tag
+                                        ? ''
+                                        : feed === 1
+                                        ? 'btn-home-title-active'
+                                        : ''
+                                }`}
                                 onClick={() => setfeed(1)}
                             >
                                 Global Feed
                             </button>
-                            <hr
-                                id="hrGlobalFeed"
-                                className={
-                                    'hr-bottom-hometitle ' +
-                                    (tag ? '' : feed === 1 ? 'hr-active' : '')
-                                }
-                            />
                         </div>
+
                         {tag ? (
-                            <div className="col-4 col-lg-3 col-sm-4">
-                                <button className="btn-home-title">
+                            <div className="col-auto">
+                                <button
+                                    className={`btn-home-title rounded-pill  m-1 ${
+                                        tag ? 'btn-home-title-active' : ''
+                                    }`}
+                                >
                                     #{tag}
                                 </button>
-                                <hr
-                                    id="hrGlobalFeed"
-                                    className={
-                                        'hr-bottom-hometitle ' +
-                                        (tag ? 'hr-active' : '')
-                                    }
-                                />
                             </div>
                         ) : null}
-
-                        <hr className="hr-bottom" />
                     </div>
                     <ArticleList />
                 </div>

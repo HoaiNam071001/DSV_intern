@@ -20,19 +20,19 @@ function CommentForm() {
     };
 
     return (
-        <div className="my-4 border">
+        <div className="my-4 comment-item border">
             <div className="form-floating m-2">
                 <textarea
-                    className="form-control"
+                    className="form-control comment-item-write"
                     placeholder="Leave a comment here"
                     id="floatingbodycomment"
                     value={body}
                     onChange={(e) => setBody(e.target.value)}
                 ></textarea>
-                <label for="floatingbodycomment">Write a comment...</label>
+                <label htmlFor="floatingbodycomment">Write a comment...</label>
             </div>
 
-            <div className="bg-light d-flex align-items-center">
+            <div className="d-flex align-items-center comment-item-user">
                 <img
                     className="rounded-circle m-1"
                     width="40"
@@ -43,7 +43,9 @@ function CommentForm() {
                         require('../../Assets/avatar-thumbnail.jpg')
                     }
                 />
-                <span className="mx-2 fs-5">{currentUser.username}</span>
+                <span className="mx-2 fs-5 info-username">
+                    {currentUser.username}
+                </span>
                 <button
                     className="btn btn-primary ms-auto rounded-pill m-1"
                     onClick={saveComment}
@@ -60,7 +62,7 @@ function CommentSection() {
     const errors = useSelector(selectErrors);
 
     return (
-        <div className="col-12 col-md-8 offset-md-2">
+        <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <ListErrors errors={errors} />
             {isAuthenticaded ? (
                 <CommentForm />

@@ -71,11 +71,11 @@ const EditArticle = () => {
 
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     return (
-        <div className="container my-3">
+        <div className="container ">
             <div className="row col-md-10 offset-md-1 col-12 col-lg-8 offset-md-2 p-2">
                 {toast && <Toast setToast={setToast} />}
                 <ListErrors errors={errors} />
-                <div className="text-center fs-2 m-4 fw-bold">
+                <div className="text-center fs-2 fw-bold m-2">
                     {slug ? 'Update Article' : 'Create a New Article'}
                 </div>
                 <div className="px-4">
