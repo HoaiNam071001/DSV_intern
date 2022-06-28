@@ -10,7 +10,8 @@ import {
     selectArticle,
 } from './articleSlice';
 import { useParams } from 'react-router';
-import TextEditor from './textEditor';
+import TextEditor from './text';
+
 const EditArticle = () => {
     const dispatch = useDispatch();
     const { article, errors, inProgress, success } = useSelector(selectArticle);
@@ -109,7 +110,7 @@ const EditArticle = () => {
                         </label>
                     </div>
 
-                    <div className="mb-4 text-body" style={{ height: 250 }}>
+                    <div className="mb-4 text-body" style={{ height: 300 }}>
                         <TextEditor body={body} setBody={setBody} />
                     </div>
 

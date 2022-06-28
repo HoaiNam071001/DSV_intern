@@ -240,7 +240,7 @@ const Detail = () => {
                 </div>
             </div>
             <div className="script-article">
-                <div className="description-article">{article.description}</div>
+                {/* <div className="description-article">{article.description}</div> */}
                 <div className="tag-article d-flex">
                     {article &&
                         article.tagList.map((tag) => {
@@ -260,7 +260,6 @@ const Detail = () => {
                 className="content-article"
                 dangerouslySetInnerHTML={{ __html: article.body }}
             />
-            <hr />
         </>
     );
 };

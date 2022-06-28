@@ -28,7 +28,8 @@
   left: 0px;
   right: 0px;
   background-color: white;
-  border-bottom: 1px solid #e1e1e1; }
+  border-bottom: 1px solid #e1e1e1;
+  z-index: 10; }
 
 .new-article-header {
   text-decoration: none;
@@ -318,18 +319,14 @@
 .detail-article .header-article:hover {
   box-shadow: 0 0 5px 1px #dbdbdb; }
 
-.detail-article .script-article .description-article {
-  font-style: italic;
-  padding-top: 10px;
-  padding-left: 10px;
-  color: #8f8f8f; }
-
 .detail-article .script-article .tag-article {
   margin: 10px; }
 
 .detail-article .content-article {
-  padding: 0px 0px 10px 30px;
-  font-size: 20px; }
+  padding: 5px 20px 10px 20px;
+  font-size: 20px;
+  background-color: #fff;
+  border-radius: 20px; }
 
 .detail-article .comment-article {
   margin-bottom: 30px;

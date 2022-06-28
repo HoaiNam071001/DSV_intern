@@ -106,19 +106,21 @@
     }
 
     & .script-article {
-        & .description-article {
-            font-style: italic;
-            padding-top: 10px;
-            padding-left: 10px;
-            color: rgb(143, 143, 143);
-        }
+        // & .description-article {
+        //     font-style: italic;
+        //     padding-top: 10px;
+        //     padding-left: 10px;
+        //     color: rgb(143, 143, 143);
+        // }
         & .tag-article {
             margin: 10px;
         }
     }
     & .content-article {
-        padding: 0px 0px 10px 30px;
+        padding: 5px 20px 10px 20px;
         font-size: 20px;
+        background-color: #fff;
+        border-radius: 20px;
     }
 
     & .comment-article {
