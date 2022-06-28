@@ -256,7 +256,10 @@ const Detail = () => {
                 </div>
             </div>
             <hr />
-            <div className="content-article">{article.body}</div>
+            <div
+                className="content-article"
+                dangerouslySetInnerHTML={{ __html: article.body }}
+            />
             <hr />
         </>
     );

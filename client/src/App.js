@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './components/Auth/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
+
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
 const Settings = lazy(() => import('./pages/settings'));

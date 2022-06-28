@@ -10,7 +10,7 @@ import {
     selectArticle,
 } from './articleSlice';
 import { useParams } from 'react-router';
-
+import TextEditor from './textEditor';
 const EditArticle = () => {
     const dispatch = useDispatch();
     const { article, errors, inProgress, success } = useSelector(selectArticle);
@@ -30,6 +30,7 @@ const EditArticle = () => {
             setTagin('');
         }
     };
+
     const removeTag = (e) => {
         setTagList((pre) =>
             pre.filter((value) => value !== e.target.outerText)
@@ -53,6 +54,7 @@ const EditArticle = () => {
             dispatch(getArticle({ slug }));
         }
     }, [slug, dispatch]);
+
     useEffect(() => {
         if (slug && article) {
             setTitle(article.title);
@@ -107,18 +109,8 @@ const EditArticle = () => {
                         </label>
                     </div>
 
-                    <div className="form-floating mb-4">
-                        <textarea
-                            className="form-control"
-                            placeholder="Leave a comment here"
-                            id="floatingTextarea2"
-                            style={{ height: '150px' }}
-                            value={body}
-                            onChange={(e) => setBody(e.target.value)}
-                        ></textarea>
-                        <label htmlFor="floatingTextarea2">
-                            Write Your Article
-                        </label>
+                    <div className="mb-4 text-body" style={{ height: 250 }}>
+                        <TextEditor body={body} setBody={setBody} />
                     </div>
 
                     <div className="form-floating mb-4">

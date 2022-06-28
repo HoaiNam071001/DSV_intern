@@ -18,7 +18,7 @@ function EditProfileSettings() {
     return (
         <Link
             to="/settings"
-            className="float-end btn-edit-profile d-flex align-items-center"
+            className="btn-edit-profile d-flex align-items-center"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,14 +100,16 @@ function UserInfo({ profile }) {
                 <div className="fs-5 bio-profile">{profile.bio}</div>
             </div>
 
-            {isCurrentUser ? (
-                <EditProfileSettings />
-            ) : (
-                <FollowUserButton
-                    username={profile.username}
-                    following={profile.following}
-                />
-            )}
+            <div className="d-flex justify-content-end">
+                {isCurrentUser ? (
+                    <EditProfileSettings />
+                ) : (
+                    <FollowUserButton
+                        username={profile.username}
+                        following={profile.following}
+                    />
+                )}
+            </div>
         </div>
     );
 }
@@ -115,7 +117,7 @@ function UserInfo({ profile }) {
 function ProfileTabs({ username, isFavorites }) {
     return (
         <div className="row nav-link-profile">
-            <div className="col-4 col-lg-3 col-sm-4 text-center ">
+            <div className="col-6 col-lg-3 text-center ">
                 <Link
                     to={`/@${username}`}
                     className={`link-nodecoration item-link-profile ${
@@ -125,7 +127,7 @@ function ProfileTabs({ username, isFavorites }) {
                     My Articles
                 </Link>
             </div>
-            <div className="col-4 col-lg-3 col-sm-4 text-center">
+            <div className="col-6 col-lg-3 text-center">
                 <Link
                     to={`/@${username}/favorites`}
                     className={`link-nodecoration item-link-profile ${
@@ -171,14 +173,17 @@ function Profile({ isFavoritePage }) {
 
     return (
         <div className="container">
-            <div className="row col-md-10 offset-md-1 col-xs-12">
-                <UserInfo profile={profile} />
-                <ProfileTabs
-                    username={profile.username}
-                    isFavorites={isFavoritePage}
-                />
-
-                <ArticleList />
+            <div className="row">
+                <div className="col-md-10 offset-md-1 col-12">
+                    <UserInfo profile={profile} />
+                    <ProfileTabs
+                        username={profile.username}
+                        isFavorites={isFavoritePage}
+                    />
+                </div>
+                <div className="col-md-8 offset-md-2 col-12">
+                    <ArticleList />
+                </div>
             </div>
         </div>
     );
