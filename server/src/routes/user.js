@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/userController');
+const user = require('../api/user');
 const { VerifyToken } = require('../middleware/Token');
 
-router.get('/', VerifyToken, UserController.getCurrentUser);
-router.put('/', VerifyToken, UserController.updateCurrentUser);
+router.get('/', VerifyToken, user.getCurrentUser);
+router.put('/', VerifyToken, user.updateCurrentUser);
 module.exports = router;

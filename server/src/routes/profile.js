@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const ProfileController = require('../controllers/profileController');
+const profile = require('../api/profile');
 const { CheckToken, VerifyToken } = require('../middleware/Token');
 
-router.post('/:username/follow', VerifyToken, ProfileController.followUser);
-router.delete('/:username/follow', VerifyToken, ProfileController.unfollowUser);
-router.get('/:username', CheckToken, ProfileController.getprofile);
+router.post('/:username/follow', VerifyToken, profile.followUser);
+router.delete('/:username/follow', VerifyToken, profile.unfollowUser);
+router.get('/:username', CheckToken, profile.getprofile);
 
 module.exports = router;

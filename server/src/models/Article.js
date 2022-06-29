@@ -3,45 +3,60 @@ var slug = require('mongoose-slug-generator');
 
 mongoose.plugin(slug);
 
-const ArticleSchema = new mongoose.Schema({
-    IdAuthor: {
-        type: String,
-        required: true,
+const ArticleSchema = new mongoose.Schema(
+    {
+        author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        title: String,
+        description: String,
+        body: String,
+        tagList: {
+            type: Array,
+            default: [],
+        },
+        favoriteList: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+            },
+        ],
+        slug: {
+            type: String,
+            slug: 'title',
+            unique: true,
+        },
     },
-    Title: {
-        type: String,
-        default: '',
-    },
-    Description: {
-        type: String,
-        default: '',
-    },
-    Body: {
-        type: String,
-        default: '',
-    },
-    createdAt: {
-        type: Date,
-        required: true,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-    Tags: {
-        type: Array,
-        default: [],
-    },
-    Favorite: {
-        type: Array,
-        default: [],
-    },
-    slug: {
-        type: String,
-        slug: 'Title',
-        unique: true,
-    },
-});
+    { timestamps: true },
+);
 
-module.exports = mongoose.model('Articles', ArticleSchema);
+ArticleSchema.methods.toJSONFor = function (user) {
+    return {
+        slug: this.slug,
+        title: this.title,
+        description: this.description,
+        body: this.body,
+        createdAt: this.createdAt,
+        updatedAt: this.updatedAt,
+        tagList: this.tagList,
+        favorited: user ? this.isFavorite(user._id) : false,
+        favoritesCount: this.favoriteList.length,
+        author: this.author.toProfileJSONFor(user),
+    };
+};
+
+ArticleSchema.methods.favorite = function (id) {
+    if (this.favoriteList.indexOf(id) === -1) this.favoriteList.push(id);
+    return this.save();
+};
+
+ArticleSchema.methods.unfavorite = function (id) {
+    this.favoriteList.remove(id);
+    return this.save();
+};
+
+ArticleSchema.methods.isFavorite = function (id) {
+    return this.favoriteList.some(
+        (userId) => userId.toString() === id.toString(),
+    );
+};
+
+mongoose.model('Article', ArticleSchema);

@@ -23,9 +23,6 @@ function route(app) {
     app.use('/api/profiles', profile);
     app.use('/api/articles', articles);
     app.use('/api/', defaults);
-    app.get('/', (req, res) => {
-        res.send('Hello World');
-    });
 }
 
 module.exports = route;

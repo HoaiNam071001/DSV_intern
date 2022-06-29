@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('config');
-const db = config.get('mongoURI');
-
+const db = process.env.MONGGOOSE_URI;
 var DbConnection = () => {
     var database = null;
 

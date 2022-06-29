@@ -1,42 +1,25 @@
-const express = require("express");
-const router = express.Router();
-const articlesController = require("../controllers/articlesController");
-const commentsController = require("../controllers/commentsController");
-const favoritesController = require("../controllers/favoritesController");
-const { VerifyToken, CheckToken } = require("../middleware/Token");
+const router = require('express').Router();
+const articles = require('../api/articles');
+const comments = require('../api/comments');
+const favorites = require('../api/favorites');
+const { VerifyToken, CheckToken } = require('../middleware/Token');
 
-router.get("/feed", VerifyToken, articlesController.getRecentArticlesUser);
-router.get("/", CheckToken, articlesController.getRecentArticlesGlobal);
-router.post("/", VerifyToken, articlesController.createArticle);
-router.get("/:slug_article", CheckToken, articlesController.getArticle);
-router.put("/:slug_article", VerifyToken, articlesController.updateArticle);
-router.delete("/:slug_article", VerifyToken, articlesController.deleteArticle);
+router.get('/feed', VerifyToken, articles.getRecentArticlesUser);
+router.get('/', CheckToken, articles.getRecentArticlesGlobal);
+router.post('/', VerifyToken, articles.createArticle);
+router.get('/:slug_article', CheckToken, articles.getArticle);
+router.put('/:slug_article', VerifyToken, articles.updateArticle);
+router.delete('/:slug_article', VerifyToken, articles.deleteArticle);
 
-router.get(
-  "/:slug_article/comments",
-  CheckToken,
-  commentsController.getComments
-);
-router.post(
-  "/:slug_article/comments",
-  VerifyToken,
-  commentsController.createComments
-);
+router.get('/:slug_article/comments', CheckToken, comments.getComments);
+router.post('/:slug_article/comments', VerifyToken, comments.createComments);
 router.delete(
-  "/:slug_article/comments/:id_comment",
-  VerifyToken,
-  commentsController.deleteComment
+    '/:slug_article/comments/:id_comment',
+    VerifyToken,
+    comments.deleteComment,
 );
 
-router.post(
-  "/:slug_article/favorite",
-  VerifyToken,
-  favoritesController.favorite
-);
-router.delete(
-  "/:slug_article/favorite",
-  VerifyToken,
-  favoritesController.unfavorite
-);
+router.post('/:slug_article/favorite', VerifyToken, favorites.favorite);
+router.delete('/:slug_article/favorite', VerifyToken, favorites.unfavorite);
 
 module.exports = router;

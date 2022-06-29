@@ -18,7 +18,7 @@ const tagsSlice = createSlice({
             })
             .addCase(getAllTags.fulfilled, (state, action) => {
                 state.status = Status.SUCCESS;
-                state.tags = action.payload;
+                state.tags = action.payload.tags;
             });
     },
 });

@@ -1,27 +1,21 @@
 const mongoose = require('mongoose');
 
-const CommentSchema = new mongoose.Schema({
-    IdSender: {
-        type: String,
-        required: true,
+const CommentSchema = new mongoose.Schema(
+    {
+        author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        article: { type: mongoose.Schema.Types.ObjectId, ref: 'Article' },
+        body: String,
     },
-    IdArticle: {
-        type: String,
-        default: '',
-    },
-    Body: {
-        type: String,
-        default: '',
-    },
-    createdAt: {
-        type: Date,
-        required: true,
-        default: Date.now,
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+    { timestamps: true },
+);
 
-module.exports = mongoose.model('Comments', CommentSchema);
+CommentSchema.methods.toJSONFor = function (user) {
+    console.log(this.author);
+    return {
+        id: this._id,
+        body: this.body,
+        createdAt: this.createdAt,
+        author: this.author.toProfileJSONFor(user),
+    };
+};
+mongoose.model('Comment', CommentSchema);

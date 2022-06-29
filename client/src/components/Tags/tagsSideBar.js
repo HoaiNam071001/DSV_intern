@@ -15,7 +15,6 @@ function TagsSidebar() {
             fetchTags.abort();
         };
     }, [dispatch]);
-
     return (
         <>
             <div className="tag-title fs-3">Popular Tags</div>
@@ -23,7 +22,7 @@ function TagsSidebar() {
                 {isLoading ? (
                     <Loading2 />
                 ) : (
-                    tags?.map((tag) => <TagItem tag={tag} key={tag} />)
+                    tags.map((tag) => <TagItem tag={tag} key={tag} />)
                 )}
             </div>
         </>

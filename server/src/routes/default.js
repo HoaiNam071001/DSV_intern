@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const defaultController = require('../controllers/defaultController');
+const defaults = require('../api/default');
 
-router.get('/tags', defaultController.getTags);
+router.get('/tags', defaults.getTags);
 module.exports = router;
