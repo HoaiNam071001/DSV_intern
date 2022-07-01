@@ -10,20 +10,9 @@ import {
     selectArticle,
 } from './articleSlice';
 import { useParams } from 'react-router';
-//import TextEditor from './text';
 import TextEditor from './textEditor';
 
-const EditArticle = () => {
-    const dispatch = useDispatch();
-    const { article, errors, inProgress, success } = useSelector(selectArticle);
-    const { slug } = useParams();
-
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [body, setBody] = useState('');
-    const [tagIn, setTagin] = useState('');
-    const [tagList, setTagList] = useState([]);
-    const [toast, setToast] = useState(false);
+const SetTag = ({ tagIn, setTagin, tagList, setTagList }) => {
     const handleEnter = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -38,7 +27,55 @@ const EditArticle = () => {
             pre.filter((value) => value !== e.target.outerText)
         );
     };
+    return (
+        <>
+            <div className="form-floating mb-4">
+                <input
+                    type="text"
+                    className="form-control"
+                    id="floatingArticleTag"
+                    placeholder="Tag"
+                    value={tagIn}
+                    onChange={(e) => setTagin(e.target.value)}
+                    onKeyUp={handleEnter}
+                />
+                <label htmlFor="floatingArticleTag">Enter Tag</label>
+            </div>
+            <div className="d-flex ">
+                {tagList.map((tag) => {
+                    return (
+                        <div
+                            key={tag}
+                            className="px-2 py-1 m-1 rounded-pill tag-item-article"
+                            onClick={removeTag}
+                        >
+                            {tag}
+                        </div>
+                    );
+                })}
+            </div>
+        </>
+    );
+};
+
+const EditArticle = () => {
+    const dispatch = useDispatch();
+    const { article, errors, inProgress, success } = useSelector(selectArticle);
+    const { slug } = useParams();
+
+    const [valid, setValid] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [body, setBody] = useState('');
+    const [tagIn, setTagin] = useState('');
+    const [tagList, setTagList] = useState([]);
+    const [toast, setToast] = useState(false);
+
     const submitForm = (event) => {
+        if (!checktitle()) {
+            document.getElementById('floatingArticleTitle').focus();
+            return;
+        }
         event.preventDefault();
         const article = {
             title,
@@ -50,7 +87,14 @@ const EditArticle = () => {
             slug ? updateArticle({ slug, article }) : createArticle(article)
         );
     };
-
+    const checktitle = () => {
+        if (title.length > 2) {
+            setValid(true);
+            return true;
+        }
+        setValid(false);
+        return false;
+    };
     useEffect(() => {
         if (slug) {
             dispatch(getArticle({ slug }));
@@ -69,7 +113,7 @@ const EditArticle = () => {
     useEffect(() => {
         if (success) {
             setToast(true);
-            setTimeout(() => setToast(false), 4000);
+            setTimeout(() => setToast(false), 3000);
         }
     }, [success, dispatch]);
 
@@ -77,7 +121,9 @@ const EditArticle = () => {
     return (
         <div className="container ">
             <div className="row col-12 col-lg-10 offset-lg-1 p-2">
-                {toast && <Toast setToast={setToast} />}
+                {toast && (
+                    <Toast setToast={setToast} message={'Update Success!'} />
+                )}
                 <ListErrors errors={errors} />
                 <div className="text-center fs-2 fw-bold m-2">
                     {slug ? 'Update Article' : 'Create a New Article'}
@@ -86,10 +132,13 @@ const EditArticle = () => {
                     <div className="form-floating mb-4">
                         <input
                             type="text"
-                            className="form-control"
+                            className={`form-control ${valid && 'valid'} ${
+                                valid === false && 'not-valid'
+                            }`}
                             id="floatingArticleTitle"
                             placeholder="Article Title"
                             value={title}
+                            onBlur={checktitle}
                             onChange={(e) => setTitle(e.target.value)}
                         />
                         <label htmlFor="floatingArticleTitle">
@@ -122,31 +171,12 @@ const EditArticle = () => {
                         />
                     </div>
 
-                    <div className="form-floating mb-4">
-                        <input
-                            type="text"
-                            className="form-control"
-                            id="floatingArticleTag"
-                            placeholder="Tag"
-                            value={tagIn}
-                            onChange={(e) => setTagin(e.target.value)}
-                            onKeyUp={handleEnter}
-                        />
-                        <label htmlFor="floatingArticleTag">Enter Tag</label>
-                    </div>
-                    <div className="d-flex ">
-                        {tagList.map((tag) => {
-                            return (
-                                <div
-                                    key={tag}
-                                    className="px-2 py-1 m-1 rounded-pill tag-item-article"
-                                    onClick={removeTag}
-                                >
-                                    {tag}
-                                </div>
-                            );
-                        })}
-                    </div>
+                    <SetTag
+                        tagIn={tagIn}
+                        setTagin={setTagin}
+                        tagList={tagList}
+                        setTagList={setTagList}
+                    />
                     <button
                         className="btn btn-primary rounded-pill p-2 m-3 float-end"
                         disabled={inProgress}

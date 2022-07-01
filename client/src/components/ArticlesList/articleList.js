@@ -6,7 +6,6 @@ import Loading from '../Loading';
 import Pagination from '../pagination/pagination';
 const Articles = () => {
     const { articles } = useSelector(selectarticleListSlice);
-    console.log(articles);
     if (!articles) return <Loading />;
     if (articles.length === 0)
         return (
@@ -17,9 +16,7 @@ const Articles = () => {
             {articles.map((article) => (
                 <ArticleItem key={article.slug} article={article} />
             ))}
-            <div className="Pagination">
-                <Pagination />
-            </div>
+            <Pagination />
         </div>
     );
 };

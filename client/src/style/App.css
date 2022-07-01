@@ -240,23 +240,34 @@
     overflow: scroll; }
 
 .toast-floating {
-  background-color: #fafafa;
-  width: 200px;
+  min-width: 250px;
   position: fixed;
-  top: 50px;
+  top: 70px;
   right: 5px;
   border-radius: 5px;
-  border: 1px solid #616161;
   box-shadow: 1px 2px 10px 2px #cbcbcb; }
   .toast-floating .header-toast {
-    padding: 5px 20px; }
+    padding: 5px;
+    color: white; }
   .toast-floating .body-toast {
     border-radius: 5px;
-    padding: 5px 20px;
-    background-color: #00ff26;
-    color: white; }
-  .toast-floating:hover {
-    opacity: 0.7; }
+    padding: 5px;
+    color: white;
+    font-size: 18px; }
+  .toast-floating .end-toast {
+    background: none;
+    border: 0px;
+    color: #fff; }
+
+.success-toast {
+  background-color: #1be700; }
+  .success-toast:hover {
+    background-color: #42f32b; }
+
+.fail-toast {
+  background-color: #d60000; }
+  .fail-toast:hover {
+    background-color: #fa4141; }
 
 .detail-article .header-article {
   padding: 20px 10px;
@@ -363,6 +374,53 @@
   .comment-item .comment-item-body {
     padding: 0px 0px 0px 15px;
     margin: 10px; }
+
+.pagination-container {
+  display: flex;
+  list-style-type: none;
+  padding: 15px 5px;
+  border-radius: 10px;
+  background-color: #fff; }
+  .pagination-container .pagination-item {
+    padding: 0 12px;
+    height: 32px;
+    text-align: center;
+    margin: auto 4px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    letter-spacing: 0.01071em;
+    border-radius: 16px;
+    line-height: 1.43;
+    font-size: 20px;
+    min-width: 32px; }
+    .pagination-container .pagination-item.dots:hover {
+      background-color: transparent;
+      cursor: default; }
+    .pagination-container .pagination-item:hover {
+      color: white;
+      background-color: #5d5d5d;
+      cursor: pointer; }
+    .pagination-container .pagination-item.selected {
+      color: #fff;
+      background-color: black; }
+    .pagination-container .pagination-item .arrow::before {
+      position: relative;
+      display: inline-block;
+      width: 2em;
+      height: 1em; }
+    .pagination-container .pagination-item .arrow.left::before {
+      content: 'Prev'; }
+    .pagination-container .pagination-item .arrow.right::before {
+      content: 'Next'; }
+    .pagination-container .pagination-item.disabled {
+      pointer-events: none; }
+      .pagination-container .pagination-item.disabled .arrow::before {
+        color: #888888; }
+      .pagination-container .pagination-item.disabled:hover {
+        background-color: transparent;
+        cursor: default; }
 
 .container-app {
   margin-top: 80px; }
