@@ -1,7 +1,7 @@
 const Toast = ({ setToast }) => {
     return (
         <div>
-            <div className="toast-floating">
+            <div className="toast-floating" style={{ zIndex: 10 }}>
                 <div className="header-toast">
                     Sun Nov 13
                     <button

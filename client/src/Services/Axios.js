@@ -40,7 +40,7 @@ export const API = {
             config
         ),
 
-    getArticlesFeed: (limit = 20, offset = 0) =>
+    getArticlesFeed: (limit = 10, offset = 0) =>
         axios.get(
             `${API_SERVER_URL}/api/articles/feed?limit=${limit}&offset=${offset}`,
             config
@@ -51,13 +51,13 @@ export const API = {
             query
                 ? API_SERVER_URL +
                       '/api/articles?' +
-                      (query.tag ? 'tag=' + query.tag : '') +
-                      (query.author ? '&author=' + query.author : '') +
-                      (query.favorited ? '&favorited=' + query.favorited : '') +
-                      '&limit=' +
-                      (query.limit ?? 20) +
+                      'limit=' +
+                      (query.limit ?? 10) +
                       '&offset=' +
-                      (query.offset ?? 0)
+                      (query.offset ?? 0) +
+                      (query.tag ? '&tag=' + query.tag : '') +
+                      (query.author ? '&author=' + query.author : '') +
+                      (query.favorited ? '&favorited=' + query.favorited : '')
                 : API_SERVER_URL + '/api/articles',
             config
         ),

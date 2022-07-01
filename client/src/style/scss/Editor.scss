@@ -8,4 +8,10 @@
 }
 .text-body {
     background-color: #fff;
+    & .jodit-react-container {
+        & .jodit-workplace {
+            max-height: 500px !important;
+            overflow: scroll;
+        }
+    }
 }

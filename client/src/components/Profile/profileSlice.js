@@ -21,41 +21,31 @@ export const { profilePageUnloaded } = profileSlice.actions;
 
 export const getProfile = createAsyncThunk(
     'profile/getProfile',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.getProfile(username);
-            const { profile } = result.data;
-            return { profile };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ username }) => {
+        const result = await API.getProfile(username);
+        const { profile } = result.data;
+        return { profile };
     }
 );
 
 export const follow = createAsyncThunk(
     'profile/follow',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.followUser(username);
-            const { profile } = result.data;
-            return { profile };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ username }) => {
+        const result = await API.followUser(username);
+        const { profile } = result.data;
+        return { profile };
     }
 );
 
 export const unfollow = createAsyncThunk(
     'profile/unfollow',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.unfollowUser(username);
-            const { profile } = result.data;
-            return { profile };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ username }) => {
+        const result = await API.unfollowUser(username);
+        const { profile } = result.data;
+        return { profile };
     }
 );
+
+export const selectProfile = (state) => state.profile;
 
 export default profileSlice.reducer;

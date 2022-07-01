@@ -61,7 +61,19 @@ const ArticleItem = ({ article }) => {
                                 {article.author.username}
                             </Link>
                             <div className="item-author-date">
-                                <time dateTime={article.createdAt}>
+                                <time
+                                    dateTime={article.createdAt}
+                                    title={
+                                        'createdAt:' +
+                                        new Date(
+                                            article.createdAt
+                                        ).toLocaleString() +
+                                        '\nupdatedAt: ' +
+                                        new Date(
+                                            article.updatedAt
+                                        ).toLocaleString()
+                                    }
+                                >
                                     {new Date(article.createdAt).toDateString()}
                                 </time>
                             </div>
@@ -72,7 +84,7 @@ const ArticleItem = ({ article }) => {
                         <Favorite article={article} />
                     </div>
 
-                    <div className="col-8 col-sm-10">
+                    <div className="col-12">
                         <Link
                             to={`/article/${article.slug}`}
                             className="link-nodecoration"

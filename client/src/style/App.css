@@ -235,6 +235,9 @@
 
 .text-body {
   background-color: #fff; }
+  .text-body .jodit-react-container .jodit-workplace {
+    max-height: 500px !important;
+    overflow: scroll; }
 
 .toast-floating {
   background-color: #fafafa;
@@ -327,6 +330,9 @@
   font-size: 20px;
   background-color: #fff;
   border-radius: 20px; }
+  .detail-article .content-article img {
+    max-width: 100%;
+    height: auto; }
 
 .detail-article .comment-article {
   margin-bottom: 30px;

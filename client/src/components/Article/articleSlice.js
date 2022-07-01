@@ -160,52 +160,33 @@ export const deleteArticle = createAsyncThunk(
 
 export const follow = createAsyncThunk(
     'article/follow',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.followUser(username);
-            const { profile } = result.data;
-            return { profile };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ username }) => {
+        const result = await API.followUser(username);
+        const { profile } = result.data;
+        return { profile };
     }
 );
 
 export const unfollow = createAsyncThunk(
     'article/unfollow',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.unfollowUser(username);
-            const { profile } = result.data;
-            return { profile };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ username }) => {
+        const result = await API.unfollowUser(username);
+        const { profile } = result.data;
+        return { profile };
     }
 );
-export const favorite = createAsyncThunk(
-    'article/favorite',
-    async (title, thunkApi) => {
-        try {
-            const result = await API.favoriteArticle(title);
-            const article = result.data;
-            return article;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-);
+export const favorite = createAsyncThunk('article/favorite', async (title) => {
+    const result = await API.favoriteArticle(title);
+    const article = result.data;
+    return article;
+});
 
 export const unfavorite = createAsyncThunk(
     'article/unfavorite',
-    async (title, thunkApi) => {
-        try {
-            const result = await API.unfavoriteArticle(title);
-            const article = result.data;
-            return article;
-        } catch (error) {
-            console.log(error);
-        }
+    async (title) => {
+        const result = await API.unfavoriteArticle(title);
+        const article = result.data;
+        return article;
     }
 );
 export const selectArticle = (state) => state.article;

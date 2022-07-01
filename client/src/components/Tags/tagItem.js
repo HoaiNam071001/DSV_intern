@@ -1,11 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getArticlesByTag } from '../ArticlesList/articleListSlice';
+import {
+    getArticlesByTag,
+    changenewTab,
+} from '../ArticlesList/articleListSlice';
 import { useDispatch } from 'react-redux';
 
 function TagItem({ tag }) {
     const dispatch = useDispatch();
     const handleClickTag = () => {
+        dispatch(changenewTab('tag'));
         dispatch(getArticlesByTag({ tag }));
     };
     return (

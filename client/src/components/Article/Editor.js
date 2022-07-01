@@ -10,7 +10,8 @@ import {
     selectArticle,
 } from './articleSlice';
 import { useParams } from 'react-router';
-import TextEditor from './text';
+//import TextEditor from './text';
+import TextEditor from './textEditor';
 
 const EditArticle = () => {
     const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const EditArticle = () => {
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     return (
         <div className="container ">
-            <div className="row col-md-10 offset-md-1 col-12 col-lg-8 offset-md-2 p-2">
+            <div className="row col-12 col-lg-10 offset-lg-1 p-2">
                 {toast && <Toast setToast={setToast} />}
                 <ListErrors errors={errors} />
                 <div className="text-center fs-2 fw-bold m-2">
@@ -110,8 +111,15 @@ const EditArticle = () => {
                         </label>
                     </div>
 
-                    <div className="mb-4 text-body" style={{ height: 300 }}>
-                        <TextEditor body={body} setBody={setBody} />
+                    <div className="mb-4 text-body">
+                        <TextEditor
+                            body={body}
+                            setBody={setBody}
+                            style={{
+                                placeholder: 'Write Your Article . . .',
+                                readonly: false,
+                            }}
+                        />
                     </div>
 
                     <div className="form-floating mb-4">

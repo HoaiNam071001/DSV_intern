@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTags, selectIsLoading, selectTags } from './tagsSlice';
 import { Loading2 } from '../Loading';
@@ -29,4 +29,4 @@ function TagsSidebar() {
     );
 }
 
-export default TagsSidebar;
+export default memo(TagsSidebar);

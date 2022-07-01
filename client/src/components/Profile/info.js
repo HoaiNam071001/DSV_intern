@@ -1,20 +1,10 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import React, { memo } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ArticleList from '../ArticlesList/articleList';
-import {
-    getArticlesByAuthor,
-    getFavoriteArticles,
-} from '../ArticlesList/articleListSlice';
-import {
-    follow,
-    unfollow,
-    getProfile,
-    profilePageUnloaded,
-} from './profileSlice';
+import { follow, unfollow } from './profileSlice';
 import { selectUser } from '../Auth/authSlice';
 
-function EditProfileSettings() {
+const Setting = () => {
     return (
         <Link
             to="/settings"
@@ -34,9 +24,9 @@ function EditProfileSettings() {
             Edit Profile
         </Link>
     );
-}
+};
 
-function FollowUserButton({ username, following }) {
+const Follow = ({ username, following }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
@@ -75,12 +65,11 @@ function FollowUserButton({ username, following }) {
             {following ? 'Unfollow' : 'Follow'}
         </button>
     );
-}
+};
 
 function UserInfo({ profile }) {
     const currentUser = useSelector(selectUser);
     const isCurrentUser = profile.username === currentUser?.username;
-
     return (
         <div className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
@@ -102,9 +91,9 @@ function UserInfo({ profile }) {
 
             <div className="d-flex justify-content-end">
                 {isCurrentUser ? (
-                    <EditProfileSettings />
+                    <Setting />
                 ) : (
-                    <FollowUserButton
+                    <Follow
                         username={profile.username}
                         following={profile.following}
                     />
@@ -114,79 +103,4 @@ function UserInfo({ profile }) {
     );
 }
 
-function ProfileTabs({ username, isFavorites }) {
-    return (
-        <div className="row nav-link-profile">
-            <div className="col-6 col-lg-3 text-center ">
-                <Link
-                    to={`/@${username}`}
-                    className={`link-nodecoration item-link-profile ${
-                        !isFavorites ? 'bg-tab-active' : ''
-                    }`}
-                >
-                    My Articles
-                </Link>
-            </div>
-            <div className="col-6 col-lg-3 text-center">
-                <Link
-                    to={`/@${username}/favorites`}
-                    className={`link-nodecoration item-link-profile ${
-                        isFavorites ? 'bg-tab-active' : ''
-                    }`}
-                >
-                    My Favorites
-                </Link>
-            </div>
-        </div>
-    );
-}
-
-function Profile({ isFavoritePage }) {
-    const dispatch = useDispatch();
-    const profile = useSelector((state) => state.profile);
-    const { username } = useParams();
-
-    useEffect(() => {
-        const fetchProfile = dispatch(getProfile({ username }));
-        const fetchArticles = dispatch(
-            isFavoritePage
-                ? getFavoriteArticles({ username })
-                : getArticlesByAuthor({ author: username })
-        );
-
-        return () => {
-            fetchProfile.abort();
-            fetchArticles.abort();
-        };
-    }, [username, isFavoritePage, dispatch]);
-
-    useEffect(
-        () => () => {
-            dispatch(profilePageUnloaded());
-        },
-        [dispatch]
-    );
-
-    if (!profile) {
-        return <div>InValid User </div>;
-    }
-
-    return (
-        <div className="container">
-            <div className="row">
-                <div className="col-md-10 offset-md-1 col-12">
-                    <UserInfo profile={profile} />
-                    <ProfileTabs
-                        username={profile.username}
-                        isFavorites={isFavoritePage}
-                    />
-                </div>
-                <div className="col-md-8 offset-md-2 col-12">
-                    <ArticleList />
-                </div>
-            </div>
-        </div>
-    );
-}
-
-export default Profile;
+export default memo(UserInfo);

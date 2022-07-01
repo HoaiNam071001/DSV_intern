@@ -17,15 +17,10 @@ const HeaderLogin = () => {
     };
     return (
         <>
-            <div className="p-2 px-2">
-                <Link to="/" className="home-article-header">
-                    Home
-                </Link>
-            </div>
             <div className="p-2">
                 <Link
                     to="/editor"
-                    className="rounded-pill d-flex align-items-center new-article-header"
+                    className="d-flex align-items-center new-article-header"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -134,18 +129,12 @@ const HeaderLogout = () => {
     return (
         <React.Fragment>
             <div className="p-1">
-                <Link
-                    to="/login"
-                    className="p-1 px-2 btn btn-outline-primary rounded-pill"
-                >
+                <Link to="/login" className="p-1 px-2 home-article-header">
                     Sign in
                 </Link>
             </div>
-            <div className="p-1 px-3">
-                <Link
-                    to="/register"
-                    className="p-1 px-2 btn btn-outline-primary rounded-pill"
-                >
+            <div className="p-1">
+                <Link to="/register" className="p-1 px-2 home-article-header">
                     Sign up
                 </Link>
             </div>
@@ -155,7 +144,6 @@ const HeaderLogout = () => {
 
 const Header = () => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
-
     return (
         <nav className="header-container">
             <div className="container">
@@ -166,6 +154,11 @@ const Header = () => {
                         </Link>
                     </div>
                     <div className="col d-flex justify-content-end align-items-center">
+                        <div className="p-2 px-2">
+                            <Link to="/" className="home-article-header">
+                                Home
+                            </Link>
+                        </div>
                         {isAuthenticated ? <HeaderLogin /> : <HeaderLogout />}
                     </div>
                 </div>

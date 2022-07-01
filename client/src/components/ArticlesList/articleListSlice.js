@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { API } from '../../Services/Axios';
-
+import { profilePageUnloaded } from '../Profile/profileSlice';
 const initialState = {
-    articles: [],
-    articlesCount: 0,
-    currentPage: 0,
+    articles: null,
+    pagination: null,
     articlesPerPage: 10,
+    tab: undefined,
     tag: undefined,
     author: undefined,
     favorited: undefined,
@@ -17,6 +17,10 @@ const articleListSlice = createSlice({
     initialState,
     reducers: {
         homePageUnloaded: () => initialState,
+        changenewTab: (state, action) => {
+            state.tab = action.payload;
+            delete state.tag;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(favoriteArticle.fulfilled, (state, action) => {
@@ -43,133 +47,123 @@ const articleListSlice = createSlice({
             );
         });
 
-        builder.addCase(getAllArticles.fulfilled, (state, action) => ({
-            articles: action.payload.articles,
-            articlesCount: action.payload.articlesCount,
-            currentPage: action.meta.arg?.page ?? 0,
-            author: undefined,
-            favorited: undefined,
-            tag: undefined,
-        }));
+        builder.addCase(getAllArticles.fulfilled, (state, action) => {
+            state.articles = action.payload.articles;
+            state.pagination = action.payload.pagination;
+        });
 
-        builder.addCase(getArticlesByTag.fulfilled, (state, action) => ({
-            articles: action.payload.articles,
-            articlesCount: action.payload.articlesCount,
-            currentPage: action.meta.arg?.page ?? 0,
-            tag: action.meta.arg?.tag,
-            author: undefined,
-            favorited: undefined,
-            articlesPerPage: 10,
-        }));
+        builder.addCase(getArticlesByTag.fulfilled, (state, action) => {
+            state.articles = action.payload.articles;
+            state.pagination = action.payload.pagination;
+            state.tag = action.meta.arg?.tag;
+        });
 
-        builder.addCase(getArticlesByAuthor.fulfilled, (_, action) => ({
-            articles: action.payload.articles,
-            articlesCount: action.payload.articlesCount,
-            currentPage: action.meta.arg?.page ?? 0,
-            author: action.meta.arg?.author,
-            tag: undefined,
-            favorited: undefined,
-            articlesPerPage: 5,
-        }));
+        builder.addCase(getArticlesByAuthor.fulfilled, (state, action) => {
+            state.articles = action.payload.articles;
+            state.pagination = action.payload.pagination;
+            state.author = action.meta.arg?.author;
+        });
 
-        builder.addCase(getFavoriteArticles.fulfilled, (_, action) => ({
-            articles: action.payload.articles,
-            articlesCount: action.payload.articlesCount,
-            currentPage: action.meta.arg?.page ?? 0,
-            favorited: action.meta.arg?.username,
-            author: undefined,
-            tag: undefined,
-            articlesPerPage: 5,
-        }));
+        builder.addCase(getFavoriteArticles.fulfilled, (state, action) => {
+            state.articles = action.payload.articles;
+            state.pagination = action.payload.pagination;
+            state.favorited = action.meta.arg?.favorited;
+        });
+
+        builder.addMatcher(
+            (action) => [profilePageUnloaded.type].includes(action.type),
+            () => initialState
+        );
     },
 });
 
-export const { homePageUnloaded } = articleListSlice.actions;
-
+export const { homePageUnloaded, changenewTab } = articleListSlice.actions;
+export const changeTab = (tab) => (dispatch) => {
+    dispatch(articleListSlice.actions.changenewTab(tab));
+    return dispatch(getAllArticles());
+};
 export const getAllArticles = createAsyncThunk(
     'articleList/getAll',
-    async (feed = 0, thunkApi) => {
-        try {
-            const result =
-                feed === 0
-                    ? await API.getArticlesFeed()
-                    : await API.getArticles();
-            const { articles, articlesCount } = result.data;
-            return { articles, articlesCount };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ page = 1, author, tag, favorited } = {}, thunkApi) => {
+        const articleList = thunkApi.getState().articleList;
+        const offset = (page - 1) * (articleList.articlesPerPage ?? 10);
+        const result =
+            thunkApi.getState().articleList.tab === 'feed'
+                ? await API.getArticlesFeed(
+                      Number(articleList.articlesPerPage) ?? 10,
+                      offset
+                  )
+                : await API.getArticles({
+                      author: author ?? articleList.author,
+                      tag: tag ?? articleList.tag,
+                      favorited: favorited ?? articleList.favorited,
+                      limit: articleList.articlesPerPage ?? 10,
+                      offset,
+                  });
+        const { articles, pagination } = result.data;
+        return { articles, pagination };
     }
 );
 
 export const getArticlesByAuthor = createAsyncThunk(
     'articleList/getArticlesByAuthor',
-    async ({ author }, thunkApi) => {
-        try {
-            const result = await API.getArticles({ author });
-            const { articles, articlesCount } = result.data;
-            return { articles, articlesCount };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ author, page = 1 }, thunkApi) => {
+        const limit = thunkApi.getState().articleList.articlesPerPage ?? 10,
+            offset = (page - 1) * limit;
+        const result = await API.getArticles({ limit, offset, author });
+        const { articles, pagination } = result.data;
+        return { articles, pagination };
     }
 );
 
 export const getArticlesByTag = createAsyncThunk(
     'articleList/getArticlesByTag',
-    async ({ tag }, thunkApi) => {
-        try {
-            const result = await API.getArticles({ tag });
-            const { articles, articlesCount } = result.data;
-            return { articles, articlesCount };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ tag, page = 1 }, thunkApi) => {
+        const limit = thunkApi.getState().articleList.articlesPerPage,
+            offset = (page - 1) * limit;
+        const result = await API.getArticles({ limit, offset, tag });
+        const { articles, pagination } = result.data;
+        return { articles, pagination };
     }
 );
 
 export const getFavoriteArticles = createAsyncThunk(
     'articleList/getFavoriteArticles',
-    async ({ username }, thunkApi) => {
-        try {
-            const result = await API.getArticles({ favorited: username });
-            const { articles, articlesCount } = result.data;
-            return { articles, articlesCount };
-        } catch (error) {
-            console.log(error);
-        }
+    async ({ favorited, page = 1 }, thunkApi) => {
+        const limit = thunkApi.getState().articleList.articlesPerPage,
+            offset = (page - 1) * limit;
+        const result = await API.getArticles({
+            limit,
+            offset,
+            favorited,
+        });
+        const { articles, pagination } = result.data;
+        return { articles, pagination };
     }
 );
 
 export const favoriteArticle = createAsyncThunk(
     'articleList/favoriteArticle',
-    async (title, thunkApi) => {
-        try {
-            const result = await API.favoriteArticle(title);
-            const articles = result.data;
-            return articles;
-        } catch (error) {
-            console.log(error);
-        }
+    async (title) => {
+        const result = await API.favoriteArticle(title);
+        const articles = result.data;
+        return articles;
     }
 );
 
 export const unfavoriteArticle = createAsyncThunk(
     'articleList/unfavoriteArticle',
-    async (title, thunkApi) => {
-        try {
-            const result = await API.unfavoriteArticle(title);
-            const articles = result.data;
-            return articles;
-        } catch (error) {
-            console.log(error);
-        }
+    async (title) => {
+        const result = await API.unfavoriteArticle(title);
+        const articles = result.data;
+        return articles;
     }
 );
 
-const selectarticleListSlice = (state) => state.articleList;
+export const selectarticleListSlice = (state) => state.articleList;
 
 export const selectArticles = (state) => selectarticleListSlice(state).articles;
 export const selectByTag = (state) => selectarticleListSlice(state).tag;
-
+export const selectArticlePagination = (state) =>
+    selectarticleListSlice(state).pagination;
 export default articleListSlice.reducer;

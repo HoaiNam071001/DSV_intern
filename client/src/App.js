@@ -37,7 +37,7 @@ function App() {
                         <Route path="/@:username" element={<Profile />} />
                         <Route
                             path="/@:username/favorites"
-                            element={<Profile favorite />}
+                            element={<Profile isFavoritePage />}
                         />
                         <Route path="/editor" element={<EditArticle />} />
                         <Route path="/editor/:slug" element={<EditArticle />} />
