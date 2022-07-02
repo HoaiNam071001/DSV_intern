@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import Toast from '../Toast';
-import ListErrors from '../ListErrors';
+import Message from '../Message';
 import {
     selectErrors,
     selectIsAuthenticated,
@@ -12,18 +11,130 @@ import {
     selectIsSuccessUpdate,
     setIdle,
 } from './authSlice';
+import isEmail from 'validator/lib/isEmail';
 
-function SettingsForm({ currentUser, onSaveSettings, isdisable }) {
-    const [image, setImage] = useState(
-        currentUser?.image ??
-            'https://static.productionready.io/images/smiley-cyrus.jpg'
+const ChangePassword = ({ onSaveSettings }) => {
+    const isLoading = useSelector(selectIsLoading);
+    const [oldpassword, setOldpassword] = useState('');
+    const [password, setPassword] = useState('');
+    const _oldpass = useRef(null);
+    const _pass = useRef(null);
+    const _repass = useRef(null);
+    const [repassword, setrePassword] = useState('');
+    const [err, setErr] = useState('');
+    const checkpassword = () => {
+        if (oldpassword.length === 0) {
+            _oldpass.current.focus();
+            setErr("Old password can't be blank");
+            return false;
+        } else if (password.length === 0) {
+            _pass.current.focus();
+            setErr("New password can't be blank");
+            return false;
+        } else if (password !== repassword) {
+            _pass.current.focus();
+            setErr('different passwords');
+            return false;
+        }
+        return true;
+    };
+    const saveSettings = (e) => {
+        if (!checkpassword()) return;
+        e.preventDefault();
+        const user = {
+            password,
+            oldpassword,
+        };
+        onSaveSettings(user);
+    };
+    return (
+        <div disabled={isLoading}>
+            <div className="form-floating mb-3">
+                <input
+                    ref={_oldpass}
+                    type="password"
+                    className={`form-control`}
+                    id="floatingoldpassword"
+                    placeholder="Enter old password"
+                    value={oldpassword}
+                    onChange={(e) => setOldpassword(e.target.value)}
+                />
+                <label htmlFor="floatingoldpassword"> Old Password</label>
+            </div>
+            <div className="form-floating mb-3">
+                <input
+                    ref={_pass}
+                    type="password"
+                    className={`form-control`}
+                    id="floatingpassword"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                />
+                <label htmlFor="floatingpassword">Password </label>
+            </div>
+            <div className="form-floating mb-3">
+                <input
+                    ref={_repass}
+                    type="password"
+                    className={`form-control`}
+                    id="floatingrepassword"
+                    value={repassword}
+                    placeholder="Enter new password"
+                    onChange={(e) => setrePassword(e.target.value)}
+                />
+                <label htmlFor="floatingrepassword">Password again</label>
+            </div>
+            <div className="err-message-password">{err}</div>
+            <button
+                className="btn btn-outline-primary btn-update-settings float-end"
+                type="submit"
+                onClick={saveSettings}
+            >
+                Update Password
+            </button>
+        </div>
     );
+};
+
+function ChangePfrofile({ currentUser, onSaveSettings }) {
+    const [image, setImage] = useState(currentUser?.image ?? '');
     const [username, setUsername] = useState(currentUser?.username ?? '');
     const [bio, setBio] = useState(currentUser?.bio ?? '');
     const [email, setEmail] = useState(currentUser?.email ?? '');
-    const [password, setPassword] = useState('');
     const isLoading = useSelector(selectIsLoading);
+    const _email = useRef(null);
+    const _username = useRef(null);
+    const CheckEmail = (e) => {
+        if (!isEmail(email)) {
+            _email.current.classList.remove('valid');
+            _email.current.classList.add('not-valid');
+            return false;
+        }
+        _email.current.classList.remove('not-valid');
+        _email.current.classList.add('valid');
+        return true;
+    };
+    const CheckUsername = (e) => {
+        if (username === '') {
+            _username.current.classList.remove('valid');
+            _username.current.classList.add('not-valid');
+            return false;
+        }
+        _username.current.classList.remove('not-valid');
+        _username.current.classList.add('valid');
+        return true;
+    };
+
     const saveSettings = (e) => {
+        if (!CheckUsername()) {
+            _username.current.focus();
+            return;
+        }
+        if (!CheckEmail()) {
+            _email.current.focus();
+            return;
+        }
         e.preventDefault();
         const user = {
             image,
@@ -31,9 +142,6 @@ function SettingsForm({ currentUser, onSaveSettings, isdisable }) {
             bio,
             email,
         };
-        if (password) {
-            user.password = password;
-        }
         onSaveSettings(user);
     };
     return (
@@ -52,10 +160,12 @@ function SettingsForm({ currentUser, onSaveSettings, isdisable }) {
 
             <div className="form-floating mb-3">
                 <input
+                    ref={_username}
                     type="text"
                     className="form-control"
                     id="floatingusername"
                     value={username}
+                    onBlur={CheckUsername}
                     onChange={(e) => setUsername(e.target.value)}
                 />
                 <label htmlFor="floatingusername">User Name</label>
@@ -75,73 +185,69 @@ function SettingsForm({ currentUser, onSaveSettings, isdisable }) {
 
             <div className="form-floating mb-3">
                 <input
+                    ref={_email}
                     type="email"
                     className="form-control"
                     id="floatingEmail"
                     value={email}
+                    onBlur={CheckEmail}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <label htmlFor="floatingEmail">Email</label>
             </div>
 
-            <div className="form-floating mb-3">
-                <input
-                    type="text"
-                    className="form-control"
-                    id="floatingpassword"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <label htmlFor="floatingpassword">Password</label>
-            </div>
-
             <button
-                className="btn btn-outline-primary float-end"
+                className="btn btn-outline-primary float-end btn-update-settings"
                 type="submit"
                 onClick={saveSettings}
-                disabled={isdisable}
             >
-                Update Settings
+                Update Profile
             </button>
         </div>
     );
 }
 
-function Settings() {
+function Settings({ isPassword }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
     const errors = useSelector(selectErrors);
     const isAuthenticated = useSelector(selectIsAuthenticated);
     const isSuccess = useSelector(selectIsSuccessUpdate);
-    const [toast, setToast] = useState(false);
     const Navigate = useNavigate();
     const saveSettings = (user) => {
         dispatch(updateUser(user));
     };
-    useEffect(() => {
-        if (isSuccess) {
-            setToast(true);
-            setTimeout(() => setToast(false), 4000);
-        }
-    }, [isSuccess, dispatch]);
     if (!isAuthenticated) {
         Navigate('/');
     }
-    useEffect(() => () => dispatch(setIdle()), [dispatch]);
+    useEffect(() => {
+        dispatch(setIdle());
+    }, [isPassword, dispatch]);
     return (
         <div className="container">
             <div className="row">
                 <div className="col-md-8 offset-md-2 col-12">
-                    {toast && <Toast setToast={setToast} />}
+                    <h1 className="text-center p-3">
+                        {isPassword
+                            ? 'Change Your Password'
+                            : 'Settings Your Profile'}
+                    </h1>
+                    {errors && <Message messagess={errors} />}
+                    {isSuccess && (
+                        <Message
+                            messagess={{ Updated: ['Success'] }}
+                            state={'success'}
+                        />
+                    )}
 
-                    <h1 className="text-center">Your Settings</h1>
-                    <ListErrors errors={errors} />
-
-                    <SettingsForm
-                        currentUser={currentUser}
-                        onSaveSettings={saveSettings}
-                        isdisable={toast}
-                    />
+                    {isPassword ? (
+                        <ChangePassword onSaveSettings={saveSettings} />
+                    ) : (
+                        <ChangePfrofile
+                            currentUser={currentUser}
+                            onSaveSettings={saveSettings}
+                        />
+                    )}
                 </div>
             </div>
         </div>

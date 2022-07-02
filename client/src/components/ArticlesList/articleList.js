@@ -13,9 +13,12 @@ const Articles = () => {
         );
     return (
         <div className="feed-container">
-            {articles.map((article) => (
-                <ArticleItem key={article.slug} article={article} />
-            ))}
+            <div className="list-article">
+                {articles.map((article) => (
+                    <ArticleItem key={article.slug} article={article} />
+                ))}
+            </div>
+
             <Pagination />
         </div>
     );

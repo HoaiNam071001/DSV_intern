@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
-import ListErrors from '../ListErrors';
+import Message from '../Message';
 import isEmail from 'validator/lib/isEmail';
 
 const Auth = ({ isRegister }) => {
@@ -92,8 +92,9 @@ const Auth = ({ isRegister }) => {
                         {isRegister ? 'Sign Up' : 'Sign In'}
                     </h1>
                 </div>
-                <ListErrors errors={errors} />
                 <div className="px-4" disabled={inProgress}>
+                    <Message messagess={errors} />
+
                     {isRegister ? (
                         <div className="form-floating mb-4">
                             <input

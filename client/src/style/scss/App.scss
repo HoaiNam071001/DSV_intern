@@ -16,3 +16,17 @@ body {
 .link-nodecoration {
     text-decoration: none;
 }
+.error-list {
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 17px;
+    &.failure-state {
+        background-color: rgb(231, 42, 25);
+    }
+    &.success-state {
+        background-color: rgba(31, 255, 31, 0.866);
+    }
+}

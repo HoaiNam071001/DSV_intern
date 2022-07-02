@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Toast from '../Toast';
-import ListErrors from '../ListErrors';
+import Message from '../Message';
 import {
     getArticle,
     createArticle,
@@ -69,7 +68,6 @@ const EditArticle = () => {
     const [body, setBody] = useState('');
     const [tagIn, setTagin] = useState('');
     const [tagList, setTagList] = useState([]);
-    const [toast, setToast] = useState(false);
 
     const submitForm = (event) => {
         if (!checktitle()) {
@@ -88,7 +86,7 @@ const EditArticle = () => {
         );
     };
     const checktitle = () => {
-        if (title.length > 2) {
+        if (title.length > 1) {
             setValid(true);
             return true;
         }
@@ -110,23 +108,25 @@ const EditArticle = () => {
         }
     }, [article, slug]);
 
-    useEffect(() => {
-        if (success) {
-            setToast(true);
-            setTimeout(() => setToast(false), 3000);
-        }
-    }, [success, dispatch]);
-
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     return (
         <div className="container ">
             <div className="row col-12 col-lg-10 offset-lg-1 p-2">
-                {toast && (
-                    <Toast setToast={setToast} message={'Update Success!'} />
-                )}
-                <ListErrors errors={errors} />
                 <div className="text-center fs-2 fw-bold m-2">
                     {slug ? 'Update Article' : 'Create a New Article'}
+                </div>
+                <div className="text-center col-12 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                    {success && (
+                        <Message
+                            messagess={
+                                slug
+                                    ? { Update: ['Success'] }
+                                    : { Create: ['Success'] }
+                            }
+                            state={'success'}
+                        />
+                    )}
+                    {errors && <Message messagess={errors} />}
                 </div>
                 <div className="px-4">
                     <div className="form-floating mb-4">

@@ -32,8 +32,12 @@ const authSlice = createSlice({
         setToken(state, action) {
             state.token = action.payload;
         },
+        setIdle(state, action) {
+            delete state.statusUpdate;
+            state.status = Status.IDLE;
+            delete state.errors;
+        },
         translate: (state, action) => (state.errors = undefined),
-        setIdle: (state, action) => (state.statusUpdate = undefined),
     },
     extraReducers(builder) {
         builder
@@ -109,7 +113,10 @@ export const getUser = createAsyncThunk('auth/getUser', async () => {
 
 export const updateUser = createAsyncThunk(
     'auth/updateUser',
-    async ({ email, username, bio, image, password }, thunkApi) => {
+    async (
+        { email, username, bio, image, password, oldpassword },
+        thunkApi
+    ) => {
         try {
             const result = await API.updateUser({
                 user: {
@@ -118,6 +125,7 @@ export const updateUser = createAsyncThunk(
                     bio,
                     image,
                     password,
+                    oldpassword,
                 },
             });
             const {

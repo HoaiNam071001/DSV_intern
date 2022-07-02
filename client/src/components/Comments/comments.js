@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
-import ListErrors from '../ListErrors';
+import Message from '../Message';
 import { selectIsAuthenticated, selectUser } from '../Auth/authSlice';
 import CommentList from './commentList';
 import { createComment, selectErrors } from './commentsSlice';
@@ -63,7 +63,7 @@ function CommentSection() {
 
     return (
         <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
-            <ListErrors errors={errors} />
+            <Message messagess={errors} />
             {isAuthenticaded ? (
                 <CommentForm />
             ) : (

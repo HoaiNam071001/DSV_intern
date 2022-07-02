@@ -1,7 +1,7 @@
 import SettingsComponent from '../components/Auth/Settings';
 
-function Settings() {
-    return <SettingsComponent />;
+function Settings({ isPassword }) {
+    return <SettingsComponent isPassword={isPassword} />;
 }
 
 export default Settings;
