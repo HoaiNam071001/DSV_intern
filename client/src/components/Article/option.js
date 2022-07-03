@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { deleteArticle } from './articleSlice';
+import { deleteArticle } from '../../redux/reducers/articleSlice';
 const OptionArticle = ({ slug, deleted }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -16,10 +16,7 @@ const OptionArticle = ({ slug, deleted }) => {
     }, [deleted, navigate]);
     return (
         <div className="d-flex align-items-center mx-1">
-            <Link
-                to={`/editor/${slug}`}
-                className="btn-editor-article btn-article"
-            >
+            <Link to={`/editor/${slug}`} className="btn-editor-article btn-article">
                 Editor Article
             </Link>
             <button
@@ -51,9 +48,7 @@ const OptionArticle = ({ slug, deleted }) => {
                                 aria-label="Close"
                             ></button>
                         </div>
-                        <div className="modal-body">
-                            Do you want to delete this article?
-                        </div>
+                        <div className="modal-body">Do you want to delete this article?</div>
                         <div className="modal-footer">
                             <button
                                 type="button"

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuthenticated } from '../Auth/authSlice';
-import { selectByTag, changeTab } from '../ArticlesList/articleListSlice';
+import { selectIsAuthenticated } from '../../redux/reducers/authSlice';
+import { selectByTag, changeTab } from '../../redux/reducers/articleListSlice';
 
 const Feed = () => {
     const dispatch = useDispatch();
@@ -14,9 +14,7 @@ const Feed = () => {
     return (
         <div className="col-6 col-md-4 col-lg-3 col-sm-4">
             <button
-                className={`btn-home-title rounded-pill m-1 ${
-                    currentTab === 'feed' && 'btn-home-title-active'
-                }`}
+                className={`btn-home-title rounded-pill m-1 ${currentTab === 'feed' && 'btn-home-title-active'}`}
                 onClick={ChangeTab}
             >
                 Your Feed
@@ -35,9 +33,7 @@ const Global = () => {
     return (
         <div className="col-6 col-md-4 col-lg-3 col-sm-4">
             <button
-                className={`btn-home-title rounded-pill m-1 ${
-                    currentTab === 'all' && 'btn-home-title-active'
-                }`}
+                className={`btn-home-title rounded-pill m-1 ${currentTab === 'all' && 'btn-home-title-active'}`}
                 onClick={ChangeTab}
             >
                 Global Feed
@@ -50,11 +46,7 @@ const Tag = () => {
     const tag = useSelector(selectByTag);
     return (
         <div className="col-auto">
-            {tag && (
-                <button className="btn-home-title rounded-pill m-1 btn-home-title-active">
-                    #{tag}
-                </button>
-            )}
+            {tag && <button className="btn-home-title rounded-pill m-1 btn-home-title-active">#{tag}</button>}
         </div>
     );
 };

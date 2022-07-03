@@ -1,21 +1,12 @@
 import React from 'react';
 import classnames from 'classnames';
 import { usePagination, DOTS } from './usePagination';
-import {
-    getAllArticles,
-    selectarticleListSlice,
-} from '../ArticlesList/articleListSlice';
+import { getAllArticles, selectarticleListSlice } from '../../redux/reducers/articleListSlice';
 import { useDispatch, useSelector } from 'react-redux';
 const Pagination = () => {
     const dispatch = useDispatch();
     const { pagination } = useSelector(selectarticleListSlice);
-    const {
-        totalCount,
-        siblingCount = 1,
-        currentPage,
-        pageSize,
-        className,
-    } = pagination;
+    const { totalCount, siblingCount = 1, currentPage, pageSize, className } = pagination;
     const paginationRange = usePagination({
         currentPage,
         totalCount,

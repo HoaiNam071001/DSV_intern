@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { favoriteArticle, unfavoriteArticle } from './articleListSlice';
-import { selectUser } from '../Auth/authSlice';
+import { favoriteArticle, unfavoriteArticle } from '../../redux/reducers/articleListSlice';
+import { selectUser } from '../../redux/reducers/authSlice';
 
 const Favorite = ({ article }) => {
     const dispatch = useDispatch();
@@ -28,10 +28,7 @@ const Favorite = ({ article }) => {
             } btn-favorate d-flex align-items-center justify-content-center`}
             onClick={handleClick}
         >
-            <img
-                src="https://static.xx.fbcdn.net/images/emoji.php/v9/tf9/1.5/32/2764.png"
-                alt="tym"
-            />
+            <img src="https://static.xx.fbcdn.net/images/emoji.php/v9/tf9/1.5/32/2764.png" alt="tym" />
             <div className="text-truncate">{article.favoritesCount}</div>
         </button>
     );
@@ -46,18 +43,12 @@ const ArticleItem = ({ article }) => {
                         <Link to={`/@${article.author.username}`}>
                             <img
                                 className="img-thumbnail"
-                                src={
-                                    article.author.image ||
-                                    require('../../Assets/avatar-thumbnail.jpg')
-                                }
+                                src={article.author.image || require('../../Assets/avatar-thumbnail.jpg')}
                                 alt="author"
                             />
                         </Link>
                         <div className="col-auto">
-                            <Link
-                                to={`/@${article.author.username}`}
-                                className="item-author-name"
-                            >
+                            <Link to={`/@${article.author.username}`} className="item-author-name">
                                 {article.author.username}
                             </Link>
                             <div className="item-author-date">
@@ -65,13 +56,9 @@ const ArticleItem = ({ article }) => {
                                     dateTime={article.createdAt}
                                     title={
                                         'createdAt:' +
-                                        new Date(
-                                            article.createdAt
-                                        ).toLocaleString() +
+                                        new Date(article.createdAt).toLocaleString() +
                                         '\nupdatedAt: ' +
-                                        new Date(
-                                            article.updatedAt
-                                        ).toLocaleString()
+                                        new Date(article.updatedAt).toLocaleString()
                                     }
                                 >
                                     {new Date(article.createdAt).toDateString()}
@@ -85,23 +72,13 @@ const ArticleItem = ({ article }) => {
                     </div>
 
                     <div className="col-12">
-                        <Link
-                            to={`/article/${article.slug}`}
-                            className="link-nodecoration"
-                        >
-                            <div className="item-title text-truncate">
-                                {article.title}
-                            </div>
-                            <div className="item-content text-truncate">
-                                {article.description}
-                            </div>
+                        <Link to={`/article/${article.slug}`} className="link-nodecoration">
+                            <div className="item-title text-truncate">{article.title}</div>
+                            <div className="item-content text-truncate">{article.description}</div>
                         </Link>
                         <div>
                             {article.tagList.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="p-1 bg-light m-1 rounded-pill border float-end"
-                                >
+                                <span key={tag} className="p-1 bg-light m-1 rounded-pill border float-end">
                                     {tag}
                                 </span>
                             ))}

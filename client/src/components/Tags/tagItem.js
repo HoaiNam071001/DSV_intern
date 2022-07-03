@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-    getArticlesByTag,
-    changenewTab,
-} from '../ArticlesList/articleListSlice';
+import { getArticlesByTag, changenewTab } from '../../redux/reducers/articleListSlice';
 import { useDispatch } from 'react-redux';
 
 function TagItem({ tag }) {
@@ -13,11 +10,7 @@ function TagItem({ tag }) {
         dispatch(getArticlesByTag({ tag }));
     };
     return (
-        <Link
-            to="#"
-            className="link-nodecoration rounded-pill float-start px-2 py-1 tag-item"
-            onClick={handleClickTag}
-        >
+        <Link to="#" className="link-nodecoration rounded-pill float-start px-2 py-1 tag-item" onClick={handleClickTag}>
             {tag}
         </Link>
     );

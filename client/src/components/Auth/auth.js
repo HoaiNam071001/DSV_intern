@@ -1,5 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { login, register, selectErrors, selectIsLoading, selectIsAuthenticated, translate } from './authSlice';
+import {
+    login,
+    register,
+    selectErrors,
+    selectIsLoading,
+    selectIsAuthenticated,
+    translate,
+} from '../../redux/reducers/authSlice';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';

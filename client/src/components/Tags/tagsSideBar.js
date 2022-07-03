@@ -1,6 +1,6 @@
 import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTags, selectIsLoading, selectTags } from './tagsSlice';
+import { getAllTags, selectIsLoading, selectTags } from '../../redux/reducers/tagsSlice';
 import { Loading2 } from '../Loading';
 import TagItem from './tagItem';
 

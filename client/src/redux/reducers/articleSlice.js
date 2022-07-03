@@ -36,12 +36,10 @@ const articleSlice = createSlice({
                 state.deleted = true;
             })
             .addCase(follow.fulfilled, (state, action) => {
-                state.article.author.following =
-                    action.payload.profile.following;
+                state.article.author.following = action.payload.profile.following;
             })
             .addCase(unfollow.fulfilled, (state, action) => {
-                state.article.author.following =
-                    action.payload.profile.following;
+                state.article.author.following = action.payload.profile.following;
             })
             .addCase(favorite.fulfilled, (state, action) => {
                 state.article = action.payload.article;
@@ -158,37 +156,28 @@ export const deleteArticle = createAsyncThunk(
     { serializeError }
 );
 
-export const follow = createAsyncThunk(
-    'article/follow',
-    async ({ username }) => {
-        const result = await API.followUser(username);
-        const { profile } = result.data;
-        return { profile };
-    }
-);
+export const follow = createAsyncThunk('article/follow', async ({ username }) => {
+    const result = await API.followUser(username);
+    const { profile } = result.data;
+    return { profile };
+});
 
-export const unfollow = createAsyncThunk(
-    'article/unfollow',
-    async ({ username }) => {
-        const result = await API.unfollowUser(username);
-        const { profile } = result.data;
-        return { profile };
-    }
-);
+export const unfollow = createAsyncThunk('article/unfollow', async ({ username }) => {
+    const result = await API.unfollowUser(username);
+    const { profile } = result.data;
+    return { profile };
+});
 export const favorite = createAsyncThunk('article/favorite', async (title) => {
     const result = await API.favoriteArticle(title);
     const article = result.data;
     return article;
 });
 
-export const unfavorite = createAsyncThunk(
-    'article/unfavorite',
-    async (title) => {
-        const result = await API.unfavoriteArticle(title);
-        const article = result.data;
-        return article;
-    }
-);
+export const unfavorite = createAsyncThunk('article/unfavorite', async (title) => {
+    const result = await API.unfavoriteArticle(title);
+    const article = result.data;
+    return article;
+});
 export const selectArticle = (state) => state.article;
 
 export default articleSlice.reducer;

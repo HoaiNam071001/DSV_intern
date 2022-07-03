@@ -1,10 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    homePageUnloaded,
-    changeTab,
-} from '../components/ArticlesList/articleListSlice';
-import { selectIsAuthenticated } from '../components/Auth/authSlice';
+import { homePageUnloaded, changeTab } from '../redux/reducers/articleListSlice';
+import { selectIsAuthenticated } from '../redux/reducers/authSlice';
 
 import Tabhome from '../components/Home/tabcontrol';
 import ArticleList from '../components/ArticlesList/articleList';
@@ -15,9 +12,7 @@ const Home = () => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
 
     useEffect(() => {
-        const fetchArticles = dispatch(
-            changeTab(isAuthenticated ? 'feed' : 'all')
-        );
+        const fetchArticles = dispatch(changeTab(isAuthenticated ? 'feed' : 'all'));
         return () => {
             dispatch(homePageUnloaded());
             fetchArticles.abort();

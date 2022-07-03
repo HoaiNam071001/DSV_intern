@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../Message';
-import { getArticle, createArticle, updateArticle, articlePageUnloaded, selectArticle } from './articleSlice';
+import {
+    getArticle,
+    createArticle,
+    updateArticle,
+    articlePageUnloaded,
+    selectArticle,
+} from '../../redux/reducers/articleSlice';
 import { useParams } from 'react-router';
 import TextEditor from './textEditor';
 

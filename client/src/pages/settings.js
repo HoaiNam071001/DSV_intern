@@ -12,7 +12,7 @@ import {
     updateUser,
     selectIsSuccessUpdate,
     setIdle,
-} from '../components/Auth/authSlice';
+} from '../redux/reducers/authSlice';
 
 function Settings({ isPassword }) {
     const dispatch = useDispatch();

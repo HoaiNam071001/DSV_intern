@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import Message from '../Message';
-import { selectIsAuthenticated, selectUser } from '../Auth/authSlice';
+import { selectIsAuthenticated, selectUser } from '../../redux/reducers/authSlice';
 import CommentList from './commentList';
-import { createComment, selectErrors } from './commentsSlice';
+import { createComment, selectErrors } from '../../redux/reducers/commentsSlice';
 
 function CommentForm() {
     const dispatch = useDispatch();
@@ -38,18 +38,10 @@ function CommentForm() {
                     width="40"
                     height="40"
                     alt={currentUser.username}
-                    src={
-                        currentUser.image ||
-                        require('../../Assets/avatar-thumbnail.jpg')
-                    }
+                    src={currentUser.image || require('../../Assets/avatar-thumbnail.jpg')}
                 />
-                <span className="mx-2 fs-5 info-username">
-                    {currentUser.username}
-                </span>
-                <button
-                    className="btn btn-primary ms-auto rounded-pill m-1"
-                    onClick={saveComment}
-                >
+                <span className="mx-2 fs-5 info-username">{currentUser.username}</span>
+                <button className="btn btn-primary ms-auto rounded-pill m-1" onClick={saveComment}>
                     Post Comment
                 </button>
             </div>

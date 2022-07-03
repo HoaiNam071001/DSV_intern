@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { API } from '../../Services/Axios';
-import { profilePageUnloaded } from '../Profile/profileSlice';
+import { profilePageUnloaded } from './profileSlice';
 const initialState = {
     articles: null,
     pagination: null,
@@ -89,10 +89,7 @@ export const getAllArticles = createAsyncThunk(
         const offset = (page - 1) * (articleList.articlesPerPage ?? 10);
         const result =
             thunkApi.getState().articleList.tab === 'feed'
-                ? await API.getArticlesFeed(
-                      Number(articleList.articlesPerPage) ?? 10,
-                      offset
-                  )
+                ? await API.getArticlesFeed(Number(articleList.articlesPerPage) ?? 10, offset)
                 : await API.getArticles({
                       author: author ?? articleList.author,
                       tag: tag ?? articleList.tag,
@@ -142,28 +139,21 @@ export const getFavoriteArticles = createAsyncThunk(
     }
 );
 
-export const favoriteArticle = createAsyncThunk(
-    'articleList/favoriteArticle',
-    async (title) => {
-        const result = await API.favoriteArticle(title);
-        const articles = result.data;
-        return articles;
-    }
-);
+export const favoriteArticle = createAsyncThunk('articleList/favoriteArticle', async (title) => {
+    const result = await API.favoriteArticle(title);
+    const articles = result.data;
+    return articles;
+});
 
-export const unfavoriteArticle = createAsyncThunk(
-    'articleList/unfavoriteArticle',
-    async (title) => {
-        const result = await API.unfavoriteArticle(title);
-        const articles = result.data;
-        return articles;
-    }
-);
+export const unfavoriteArticle = createAsyncThunk('articleList/unfavoriteArticle', async (title) => {
+    const result = await API.unfavoriteArticle(title);
+    const articles = result.data;
+    return articles;
+});
 
 export const selectarticleListSlice = (state) => state.articleList;
 
 export const selectArticles = (state) => selectarticleListSlice(state).articles;
 export const selectByTag = (state) => selectarticleListSlice(state).tag;
-export const selectArticlePagination = (state) =>
-    selectarticleListSlice(state).pagination;
+export const selectArticlePagination = (state) => selectarticleListSlice(state).pagination;
 export default articleListSlice.reducer;

@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Loading from './components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, selectIsAuthenticated } from './components/Auth/authSlice';
+import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
 

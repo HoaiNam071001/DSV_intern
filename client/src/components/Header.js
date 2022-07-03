@@ -1,9 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { selectUser } from './Auth/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuthenticated, logout } from './Auth/authSlice';
+import { selectIsAuthenticated, logout, selectUser } from '../redux/reducers/authSlice';
 import { useNavigate } from 'react-router';
 
 const HeaderLogin = () => {
@@ -18,10 +17,7 @@ const HeaderLogin = () => {
     return (
         <>
             <div className="p-2">
-                <Link
-                    to="/editor"
-                    className="d-flex align-items-center new-article-header"
-                >
+                <Link to="/editor" className="d-flex align-items-center new-article-header">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -38,21 +34,14 @@ const HeaderLogin = () => {
             </div>
 
             <div className="p-2">
-                <div
-                    className="nav-link d-flex align-items-center"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                >
+                <div className="nav-link d-flex align-items-center" role="button" data-bs-toggle="dropdown">
                     <img
                         title="Your Profile"
                         width="40"
                         height="40"
                         className="rounded-circle"
                         alt="avatar"
-                        src={
-                            currentUser.image ||
-                            require('../Assets/avatar-thumbnail.jpg')
-                        }
+                        src={currentUser.image || require('../Assets/avatar-thumbnail.jpg')}
                     />
                 </div>
 
@@ -68,14 +57,9 @@ const HeaderLogin = () => {
                                 height="30"
                                 className="rounded-circle"
                                 alt="avatar"
-                                src={
-                                    currentUser.image ||
-                                    require('../Assets/avatar-thumbnail.jpg')
-                                }
+                                src={currentUser.image || require('../Assets/avatar-thumbnail.jpg')}
                             />
-                            <span className="p-1 ">
-                                {currentUser?.username}
-                            </span>
+                            <span className="p-1 ">{currentUser?.username}</span>
                         </Link>
                     </li>
                     <li>

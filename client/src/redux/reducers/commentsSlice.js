@@ -1,7 +1,7 @@
 import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { isApiError, Status } from '../../common/utils';
-import { selectUser } from '../Auth/authSlice';
+import { selectUser } from './authSlice';
 import { API } from '../../Services/Axios';
 
 const commentAdapter = createEntityAdapter({

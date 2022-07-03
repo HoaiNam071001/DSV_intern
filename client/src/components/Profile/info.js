@@ -1,15 +1,12 @@
 import React, { memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { follow, unfollow } from './profileSlice';
-import { selectUser } from '../Auth/authSlice';
+import { follow, unfollow } from '../../redux/reducers/profileSlice';
+import { selectUser } from '../../redux/reducers/authSlice';
 
 const Setting = () => {
     return (
-        <Link
-            to="/settings"
-            className="btn-edit-profile d-flex align-items-center"
-        >
+        <Link to="/settings" className="btn-edit-profile d-flex align-items-center">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -75,10 +72,7 @@ function UserInfo({ profile }) {
             <div className="d-flex justify-content-center">
                 <div className="rounded-circle text-center container-avt-img">
                     <img
-                        src={
-                            profile.image ||
-                            require('../../Assets/avatar-thumbnail.jpg')
-                        }
+                        src={profile.image || require('../../Assets/avatar-thumbnail.jpg')}
                         className="avt-img rounded-circle"
                         alt={profile.username}
                     />
@@ -90,14 +84,7 @@ function UserInfo({ profile }) {
             </div>
 
             <div className="d-flex justify-content-end">
-                {isCurrentUser ? (
-                    <Setting />
-                ) : (
-                    <Follow
-                        username={profile.username}
-                        following={profile.following}
-                    />
-                )}
+                {isCurrentUser ? <Setting /> : <Follow username={profile.username} following={profile.following} />}
             </div>
         </div>
     );

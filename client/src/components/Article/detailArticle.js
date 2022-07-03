@@ -3,8 +3,8 @@ import { useParams } from 'react-router';
 
 import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { articlePageUnloaded, getArticle, selectArticle } from './articleSlice';
-import { selectUser } from '../Auth/authSlice';
+import { articlePageUnloaded, getArticle, selectArticle } from '../../redux/reducers/articleSlice';
+import { selectUser } from '../../redux/reducers/authSlice';
 import OptionArticle from './option';
 import InteractArticle from './interact';
 import Loading from '../Loading';
@@ -31,10 +31,7 @@ const Detail = () => {
                 <div className="author-article d-flex">
                     <Link to={`/@${article?.author?.username}`}>
                         <img
-                            src={
-                                article?.author?.image ||
-                                require('../../Assets/avatar-thumbnail.jpg')
-                            }
+                            src={article?.author?.image || require('../../Assets/avatar-thumbnail.jpg')}
                             alt="avatar_img"
                             width="50"
                             height="50"
@@ -42,16 +39,11 @@ const Detail = () => {
                     </Link>
 
                     <div className="author-detail">
-                        <Link
-                            to={`/@${article?.author?.username}`}
-                            className="author"
-                        >
+                        <Link to={`/@${article?.author?.username}`} className="author">
                             {article.author.username}
                         </Link>
                         <div className="create-article">
-                            <time dateTime={article.createdAt}>
-                                {new Date(article.createdAt).toDateString()}
-                            </time>
+                            <time dateTime={article.createdAt}>{new Date(article.createdAt).toDateString()}</time>
                         </div>
                     </div>
 
@@ -75,10 +67,7 @@ const Detail = () => {
                     {article &&
                         article.tagList.map((tag) => {
                             return (
-                                <div
-                                    className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light"
-                                    key={tag}
-                                >
+                                <div className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light" key={tag}>
                                     {tag}
                                 </div>
                             );
@@ -86,10 +75,7 @@ const Detail = () => {
                 </div>
             </div>
             <hr />
-            <div
-                className="content-article"
-                dangerouslySetInnerHTML={{ __html: article.body }}
-            />
+            <div className="content-article" dangerouslySetInnerHTML={{ __html: article.body }} />
         </>
     );
 };

@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { localStorageMiddleware } from './middleware';
 
-import authSlice from '../components/Auth/authSlice';
-import articlesSlice from '../components/ArticlesList/articleListSlice';
-import tagsSlice from '../components/Tags/tagsSlice';
-import profileSlice from '../components/Profile/profileSlice';
-import articleSlice from '../components/Article/articleSlice';
-import commentsSlice from '../components/Comments/commentsSlice';
+import authSlice from './reducers/authSlice';
+import articlesSlice from './reducers/articleListSlice';
+import tagsSlice from './reducers/tagsSlice';
+import profileSlice from './reducers/profileSlice';
+import articleSlice from './reducers/articleSlice';
+import commentsSlice from './reducers/commentsSlice';
 
 export function makeStore(preloadedState) {
     return configureStore({
@@ -20,10 +20,7 @@ export function makeStore(preloadedState) {
         },
         devTools: true,
         preloadedState,
-        middleware: (getDefaultMiddleware) => [
-            ...getDefaultMiddleware(),
-            localStorageMiddleware,
-        ],
+        middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), localStorageMiddleware],
     });
 }
 

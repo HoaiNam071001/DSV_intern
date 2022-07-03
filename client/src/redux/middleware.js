@@ -1,9 +1,4 @@
-import {
-    login,
-    logout,
-    register,
-    setToken,
-} from '../components/Auth/authSlice';
+import { login, logout, register, setToken } from './reducers/authSlice';
 import { setAuthorization } from '../Services/Axios';
 
 const localStorageMiddleware = (store) => (next) => (action) => {

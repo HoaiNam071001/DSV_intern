@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { selectIsLoading } from './authSlice';
+import { selectIsLoading } from '../../redux/reducers/authSlice';
 
 const ChangePassword = ({ onSaveSettings }) => {
     const isLoading = useSelector(selectIsLoading);

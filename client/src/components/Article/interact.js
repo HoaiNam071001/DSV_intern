@@ -1,4 +1,4 @@
-import { follow, unfollow, favorite, unfavorite } from './articleSlice';
+import { follow, unfollow, favorite, unfavorite } from '../../redux/reducers/articleSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 

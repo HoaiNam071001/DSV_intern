@@ -8,7 +8,7 @@ import {
     selectAllComments,
     selectIsAuthor,
     selectIsLoading,
-} from './commentsSlice';
+} from '../../redux/reducers/commentsSlice';
 
 function DeleteCommentButton({ commentId }) {
     const dispatch = useDispatch();
@@ -51,24 +51,16 @@ function Comment({ comment }) {
                         height="35"
                         className="rounded-circle"
                         alt="avatar"
-                        src={
-                            comment.author.image ||
-                            require('../../Assets/avatar-thumbnail.jpg')
-                        }
+                        src={comment.author.image || require('../../Assets/avatar-thumbnail.jpg')}
                     />
                 </Link>
-                <Link
-                    to={`/@${comment.author.username}`}
-                    className="info-username"
-                >
+                <Link to={`/@${comment.author.username}`} className="info-username">
                     {comment.author.username}
                 </Link>
                 <time className="date-posted" dateTime={comment.createdAt}>
                     {new Date(comment.createdAt).toDateString()}
                 </time>
-                {isAuthor ? (
-                    <DeleteCommentButton commentId={comment.id} />
-                ) : null}
+                {isAuthor ? <DeleteCommentButton commentId={comment.id} /> : null}
             </div>
             <div className="comment-item-body">{comment.body}</div>
         </div>
