@@ -100,13 +100,14 @@ const user = (() => {
               res
                 .status(422)
                 .json({ errors: { "Old password": ["can't be blank"] } });
+
             return user.validPassword(oldpassword).then((valid) => {
               if (!valid)
                 return res
                   .status(422)
                   .json({ errors: { "Old password": ["is invalid"] } });
               user.setPassword(password);
-              user.save().then(() => res.json({ user: user.toAuthJSON() }));
+              return res.json({ user: user.toAuthJSON() });
             });
           }
 

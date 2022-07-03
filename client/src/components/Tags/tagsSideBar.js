@@ -19,11 +19,7 @@ function TagsSidebar() {
         <>
             <div className="tag-title fs-3">Popular Tags</div>
             <div className="tag-container">
-                {isLoading ? (
-                    <Loading2 />
-                ) : (
-                    tags.map((tag) => <TagItem tag={tag} key={tag} />)
-                )}
+                {isLoading ? <Loading2 /> : tags.map((tag) => <TagItem tag={tag} key={tag} />)}
             </div>
         </>
     );

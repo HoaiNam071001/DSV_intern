@@ -33,16 +33,10 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/settings" element={<Settings />} />
-                        <Route
-                            path="/setpassword"
-                            element={<Settings isPassword />}
-                        />
+                        <Route path="/setpassword" element={<Settings isPassword />} />
                         <Route path="/article/:slug" element={<Article />} />
                         <Route path="/@:username" element={<Profile />} />
-                        <Route
-                            path="/@:username/favorites"
-                            element={<Profile isFavoritePage />}
-                        />
+                        <Route path="/@:username/favorites" element={<Profile isFavoritePage />} />
                         <Route path="/editor" element={<EditArticle />} />
                         <Route path="/editor/:slug" element={<EditArticle />} />
                     </Routes>

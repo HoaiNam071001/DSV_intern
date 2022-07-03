@@ -50,18 +50,10 @@
                 box-shadow: 0px 2px 5px 0px rgb(133, 133, 133);
             }
             & .btn-editor-article {
-                background: linear-gradient(
-                    90deg,
-                    rgba(34, 252, 209, 1) 0%,
-                    rgba(20, 0, 255, 1) 100%
-                );
+                background: linear-gradient(90deg, rgba(34, 252, 209, 1) 0%, rgba(20, 0, 255, 1) 100%);
             }
             & .btn-delete-article {
-                background: linear-gradient(
-                    90deg,
-                    rgba(223, 111, 71, 1) 0%,
-                    rgba(255, 0, 0, 1) 100%
-                );
+                background: linear-gradient(90deg, rgba(223, 111, 71, 1) 0%, rgba(255, 0, 0, 1) 100%);
             }
             ///
             & .btn-follow-article {
@@ -71,11 +63,7 @@
             }
 
             & .btn-follow-article-active {
-                background: linear-gradient(
-                    90deg,
-                    rgba(34, 252, 165, 1) 0%,
-                    rgba(113, 255, 0, 1) 100%
-                );
+                background: linear-gradient(90deg, rgba(34, 252, 165, 1) 0%, rgba(113, 255, 0, 1) 100%);
                 color: #fff;
                 border: 0px;
                 padding: 9px 11px;
@@ -88,11 +76,7 @@
             }
             & .btn-favorite-article-active {
                 padding: 9px 11px;
-                background: linear-gradient(
-                    90deg,
-                    rgba(252, 34, 203, 1) 0%,
-                    rgba(209, 0, 255, 1) 100%
-                );
+                background: linear-gradient(90deg, rgba(252, 34, 203, 1) 0%, rgba(209, 0, 255, 1) 100%);
 
                 color: #fff;
                 border: 0px;
@@ -117,7 +101,7 @@
         }
     }
     & .content-article {
-        padding: 5px 20px 10px 20px;
+        padding: 20px;
         font-size: 20px;
         background-color: #fff;
         border-radius: 20px;

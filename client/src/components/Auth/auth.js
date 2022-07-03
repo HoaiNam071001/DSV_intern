@@ -1,15 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
-import {
-    login,
-    register,
-    selectErrors,
-    selectIsLoading,
-    selectIsAuthenticated,
-    translate,
-} from './authSlice';
+import { login, register, selectErrors, selectIsLoading, selectIsAuthenticated, translate } from './authSlice';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import Message from '../Message';
 import isEmail from 'validator/lib/isEmail';
 
@@ -72,11 +65,7 @@ const Auth = ({ isRegister }) => {
             _password.current.focus();
             return;
         }
-        dispatch(
-            isRegister
-                ? register({ username, email, password })
-                : login({ email, password })
-        );
+        dispatch(isRegister ? register({ username, email, password }) : login({ email, password }));
     };
 
     useEffect(() => {
@@ -88,9 +77,7 @@ const Auth = ({ isRegister }) => {
         <div className="container">
             <div className="row col-md-6 offset-md-3 col-xs-12 shadow-lg bg-body rounded">
                 <div className="my-3 text-center">
-                    <h1 className="text-xs-center mb-3">
-                        {isRegister ? 'Sign Up' : 'Sign In'}
-                    </h1>
+                    <h1 className="text-xs-center mb-3">{isRegister ? 'Sign Up' : 'Sign In'}</h1>
                 </div>
                 <div className="px-4" disabled={inProgress}>
                     <Message messagess={errors} />
@@ -140,10 +127,7 @@ const Auth = ({ isRegister }) => {
                     </div>
                 </div>
                 <div className="text-center">
-                    <button
-                        className="btn btn-primary btn-lg col-6 mx-auto"
-                        onClick={authenticateUser}
-                    >
+                    <button className="btn btn-primary btn-lg col-6 mx-auto" onClick={authenticateUser}>
                         {isRegister ? 'Sign Up' : 'Sign in'}
                     </button>
                 </div>

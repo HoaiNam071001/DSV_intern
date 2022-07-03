@@ -1,9 +1,4 @@
-import {
-    createAsyncThunk,
-    createEntityAdapter,
-    createSelector,
-    createSlice,
-} from '@reduxjs/toolkit';
+import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit';
 
 import { isApiError, Status } from '../../common/utils';
 import { selectUser } from '../Auth/authSlice';
@@ -30,8 +25,6 @@ const commentsSlice = createSlice({
                         ...action.meta.arg.comment,
                         author: action.meta.author,
                         id: action.meta.requestId,
-                        createdAt: new Date().toISOString(),
-                        updatedAt: new Date().toISOString(),
                     });
                 }
             })
@@ -80,21 +73,15 @@ export const createComment = createAsyncThunk(
     }
 );
 
-export const getCommentsForArticle = createAsyncThunk(
-    'comments/getCommentsForArticle',
-    async (articleSlug) => {
-        const result = await API.getComments(articleSlug);
-        const { comments } = result.data;
-        return comments;
-    }
-);
+export const getCommentsForArticle = createAsyncThunk('comments/getCommentsForArticle', async (articleSlug) => {
+    const result = await API.getComments(articleSlug);
+    const { comments } = result.data;
+    return comments;
+});
 
-export const removeComment = createAsyncThunk(
-    'comments/removeComment',
-    async ({ articleSlug, commentId }) => {
-        await API.deleteComment(articleSlug, commentId);
-    }
-);
+export const removeComment = createAsyncThunk('comments/removeComment', async ({ articleSlug, commentId }) => {
+    await API.deleteComment(articleSlug, commentId);
+});
 
 const selectCommentsSlice = (state) => state.comments;
 
@@ -102,19 +89,16 @@ const commentSelectors = commentAdapter.getSelectors(selectCommentsSlice);
 
 export const selectAllComments = commentSelectors.selectAll;
 
-const selectCommentById = (commentId) => (state) =>
-    commentSelectors.selectById(state, commentId);
+const selectCommentById = (commentId) => (state) => commentSelectors.selectById(state, commentId);
 
 export const selectIsAuthor = (commentId) =>
     createSelector(
         selectCommentById(commentId),
         selectUser,
-        (comment, currentUser) =>
-            currentUser?.username === comment?.author.username
+        (comment, currentUser) => currentUser?.username === comment?.author.username
     );
 
-export const selectIsLoading = (state) =>
-    selectCommentsSlice(state).status === Status.LOADING;
+export const selectIsLoading = (state) => selectCommentsSlice(state).status === Status.LOADING;
 
 export const selectErrors = (state) => selectCommentsSlice(state).errors;
 
