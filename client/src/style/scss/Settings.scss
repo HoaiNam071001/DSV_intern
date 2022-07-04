@@ -1,0 +1,46 @@
+.toast-floating {
+    min-width: 250px;
+    position: fixed;
+    top: 70px;
+    right: 5px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 10px 2px rgb(203, 203, 203);
+    & .header-toast {
+        padding: 5px;
+        color: rgb(255, 255, 255);
+    }
+    & .body-toast {
+        border-radius: 5px;
+        padding: 5px;
+        color: rgb(255, 255, 255);
+        font-size: 18px;
+    }
+    & .end-toast {
+        background: none;
+        border: 0px;
+        color: #fff;
+    }
+}
+.success-toast {
+    background-color: rgb(27, 231, 0);
+    &:hover {
+        background-color: rgb(66, 243, 43);
+    }
+}
+
+.fail-toast {
+    background-color: rgb(214, 0, 0);
+    &:hover {
+        background-color: rgb(250, 65, 65);
+    }
+}
+.err-message-password {
+    padding: 0 10px;
+    text-align: center;
+    margin: 5px;
+    min-height: 24px;
+    color: rgb(255, 0, 0);
+}
+.btn-update-settings {
+    border-radius: 20px;
+}

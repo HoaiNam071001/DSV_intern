@@ -1,0 +1,93 @@
+.container-info-profile {
+    border-radius: 20px;
+    background: #fff;
+
+    & .container-avt-img {
+        padding: 5px;
+        width: 200px;
+        height: 200px;
+        border: 1px solid rgb(215, 215, 215);
+        transition: transform 0.3s;
+        & .avt-img {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+    }
+    & .container-avt-img:hover {
+        transform: scale(1.05);
+    }
+
+    & .username-profile {
+        color: rgb(12, 0, 122);
+        font-weight: bold;
+    }
+    & .username-profile:hover {
+        color: rgb(0, 0, 0);
+    }
+    & .bio-profile {
+        color: rgb(65, 65, 65);
+    }
+
+    & .btn-edit-profile {
+        border: 0px;
+        text-decoration: none;
+        padding: 8px 15px;
+        background: linear-gradient(
+            90deg,
+            rgb(36, 91, 255) 0%,
+            rgb(0, 231, 135) 100%
+        );
+        color: #fff;
+        border-radius: 20px;
+        transition: all 0.3s;
+    }
+    & .btn-edit-profile:hover {
+        transform: translateY(-1px);
+        box-shadow: 0px 4px 5px 1px rgb(163, 163, 163);
+    }
+
+    & .btn-follow-profile {
+        margin-right: 10px;
+        background: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        border-radius: 20px;
+        padding: 7px 15px;
+        border: 1px solid rgb(204, 204, 204);
+    }
+    & .btn-follow-profile-active {
+        background: linear-gradient(
+            90deg,
+            rgb(36, 226, 255) 0%,
+            rgb(0, 255, 149) 100%
+        );
+        padding: 8px 15px;
+        border: 0px;
+        color: rgb(255, 255, 255);
+    }
+}
+
+.nav-link-profile {
+    margin: 20px 0px;
+    & .item-link-profile {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 30px;
+        width: 100%;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        transition: all 0.2s;
+        font-weight: bold;
+        font-size: 20px;
+    }
+    & .item-link-profile:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 3px 5px 1px rgb(165, 165, 165);
+    }
+
+    & .bg-tab-active {
+        transform: translateY(-1px);
+        color: rgb(0, 15, 181);
+        box-shadow: 0px 1px 3px 0px rgb(165, 165, 165);
+    }
+}

@@ -1,0 +1,32 @@
+@import './Header.scss';
+@import './Home.scss';
+@import './Artilces.scss';
+@import './Profile.scss';
+@import './Editor.scss';
+@import './Settings.scss';
+@import './detail.scss';
+@import './Comments.scss';
+@import './pagination.scss';
+.container-app {
+    margin-top: 80px;
+}
+body {
+    background-color: #ebf0f5;
+}
+.link-nodecoration {
+    text-decoration: none;
+}
+.error-list {
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    margin: 10px;
+    border-radius: 5px;
+    font-size: 17px;
+    &.failure-state {
+        background-color: rgb(231, 42, 25);
+    }
+    &.success-state {
+        background-color: rgba(31, 255, 31, 0.866);
+    }
+}

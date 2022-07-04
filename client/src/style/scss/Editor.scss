@@ -1,0 +1,17 @@
+.tag-item-article {
+    cursor: pointer;
+    background-color: rgb(28, 187, 255);
+    color: white;
+}
+.tag-item-article:hover {
+    opacity: 0.6;
+}
+.text-body {
+    background-color: #fff;
+    & .jodit-react-container {
+        & .jodit-workplace {
+            height: 400px !important;
+            overflow: scroll;
+        }
+    }
+}

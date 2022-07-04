@@ -1,0 +1,96 @@
+// content-container
+$bg-favorate: #0088ff;
+$content: #0d6efd;
+$bg-blur: #36a1ff;
+
+.feed-container {
+    padding: 5px;
+    & .list-article {
+        min-height: 600px;
+        & .feed-item {
+            border: 0;
+            padding: 15px 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background-color: #fff;
+            border-radius: 30px;
+            & .item-author {
+                margin-bottom: 3px;
+                & a {
+                    margin: 0 0 0 10px;
+                    padding: 0;
+                    width: 50px;
+                    height: 50px;
+                    & img {
+                        width: 45px;
+                        height: 45px;
+                        border-radius: 50%;
+                        margin: 0px;
+                        padding: 4px;
+                        border: 1px solid rgb(236, 236, 236);
+                    }
+                }
+                & .item-author-name {
+                    color: rgb(19, 26, 112);
+                    text-decoration: none;
+                    font-size: 20px;
+                    margin: 0px;
+                }
+                & .item-author-date {
+                    color: rgb(147, 147, 147);
+                }
+            }
+        }
+
+        & .feed-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px 0px rgb(200, 200, 200);
+        }
+
+        & .item-title {
+            margin-left: 5px;
+            font-size: 20px;
+            font-weight: bold;
+            color: rgb(26, 32, 106);
+        }
+
+        & .item-content {
+            margin-left: 5px;
+            font-size: 15px;
+            color: rgb(147, 147, 147);
+            overflow: hidden;
+            height: 25px;
+        }
+
+        & .btn-favorate {
+            width: 100%;
+            margin-right: 10px;
+            border-radius: 20px;
+            border: 0px;
+            background-color: rgb(234, 234, 234);
+            & img {
+                width: 15px;
+                display: inline;
+            }
+            & div {
+                margin: 4px;
+                display: inline;
+                font-size: 15px;
+                color: rgb(0, 0, 0);
+            }
+        }
+        & .btn-favorate-active {
+            background: linear-gradient(
+                90deg,
+                rgba(255, 0, 228, 1) 0%,
+                rgb(174, 0, 255) 100%
+            );
+            & div {
+                color: rgb(255, 255, 255);
+            }
+        }
+        & .btn-favorate:hover {
+            opacity: 0.7;
+        }
+    }
+}

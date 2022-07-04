@@ -1,0 +1,118 @@
+.detail-article {
+    //box-shadow: 3px 0px 5px 4px rgb(226, 226, 226);
+    & .header-article {
+        padding: 20px 10px;
+        background-color: rgb(255, 255, 255);
+        border-radius: 20px;
+        & h1 {
+            margin-bottom: 10px;
+        }
+        & .author-article {
+            & img {
+                border-radius: 50%;
+            }
+            & img:hover {
+                opacity: 0.8;
+            }
+            & .author-detail {
+                margin: 5px;
+                & .author {
+                    margin: 0px;
+                    padding-left: 0px;
+                    text-decoration: none;
+                    font-size: 20px;
+                    color: rgb(7, 0, 99);
+                    font-weight: bold;
+                }
+                & .author:hover {
+                    opacity: 0.8;
+                }
+                & .create-article {
+                    color: rgb(142, 142, 142);
+                }
+            }
+            & a {
+                padding: 5px 7px;
+                margin: 5px;
+            }
+            & .btn-article {
+                padding: 8px 10px;
+                margin-left: 10px;
+                border: 0px;
+                border-radius: 20px;
+                color: #fff;
+                text-decoration: none;
+                transition: all 0.2s;
+            }
+
+            & .btn-article:hover {
+                transform: translateY(-3px);
+                box-shadow: 0px 2px 5px 0px rgb(133, 133, 133);
+            }
+            & .btn-editor-article {
+                background: linear-gradient(90deg, rgba(34, 252, 209, 1) 0%, rgba(20, 0, 255, 1) 100%);
+            }
+            & .btn-delete-article {
+                background: linear-gradient(90deg, rgba(223, 111, 71, 1) 0%, rgba(255, 0, 0, 1) 100%);
+            }
+            ///
+            & .btn-follow-article {
+                background-color: rgb(255, 255, 255);
+                color: rgb(53, 206, 71);
+                border: 1px solid rgb(53, 206, 71);
+            }
+
+            & .btn-follow-article-active {
+                background: linear-gradient(90deg, rgba(34, 252, 165, 1) 0%, rgba(113, 255, 0, 1) 100%);
+                color: #fff;
+                border: 0px;
+                padding: 9px 11px;
+            }
+            & .btn-favorite-article {
+                background-color: rgb(255, 255, 255);
+                color: rgb(234, 0, 255);
+                border: 1px solid rgb(255, 0, 230);
+                min-width: 80px;
+            }
+            & .btn-favorite-article-active {
+                padding: 9px 11px;
+                background: linear-gradient(90deg, rgba(252, 34, 203, 1) 0%, rgba(209, 0, 255, 1) 100%);
+
+                color: #fff;
+                border: 0px;
+            }
+            ////
+        }
+    }
+
+    & .header-article:hover {
+        box-shadow: 0 0 5px 1px rgb(219, 219, 219);
+    }
+
+    & .script-article {
+        // & .description-article {
+        //     font-style: italic;
+        //     padding-top: 10px;
+        //     padding-left: 10px;
+        //     color: rgb(143, 143, 143);
+        // }
+        & .tag-article {
+            margin: 10px;
+        }
+    }
+    & .content-article {
+        padding: 20px;
+        font-size: 20px;
+        background-color: #fff;
+        border-radius: 20px;
+        & img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    & .comment-article {
+        margin-bottom: 30px;
+        padding: 10px;
+    }
+}
