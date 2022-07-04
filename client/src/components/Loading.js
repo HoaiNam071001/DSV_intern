@@ -1,12 +1,12 @@
 export const Loading2 = () => {
     return (
-        <p class="placeholder-glow tag-container">
-            <span class="placeholder col-4 m-1 rounded-pill"></span>
-            <span class="placeholder col-3 m-1 rounded-pill"></span>
-            <span class="placeholder col-3 m-1 rounded-pill"></span>
-            <span class="placeholder col-3 m-1 rounded-pill"></span>
-            <span class="placeholder col-2 m-1 rounded-pill"></span>
-            <span class="placeholder col-5 m-1 rounded-pill"></span>
+        <p className="placeholder-glow tag-container">
+            <span className="placeholder col-4 m-1 rounded-pill"></span>
+            <span className="placeholder col-3 m-1 rounded-pill"></span>
+            <span className="placeholder col-3 m-1 rounded-pill"></span>
+            <span className="placeholder col-3 m-1 rounded-pill"></span>
+            <span className="placeholder col-2 m-1 rounded-pill"></span>
+            <span className="placeholder col-5 m-1 rounded-pill"></span>
         </p>
     );
 };

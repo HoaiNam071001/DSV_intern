@@ -74,7 +74,6 @@ const Auth = ({ isRegister }) => {
         }
         dispatch(isRegister ? register({ username, email, password }) : login({ email, password }));
     };
-
     useEffect(() => {
         if (isSuccess) navigate('/');
     }, [isSuccess, navigate]);
