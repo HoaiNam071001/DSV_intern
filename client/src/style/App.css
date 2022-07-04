@@ -30,25 +30,34 @@
   background-color: white;
   border-bottom: 1px solid #e1e1e1;
   z-index: 10; }
-
-.new-article-header {
-  text-decoration: none;
-  font-size: 20px;
-  color: #000;
-  font-weight: bold;
-  padding-right: 10px; }
-
-.new-article-header:hover {
-  color: #00089e; }
-
-.home-article-header {
-  text-decoration: none;
-  font-size: 20px;
-  color: #000;
-  font-weight: bold; }
-
-.home-article-header:hover {
-  color: #00089e; }
+  .header-container .btn-header {
+    color: #000;
+    background: #f1f1f1;
+    font-weight: bold;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px; }
+    .header-container .btn-header:hover {
+      background: #acacac;
+      color: white; }
+  .header-container .sign-header {
+    text-decoration: none;
+    background-color: white;
+    border-radius: 20px;
+    border: 1px solid #0059ff;
+    padding: 5px 10px;
+    color: #0059ff;
+    margin: 5px 10px; }
+    .header-container .sign-header:hover {
+      background: #0059ff;
+      color: #fff;
+      opacity: 0.8; }
+  .header-container .btn-active-out {
+    background: #0059ff;
+    color: #fff; }
+  .header-container .btn-active-in {
+    background: rgba(0, 89, 255, 0.088);
+    color: #0059ff; }
 
 .tab-home-head {
   margin-bottom: 30px; }
@@ -238,7 +247,7 @@
 .text-body {
   background-color: #fff; }
   .text-body .jodit-react-container .jodit-workplace {
-    max-height: 500px !important;
+    height: 400px !important;
     overflow: scroll; }
 
 .toast-floating {

@@ -72,7 +72,6 @@ function CommentList() {
     const comments = useSelector(selectAllComments);
     const isLoading = useSelector(selectIsLoading);
     const { slug } = useParams();
-
     useEffect(() => {
         const fetchComments = dispatch(getCommentsForArticle(slug));
         return () => {
@@ -83,7 +82,6 @@ function CommentList() {
     if (isLoading) {
         return <Loading />;
     }
-
     return (
         <>
             {comments.map((comment) => (

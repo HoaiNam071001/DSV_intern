@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
 import Message from '../Message';
 import { selectIsAuthenticated, selectUser } from '../../redux/reducers/authSlice';
 import CommentList from './commentList';
-import { createComment, selectErrors } from '../../redux/reducers/commentsSlice';
+import { createComment, selectErrors, commentPageUnloaded } from '../../redux/reducers/commentsSlice';
+import { selectArticle } from '../../redux/reducers/articleSlice';
+import Loading from '../Loading';
 
 function CommentForm() {
     const dispatch = useDispatch();
@@ -50,9 +52,15 @@ function CommentForm() {
 }
 
 function CommentSection() {
+    const dispatch = useDispatch();
     const isAuthenticaded = useSelector(selectIsAuthenticated);
     const errors = useSelector(selectErrors);
+    const { article } = useSelector(selectArticle);
 
+    useEffect(() => () => dispatch(commentPageUnloaded()), [dispatch]);
+    if (!article) {
+        return <Loading />;
+    }
     return (
         <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <Message messagess={errors} />

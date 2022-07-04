@@ -15,7 +15,9 @@ const initialState = commentAdapter.getInitialState({
 const commentsSlice = createSlice({
     name: 'comments',
     initialState,
-    reducers: {},
+    reducers: {
+        commentPageUnloaded: () => initialState,
+    },
     extraReducers(builder) {
         builder
             .addCase(createComment.pending, (state, action) => {
@@ -53,6 +55,7 @@ const commentsSlice = createSlice({
         });
     },
 });
+export const { commentPageUnloaded } = commentsSlice.actions;
 
 export const createComment = createAsyncThunk(
     'comments/createComment',

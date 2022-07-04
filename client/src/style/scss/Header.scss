@@ -30,23 +30,38 @@
     background-color: rgb(255, 255, 255);
     border-bottom: 1px solid rgb(225, 225, 225);
     z-index: 10;
-}
-.new-article-header {
-    text-decoration: none;
-    font-size: 20px;
-    color: #000;
-    font-weight: bold;
-    padding-right: 10px;
-}
-.new-article-header:hover {
-    color: rgb(0, 8, 158);
-}
-.home-article-header {
-    text-decoration: none;
-    font-size: 20px;
-    color: #000;
-    font-weight: bold;
-}
-.home-article-header:hover {
-    color: rgb(0, 8, 158);
+    & .btn-header {
+        color: #000;
+        background: rgb(241, 241, 241);
+        font-weight: bold;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        &:hover {
+            background: rgb(172, 172, 172);
+            color: rgb(255, 255, 255);
+        }
+    }
+    & .sign-header {
+        text-decoration: none;
+        background-color: rgb(255, 255, 255);
+        border-radius: 20px;
+        border: 1px solid rgb(0, 89, 255);
+        padding: 5px 10px;
+        color: rgb(0, 89, 255);
+        margin: 5px 10px;
+        &:hover {
+            background: rgb(0, 89, 255);
+            color: #fff;
+            opacity: 0.8;
+        }
+    }
+    & .btn-active-out {
+        background: rgb(0, 89, 255);
+        color: #fff;
+    }
+    & .btn-active-in {
+        background: rgba(0, 89, 255, 0.088);
+        color: rgb(0, 89, 255);
+    }
 }

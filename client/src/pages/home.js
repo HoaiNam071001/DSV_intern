@@ -5,7 +5,7 @@ import { selectIsAuthenticated } from '../redux/reducers/authSlice';
 
 import Tabhome from '../components/Home/tabcontrol';
 import ArticleList from '../components/ArticlesList/articleList';
-import TagsSidebar from '../components/Tags/tagsSideBar';
+import TagsSidebar from '../components/Home/tagsSideBar';
 
 const Home = () => {
     const dispatch = useDispatch();
