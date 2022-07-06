@@ -8,8 +8,8 @@ import {
     articlePageUnloaded,
     selectArticle,
 } from '../../redux/reducers/articleSlice';
-import { useParams } from 'react-router';
 import TextEditor from './textEditor';
+import { useParams } from 'react-router';
 
 const EditArticle = () => {
     const dispatch = useDispatch();

@@ -17,27 +17,25 @@ route(app);
 var server = app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${server.address().port}`);
 });
-// var io = require("socket.io")(server, {
-//   cors: {
-//     origin: "*",
-//   },
-// });
-// io.on("connection", (socket) => {
-//   console.log(`connect: ${socket.id}`);
-//   socket.on("hello!", () => {
-//     console.log(`hello from ${socket.id}`);
-//   });
-
-//   socket.on("private message", ({ content, to }) => {
-//     socket.to(to).emit("private message", {
-//       content,
-//       from: socket.id,
-//     });
-//   });
-//   socket.on("disconnect", () => {
-//     console.log(`disconnect: ${socket.id}`);
-//   });
-// });
+var io = require("socket.io")(server, {
+  cors: {
+    origin: "*",
+  },
+});
+io.on("connection", (socket) => {
+  // foreach(var i in io.of("/").sockets)
+  console.log("connection", socket.id);
+  socket.on("private message", ({ content, to }) => {
+    console.log(`from ${socket.id}`);
+    socket.to(to).emit("private message", {
+      content,
+      from: socket.id,
+    });
+  });
+  socket.on("disconnect", () => {
+    console.log(`disconnect: ${socket.id}`);
+  });
+});
 
 app.use(function (req, res, next) {
   var err = new Error("Not Found");
