@@ -9,7 +9,11 @@ const route = require("./routes");
 const cors = require("cors");
 const connectDB = require("./Db");
 connectDB();
-
+app.use(cors());
+// define : post
+app.use(express.json({ limit: "10mb" }));
+app.use(express.urlencoded({ limit: "10mb", extended: true }));
+route(app);
 var server = app.listen(process.env.PORT || port, () => {
   console.log(`Example app listening on port ${server.address().port}`);
 });
@@ -41,7 +45,6 @@ app.use(function (req, res, next) {
   next(err);
 });
 
-app.use(cors());
 // var corsOptions = {
 //   origin: 'http://example.com',
 //   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
@@ -90,11 +93,6 @@ app.use(cors());
 
 //const morgan = require("morgan");
 //app.use(morgan("combined"));
-
-// define : post
-app.use(express.json({ limit: "10mb" }));
-app.use(express.urlencoded({ limit: "10mb", extended: true }));
-route(app);
 
 // production error handler
 // no stacktraces leaked to user
