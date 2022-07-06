@@ -1,7 +1,8 @@
-FROM node:16.13.0
+FROM --platform=linux/amd64 node:16.13.0
 
-ARG MONGGOOSE_URI
-ARG JWT_SECRET
+ENV MONGGOOSE_URI="mongodb+srv://hoainam:hoainam07@backend.pup32.mongodb.net/DSV_intern"
+ENV JWT_SECRET="dsv_intern"
+ENV PORT=80
 
 WORKDIR /app
 COPY package*.json ./
@@ -11,7 +12,5 @@ ENV PATH /app/node_modules/.bin:$PATH
 RUN npm install
 
 COPY . .
-
-EXPOSE 3060
 
 CMD ["npm","start"]

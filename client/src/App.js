@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
+//import Messenger from './components/Messenger/messenger';
 
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
@@ -22,7 +23,6 @@ function App() {
         setAuthorization(window.localStorage.getItem('jwt'));
         dispatch(getUser());
     }
-
     return (
         <React.Fragment>
             <Header />
@@ -42,6 +42,7 @@ function App() {
                     </Routes>
                 </Suspense>
             </div>
+            {/* <Messenger /> */}
         </React.Fragment>
     );
 }

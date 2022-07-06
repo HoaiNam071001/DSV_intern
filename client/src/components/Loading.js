@@ -10,6 +10,13 @@ export const Loading2 = () => {
         </p>
     );
 };
+export const ItemLoading = () => {
+    return (
+        <p className="placeholder-glow tag-container">
+            <span className="placeholder col-2 m-3 rounded-pill"></span>
+        </p>
+    );
+};
 
 const Loading = () => {
     return (
