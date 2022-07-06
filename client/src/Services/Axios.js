@@ -1,43 +1,37 @@
 import axios from 'axios';
 
-const API_SERVER_URL = 'http://localhost:3060';
-export const axiosInstance = axios.create({
-    baseURL: API_SERVER_URL,
-});
-
 const config = {
+    baseURL: process.env.REACT_APP_SERVER,
     headers: {
         'Content-Type': 'application/json',
     },
 };
-
 export const setAuthorization = (token) => {
     axios.defaults.headers.common['Authorization'] = token ? 'Token ' + token : '';
 };
 
 export const API = {
-    login: (data) => axios.post(`${API_SERVER_URL}/api/users/login`, data, config),
+    login: (data) => axios.post(`/api/users/login`, data, config),
 
-    register: (data) => axios.post(`${API_SERVER_URL}/api/users`, data, config),
+    register: (data) => axios.post(`/api/users`, data, config),
 
-    getUser: () => axios.get(`${API_SERVER_URL}/api/user`, config),
+    getUser: () => axios.get(`/api/user`, config),
 
-    updateUser: (data) => axios.put(`${API_SERVER_URL}/api/user`, data, config),
+    updateUser: (data) => axios.put(`/api/user`, data, config),
 
-    getProfile: (username) => axios.get(`${API_SERVER_URL}/api/profiles/${username}`, config),
+    getProfile: (username) => axios.get(`/api/profiles/${username}`, config),
 
-    followUser: (username) => axios.post(`${API_SERVER_URL}/api/profiles/${username}/follow`, {}, config),
+    followUser: (username) => axios.post(`/api/profiles/${username}/follow`, {}, config),
 
-    unfollowUser: (username) => axios.delete(`${API_SERVER_URL}/api/profiles/${username}/follow`, config),
+    unfollowUser: (username) => axios.delete(`/api/profiles/${username}/follow`, config),
 
     getArticlesFeed: (limit = 10, offset = 0) =>
-        axios.get(`${API_SERVER_URL}/api/articles/feed?limit=${limit}&offset=${offset}`, config),
+        axios.get(`/api/articles/feed?limit=${limit}&offset=${offset}`, config),
 
     getArticles: (query = null) =>
         axios.get(
             query
-                ? API_SERVER_URL +
-                      '/api/articles?' +
+                ? '/api/articles?' +
                       'limit=' +
                       (query.limit ?? 10) +
                       '&offset=' +
@@ -45,27 +39,26 @@ export const API = {
                       (query.tag ? '&tag=' + query.tag : '') +
                       (query.author ? '&author=' + query.author : '') +
                       (query.favorited ? '&favorited=' + query.favorited : '')
-                : API_SERVER_URL + '/api/articles',
+                : '/api/articles',
             config
         ),
-    createArticle: (data) => axios.post(`${API_SERVER_URL}/api/articles`, data, config),
+    createArticle: (data) => axios.post(`/api/articles`, data, config),
 
-    getArticle: (slug) => axios.get(`${API_SERVER_URL}/api/articles/${slug}`, config),
+    getArticle: (slug) => axios.get(`/api/articles/${slug}`, config),
 
-    updateArticle: (data) =>
-        axios.put(`${API_SERVER_URL}/api/articles/${data.slug}`, { article: data.article }, config),
+    updateArticle: (data) => axios.put(`/api/articles/${data.slug}`, { article: data.article }, config),
 
-    deleteArticle: (slug) => axios.delete(`${API_SERVER_URL}/api/articles/${slug}`, config),
+    deleteArticle: (slug) => axios.delete(`/api/articles/${slug}`, config),
 
-    getComments: (slug) => axios.get(`${API_SERVER_URL}/api/articles/${slug}/comments`, config),
+    getComments: (slug) => axios.get(`/api/articles/${slug}/comments`, config),
 
-    createComment: (slug, data) => axios.post(`${API_SERVER_URL}/api/articles/${slug}/comments`, data, config),
+    createComment: (slug, data) => axios.post(`/api/articles/${slug}/comments`, data, config),
 
-    deleteComment: (slug, id) => axios.delete(`${API_SERVER_URL}/api/articles/${slug}/comments/${id}`, {}, config),
+    deleteComment: (slug, id) => axios.delete(`/api/articles/${slug}/comments/${id}`, {}, config),
 
-    favoriteArticle: (slug) => axios.post(`${API_SERVER_URL}/api/articles/${slug}/favorite`, {}, config),
+    favoriteArticle: (slug) => axios.post(`/api/articles/${slug}/favorite`, {}, config),
 
-    unfavoriteArticle: (slug) => axios.delete(`${API_SERVER_URL}/api/articles/${slug}/favorite`, config),
+    unfavoriteArticle: (slug) => axios.delete(`/api/articles/${slug}/favorite`, config),
 
-    getTags: () => axios.get(`${API_SERVER_URL}/api/tags`, config),
+    getTags: () => axios.get(`/api/tags`, config),
 };

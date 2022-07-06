@@ -36,11 +36,6 @@ function Profile({ isFavoritePage }) {
         },
         [dispatch]
     );
-
-    if (!profile) {
-        return <div>InValid User </div>;
-    }
-
     return (
         <div className="container">
             <div className="row">

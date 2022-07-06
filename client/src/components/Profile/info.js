@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { follow, unfollow } from '../../redux/reducers/profileSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
-
+import { ItemLoading } from '../Loading';
 const Setting = () => {
     return (
         <Link to="/settings" className="btn-edit-profile d-flex align-items-center">
@@ -79,7 +79,7 @@ function UserInfo({ profile }) {
                 </div>
             </div>
             <div className="text-center m-2">
-                <div className="fs-3 username-profile">{profile.username}</div>
+                {profile.username ? <div className="fs-3 username-profile">{profile.username}</div> : <ItemLoading />}
                 <div className="fs-5 bio-profile">{profile.bio}</div>
             </div>
 
