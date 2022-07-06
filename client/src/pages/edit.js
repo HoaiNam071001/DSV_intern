@@ -1,4 +1,4 @@
-import CreateArticle from '../components/Article/editor';
+import CreateArticle from '../components/Article/editorArticle';
 
 function NewArticle() {
     return <CreateArticle />;
