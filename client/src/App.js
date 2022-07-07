@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
-// import Messenger from './components/Messenger/messenger';
+import Messenger from './components/Messenger/messenger';
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
 const Settings = lazy(() => import('./pages/settings'));
@@ -38,10 +38,10 @@ function App() {
                         <Route path="/@:username/favorites" element={<Profile isFavoritePage />} />
                         <Route path="/editor" element={<EditArticle />} />
                         <Route path="/editor/:slug" element={<EditArticle />} />
+                        <Route path="/messages" element={<Messenger />} />
                     </Routes>
                 </Suspense>
             </div>
-            {/* <Messenger /> */}
         </React.Fragment>
     );
 }

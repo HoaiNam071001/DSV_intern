@@ -5,7 +5,7 @@ import { profilePageUnloaded } from './profileSlice';
 const initialState = {
     articles: null,
     pagination: null,
-    articlesPerPage: 10,
+    articlesPerPage: 5,
     tab: undefined,
     tag: undefined,
     author: undefined,

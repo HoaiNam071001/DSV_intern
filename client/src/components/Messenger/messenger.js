@@ -3,14 +3,12 @@ import { io } from 'socket.io-client';
 
 // const URL = 'http://localhost:3060';
 // const socket = io(URL, { autoConnect: true });
-const socket = io('localhost');
+const socket = io('localhost', { reconnection: false });
 
 function Messenger() {
     const [isConnected, setIsConnected] = useState(socket.connected);
     const [user, setUser] = useState('');
     const [message, setMessage] = useState('');
-    console.log('reload');
-
     useEffect(() => {
         socket.on('connect', () => {
             setIsConnected(true);
@@ -19,8 +17,6 @@ function Messenger() {
             setIsConnected(false);
         });
         socket.on('private message', (data) => {
-            //setLastMessage(data);
-            console.log('send');
             const node = document.createElement('li');
             const textnode = document.createTextNode(`${data.from}: ${data.content}`);
             node.appendChild(textnode);
@@ -29,7 +25,7 @@ function Messenger() {
         return () => {
             socket.off('connect');
             socket.off('disconnect');
-            socket.off('users');
+            socket.off('private message');
         };
     }, []);
 
