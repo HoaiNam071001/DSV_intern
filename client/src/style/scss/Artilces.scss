@@ -5,8 +5,33 @@ $bg-blur: #36a1ff;
 
 .feed-container {
     padding: 5px;
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px rgb(219, 219, 219);
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgb(255, 18, 230);
+        background: linear-gradient(183deg, rgba(255, 18, 230, 1) 0%, rgba(35, 210, 255, 1) 100%);
+        border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(255, 18, 230);
+        background: linear-gradient(
+            183deg,
+            rgba(255, 18, 230, 0.7346288857339811) 0%,
+            rgba(35, 210, 255, 0.7402311266303396) 100%
+        );
+    }
     & .list-article {
-        min-height: 600px;
+        //min-height: 600px;
+        padding-right: 3px;
+        max-height: 600px;
+        overflow-y: auto;
+        overflow-x: hidden;
+
         & .feed-item {
             border: 0;
             padding: 15px 10px;
@@ -80,11 +105,7 @@ $bg-blur: #36a1ff;
             }
         }
         & .btn-favorate-active {
-            background: linear-gradient(
-                90deg,
-                rgba(255, 0, 228, 1) 0%,
-                rgb(174, 0, 255) 100%
-            );
+            background: linear-gradient(90deg, rgba(255, 0, 228, 1) 0%, rgb(174, 0, 255) 100%);
             & div {
                 color: rgb(255, 255, 255);
             }

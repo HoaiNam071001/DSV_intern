@@ -5,7 +5,6 @@ require('./models/User');
 require('./models/Article');
 require('./models/Comment');
 require('./models/Message');
-require('./models/Room');
 const port = 3060;
 const route = require('./routes');
 const socket = require('./socket');
@@ -22,7 +21,7 @@ var server = app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening on port ${server.address().port}`);
 });
 
-socket(server);
+//socket(server);
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

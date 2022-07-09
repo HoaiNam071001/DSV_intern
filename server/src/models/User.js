@@ -18,13 +18,11 @@ const UserSchema = new mongoose.Schema(
             required: true,
             index: true,
         },
-        password: {
-            type: String,
-        },
+        password: String,
         image: String,
         bio: String,
         following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        rooms: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Room' }],
+        rooms: [String],
     },
     { timestamps: true }
 );
@@ -51,7 +49,7 @@ UserSchema.methods.toAuthJSON = function () {
         token: this.generateJWT(),
         bio: this.bio,
         image: this.image,
-        rooms: this.rooms ? this.rooms.map((room) => room.toUserJSON()) : [],
+        rooms: this.rooms || [],
     };
 };
 
@@ -70,6 +68,7 @@ UserSchema.methods.toMessJSON = function () {
         image: this.image || null,
     };
 };
+
 UserSchema.methods.follow = function (id) {
     if (this.following.indexOf(id) === -1) this.following.push(id);
     return this.save();

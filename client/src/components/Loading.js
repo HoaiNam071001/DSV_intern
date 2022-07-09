@@ -17,7 +17,15 @@ export const ItemLoading = () => {
         </p>
     );
 };
-
+export const LoadingWrite = () => {
+    return (
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    );
+};
 const Loading = () => {
     return (
         <div className="d-flex justify-content-center">

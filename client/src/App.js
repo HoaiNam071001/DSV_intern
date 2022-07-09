@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
-import Messenger from './components/Messenger/messenger';
 const Login = lazy(() => import('./pages/login'));
 const Register = lazy(() => import('./pages/register'));
 const Settings = lazy(() => import('./pages/settings'));
@@ -14,6 +13,7 @@ const Home = lazy(() => import('./pages/home'));
 const Article = lazy(() => import('./pages/article'));
 const Profile = lazy(() => import('./pages/profile'));
 const EditArticle = lazy(() => import('./pages/edit'));
+const Message = lazy(() => import('./pages/messenger'));
 
 function App() {
     const dispatch = useDispatch();
@@ -38,7 +38,7 @@ function App() {
                         <Route path="/@:username/favorites" element={<Profile isFavoritePage />} />
                         <Route path="/editor" element={<EditArticle />} />
                         <Route path="/editor/:slug" element={<EditArticle />} />
-                        <Route path="/messages" element={<Messenger />} />
+                        <Route path="/messages" element={<Message />} />
                     </Routes>
                 </Suspense>
             </div>

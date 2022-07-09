@@ -2,20 +2,23 @@ const mongoose = require('mongoose');
 
 const MessageSchema = new mongoose.Schema({
     sender: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    body: {
+    content: {
         type: String,
         default: '',
     },
-    roomname: { type: mongoose.Schema.Types.ObjectId, ref: 'Room', required: true },
+    roomname: { type: String, required: true },
     createdAt: Date,
 });
 
 MessageSchema.methods.toMessageJSON = function () {
     return {
         sender: this.sender.toMessJSON(),
-        body: this.body,
+        content: this.content,
         createdAt: this.createdAt,
     };
+};
+MessageSchema.statics.toJSONFor = function (messages) {
+    return messages.map((message) => message.toMessageJSON());
 };
 
 mongoose.model('Message', MessageSchema);

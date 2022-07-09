@@ -14,7 +14,7 @@ const socket = (server) => {
     });
 
     io.on('connection', (socket) => {
-        socket.join('room1');
+        //socket.join('room1');
 
         console.log('connection', socket.id);
         io.of('/').adapter.on('create-room', (room) => {
