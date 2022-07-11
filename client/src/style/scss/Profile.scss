@@ -78,10 +78,22 @@ $desktop-width: 1024px;
                 display: flex;
                 margin: 40px 10px;
                 justify-content: center;
+
                 & label {
+                    width: 30vw;
+                    height: 30vw;
+                    border-radius: 50%;
+                    @include desktop {
+                        width: 25vw;
+                        height: 25vw;
+                    }
+                    @include mobile {
+                        width: 60vw;
+                        height: 60vw;
+                    }
                     position: relative;
                     cursor: pointer;
-                    border-radius: 50%;
+
                     & .upload-icon {
                         border-radius: 50%;
                         position: absolute;
@@ -111,7 +123,6 @@ $desktop-width: 1024px;
                             }
                         }
                     }
-
                     & img {
                         width: 30vw;
                         height: 30vw;

@@ -64,7 +64,14 @@ function Avatar({ image, setModal }) {
                         />
                         <div className="image-upload">
                             <label htmlFor="inputuploadimg">
-                                <img src={!avatar ? image : avatar.preview} alt="myImage" />
+                                <img
+                                    src={
+                                        !avatar
+                                            ? image || require('../../Assets/avatar-thumbnail.jpg')
+                                            : avatar.preview
+                                    }
+                                    alt="myImage"
+                                />
                                 <div className="upload-icon">
                                     <FileUploadIcon />
                                 </div>
