@@ -14,6 +14,7 @@ const Article = lazy(() => import('./pages/article'));
 const Profile = lazy(() => import('./pages/profile'));
 const EditArticle = lazy(() => import('./pages/edit'));
 const Message = lazy(() => import('./pages/messenger'));
+const Avatar = lazy(() => import('./components/Profile/uploadAvatar'));
 
 function App() {
     const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
                         <Route path="/editor" element={<EditArticle />} />
                         <Route path="/editor/:slug" element={<EditArticle />} />
                         <Route path="/messages" element={<Message />} />
+                        <Route path="/avatar" element={<Avatar />} />
                     </Routes>
                 </Suspense>
             </div>

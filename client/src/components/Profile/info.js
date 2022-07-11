@@ -1,9 +1,10 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { follow, unfollow } from '../../redux/reducers/profileSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
 import { ItemLoading } from '../Loading';
+import UploadAvatar from './uploadAvatar';
 const Setting = () => {
     return (
         <Link to="/settings" className="btn-edit-profile d-flex align-items-center">
@@ -64,27 +65,42 @@ const Follow = ({ username, following }) => {
     );
 };
 
-function UserInfo({ profile }) {
+function UserInfo({ profile, author }) {
     const currentUser = useSelector(selectUser);
     const isCurrentUser = profile.username === currentUser?.username;
+    const [modal, setModal] = useState(false);
     return (
         <div className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
-                <div className="rounded-circle text-center container-avt-img">
+                <div
+                    className="rounded-circle text-center container-avt-img"
+                    onClick={() => setModal(!modal)}
+                >
                     <img
                         src={profile.image || require('../../Assets/avatar-thumbnail.jpg')}
                         className="avt-img rounded-circle"
                         alt={profile.username}
                     />
                 </div>
+                {modal && profile.username === author.username && (
+                    <UploadAvatar image={profile.image} setModal={setModal} />
+                )}
             </div>
             <div className="text-center m-2">
-                {profile.username ? <div className="fs-3 username-profile">{profile.username}</div> : <ItemLoading />}
+                {profile.username ? (
+                    <div className="fs-3 username-profile">{profile.username}</div>
+                ) : (
+                    <ItemLoading />
+                )}
                 <div className="fs-5 bio-profile">{profile.bio}</div>
             </div>
 
             <div className="d-flex justify-content-end">
-                {isCurrentUser ? <Setting /> : <Follow username={profile.username} following={profile.following} />}
+                {isCurrentUser ? (
+                    <Setting />
+                ) : (
+                    <Follow username={profile.username} following={profile.following} />
+                )}
             </div>
         </div>
     );

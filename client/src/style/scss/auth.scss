@@ -1,0 +1,23 @@
+.btn-submit-sign {
+    background: rgb(0, 164, 255);
+    background: linear-gradient(62deg, rgb(0, 195, 255) 0%, rgb(106, 96, 255) 100%);
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 10px 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    &:hover {
+        opacity: 0.8;
+    }
+}
+.btn-disabled {
+    opacity: 0.5;
+}
+.container-settings {
+    background: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 20px;
+    & h1 {
+        color: rgb(59, 5, 117);
+    }
+}

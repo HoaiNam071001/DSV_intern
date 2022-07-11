@@ -33,10 +33,14 @@ function Settings({ isPassword }) {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-8 offset-md-2 col-12">
-                    <h1 className="text-center p-3">{isPassword ? 'Change Your Password' : 'Settings Your Profile'}</h1>
+                <div className="col-md-8 offset-md-2 col-12 container-settings">
+                    <h1 className="text-center p-3">
+                        {isPassword ? 'Change Your Password' : 'Settings Your Profile'}
+                    </h1>
                     {errors && <Message messagess={errors} />}
-                    {isSuccess && <Message messagess={{ Updated: ['Success'] }} state={'success'} />}
+                    {isSuccess && (
+                        <Message messagess={{ Updated: ['Success'] }} state={'success'} />
+                    )}
 
                     {isPassword ? (
                         <ChangePassword onSaveSettings={saveSettings} />
