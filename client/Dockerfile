@@ -3,7 +3,7 @@ FROM --platform=linux/amd64 node:16.13.0
 WORKDIR /app
 COPY package*.json ./
 ENV PORT=80
-ENV REACT_APP_SERVER="http://namnh.api.internship.designveloper.com"
+ENV REACT_APP_SERVER="https://namnh.api.internship.designveloper.com"
 
 RUN npm install npm@8.5.3 -g
 

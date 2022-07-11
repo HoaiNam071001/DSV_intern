@@ -5,7 +5,7 @@ import { profilePageUnloaded } from './profileSlice';
 const initialState = {
     articles: null,
     pagination: null,
-    articlesPerPage: 10,
+    articlesPerPage: 5,
     tab: undefined,
     tag: undefined,
     author: undefined,
@@ -47,10 +47,14 @@ const articleListSlice = createSlice({
             );
         });
 
-        builder.addCase(getAllArticles.fulfilled, (state, action) => {
-            state.articles = action.payload.articles;
-            state.pagination = action.payload.pagination;
-        });
+        builder
+            .addCase(getAllArticles.fulfilled, (state, action) => {
+                state.articles = action.payload.articles;
+                state.pagination = action.payload.pagination;
+            })
+            .addCase(getAllArticles.pending, (state, action) => {
+                state.articles = null;
+            });
 
         builder.addCase(getArticlesByTag.fulfilled, (state, action) => {
             state.articles = action.payload.articles;
@@ -69,7 +73,6 @@ const articleListSlice = createSlice({
             state.pagination = action.payload.pagination;
             state.favorited = action.meta.arg?.favorited;
         });
-
         builder.addMatcher(
             (action) => [profilePageUnloaded.type].includes(action.type),
             () => initialState

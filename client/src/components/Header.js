@@ -26,11 +26,11 @@ const HeaderLogin = ({ location }) => {
                 <i className="bi bi-plus-circle fs-5"></i>
             </Link>
             <Link
-                to="/mess"
+                to="/messages"
                 className={`mx-2 btn-header d-flex align-items-center justify-content-center ${
-                    location === '/mess' ? 'btn-active-in' : ''
+                    location === '/messages' ? 'btn-active-in' : ''
                 }`}
-                title="Messenger"
+                title="messages"
             >
                 <i className="bi bi-messenger fs-5"></i>
             </Link>

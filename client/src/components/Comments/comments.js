@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
+import TextField from '@mui/material/TextField';
 
 import Message from '../Message';
 import { selectIsAuthenticated, selectUser } from '../../redux/reducers/authSlice';
 import CommentList from './commentList';
-import { createComment, selectErrors, commentPageUnloaded } from '../../redux/reducers/commentsSlice';
+import {
+    createComment,
+    selectErrors,
+    commentPageUnloaded,
+} from '../../redux/reducers/commentsSlice';
 import { selectArticle } from '../../redux/reducers/articleSlice';
 import Loading from '../Loading';
 
@@ -14,25 +19,36 @@ function CommentForm() {
     const currentUser = useSelector(selectUser);
     const { slug } = useParams();
     const [body, setBody] = useState('');
-
     const saveComment = (event) => {
         event.preventDefault();
+        if (body === '') return;
         dispatch(createComment({ articleSlug: slug, comment: { body } }));
         setBody('');
+    };
+    const saveCommentEnter = (e) => {
+        e.preventDefault();
+        if (e.key === 'Enter') saveComment(e);
     };
 
     return (
         <div className="my-4 comment-item border">
-            <div className="form-floating m-2">
-                <textarea
-                    className="form-control comment-item-write"
-                    placeholder="Leave a comment here"
-                    id="floatingbodycomment"
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                ></textarea>
-                <label htmlFor="floatingbodycomment">Write a comment...</label>
-            </div>
+            <TextField
+                sx={{
+                    '& .MuiOutlinedInput-root': {
+                        background: '#fff',
+                        borderRadius: 5,
+                        margin: 2,
+                    },
+                    '& label': { fontSize: 16, margin: 2 },
+                }}
+                className="form-control comment-item-write"
+                label="Comment"
+                variant="outlined"
+                placeholder="Write your comment..."
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                onKeyUp={saveCommentEnter}
+            />
 
             <div className="d-flex align-items-center comment-item-user">
                 <img
@@ -43,7 +59,11 @@ function CommentForm() {
                     src={currentUser.image || require('../../Assets/avatar-thumbnail.jpg')}
                 />
                 <span className="mx-2 fs-5 info-username">{currentUser.username}</span>
-                <button className="btn btn-primary ms-auto rounded-pill m-1" onClick={saveComment}>
+                <button
+                    className="btn btn-primary ms-auto rounded-pill m-1"
+                    onClick={saveComment}
+                    onKeyUp={saveCommentEnter}
+                >
                     Post Comment
                 </button>
             </div>

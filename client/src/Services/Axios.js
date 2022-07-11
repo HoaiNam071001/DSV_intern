@@ -54,7 +54,7 @@ export const API = {
 
     createComment: (slug, data) => axios.post(`/api/articles/${slug}/comments`, data, config),
 
-    deleteComment: (slug, id) => axios.delete(`/api/articles/${slug}/comments/${id}`, {}, config),
+    deleteComment: (slug, id) => axios.delete(`/api/articles/${slug}/comments/${id}`, config),
 
     favoriteArticle: (slug) => axios.post(`/api/articles/${slug}/favorite`, {}, config),
 
