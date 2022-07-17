@@ -26,23 +26,27 @@ $desktop-width: 1024px;
     }
     & .messenger-list {
         background-color: #fff;
-        border-radius: 20px;
+        border-radius: 10px;
         padding: 15px;
         @include mobile {
             display: none;
         }
-        & hr {
-            margin: 0px;
-            color: rgb(158, 158, 158);
+        & .active {
+            background-color: rgb(243, 243, 243) !important;
+            box-shadow: 0px 1px 2px 0px rgb(126, 126, 126);
         }
         & .messenger-item {
+            background-color: #fff;
+
             padding: 0px 5px;
-            border-radius: 10px;
+            border-radius: 5px;
             transition: all 0.3s;
-            margin-top: 5px;
+            border: 1px solid rgb(243, 243, 243);
+            margin: 5px 0 0 0;
+            width: 100%;
             &:hover {
                 transform: translateY(-1px);
-                box-shadow: 0px 2px 2px 1px rgb(136, 136, 136);
+                box-shadow: 0px 2px 3px 1px rgb(136, 136, 136);
             }
             & .item-image {
                 padding: 5px;
@@ -52,21 +56,24 @@ $desktop-width: 1024px;
             }
             & .item-user-mess {
                 padding: 0px;
-                & .item-username {
-                    color: rgb(0, 0, 0);
-                }
-                & .item-message {
-                    color: rgb(109, 109, 109);
-                    font-size: 15px;
-                }
+                color: rgb(0, 94, 255);
+                font-size: 20px;
+                text-align: center;
+                margin: 10px 0;
+                font-weight: bold;
             }
         }
     }
 
     & .messenger-body {
+        margin-bottom: 20px;
         background-color: #fff;
-        border-radius: 20px;
-
+        border-radius: 10px;
+        box-shadow: 0px 1px 5px 1px rgb(210, 210, 210);
+        & > img {
+            border-radius: 20px;
+            width: 100%;
+        }
         & .messenger-body-header {
             padding: 5px 10px;
             margin-bottom: 10px;
@@ -75,12 +82,12 @@ $desktop-width: 1024px;
             & .chatbox-image {
                 padding: 5px;
                 & img {
-                    width: 5vw;
-                    height: 5vw;
+                    width: 4vw;
+                    height: 4vw;
                     border-radius: 50px;
                     @include desktop {
-                        width: 4vw;
-                        height: 4vw;
+                        width: 3vw;
+                        height: 3vw;
                     }
 
                     @include mobile {
@@ -97,7 +104,10 @@ $desktop-width: 1024px;
                 }
                 & .chatbox-info-status {
                     font-size: 15px;
-                    color: rgb(0, 255, 51);
+                    color: rgb(255, 0, 0);
+                }
+                & .active {
+                    color: rgb(38, 255, 0);
                 }
             }
             & .btn-videocall {
@@ -137,23 +147,35 @@ $desktop-width: 1024px;
         }
         & .body-chatbox {
             padding-left: 10px;
-            height: 330px;
+            height: 370px;
             overflow-y: auto;
+            & button {
+                background-color: rgb(243, 243, 243);
+                border: 0px;
+                width: 30%;
+                padding: 5px;
+                color: rgb(97, 97, 97);
+                align-self: center;
+                border-radius: 20px;
+                transition: all 0.2s;
+                &:hover {
+                    box-shadow: 0px 1px 2px 0px rgb(198, 198, 198);
+                }
+                @include mobile {
+                    width: 50%;
+                }
+            }
             & .chatbox-left {
                 & .chatbox-image {
                     padding: 5px;
                     & img {
-                        width: 5vw;
-                        height: 5vw;
+                        width: calc(2em + 1vw);
+                        height: calc(2em + 1vw);
                         border-radius: 50px;
-                        @include desktop {
-                            width: 4vw;
-                            height: 4vw;
-                        }
 
                         @include mobile {
-                            width: 10vw;
-                            height: 10vw;
+                            width: 7vw;
+                            height: 7vw;
                         }
                     }
                 }
@@ -165,7 +187,6 @@ $desktop-width: 1024px;
                         background-color: rgb(247, 247, 247);
                         border-radius: 0px 10px 10px 10px;
                         margin: 5px;
-                        max-width: 80%;
                         @include mobile {
                             max-width: 90%;
                         }
@@ -174,22 +195,20 @@ $desktop-width: 1024px;
             }
             & .chatbox-right {
                 margin-right: 10px;
-                & .chatbox-content {
-                    & .chatbox-content-item {
-                        padding: 5px;
-                        color: #fff;
-                        background: rgb(0, 85, 255);
-                        background: linear-gradient(
-                            62deg,
-                            rgb(0, 140, 255) 0%,
-                            rgba(213, 123, 255, 1) 100%
-                        );
-                        border-radius: 10px 0px 10px 10px;
-                        margin: 5px;
-                        max-width: 80%;
-                        @include mobile {
-                            max-width: 90%;
-                        }
+                & .chatbox-content-item {
+                    padding: 5px;
+                    color: #fff;
+                    background: rgb(0, 85, 255);
+                    background: linear-gradient(
+                        62deg,
+                        rgb(0, 140, 255) 0%,
+                        rgba(213, 123, 255, 1) 100%
+                    );
+                    border-radius: 10px 0px 10px 10px;
+                    margin: 5px;
+                    max-width: 80%;
+                    @include mobile {
+                        max-width: 90%;
                     }
                 }
             }
@@ -206,9 +225,10 @@ $desktop-width: 1024px;
             margin: 5px;
             padding: 15px 10px;
             & .chatbox-message {
-                background-color: rgb(239, 249, 255);
+                background-color: rgb(248, 248, 248);
                 padding: 15px 20px;
                 border-radius: 30px;
+                box-shadow: 0 0 5px 1px rgb(219, 219, 219);
                 & input {
                     background-color: transparent;
                     border: 0px;

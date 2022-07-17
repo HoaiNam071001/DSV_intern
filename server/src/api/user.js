@@ -36,7 +36,7 @@ const user = (() => {
                         user.username = username;
                         user.email = email;
                         user.setPassword(password);
-                        user.following = [user._id];
+                        user.following = [];
                         user.save().then(() => res.json({ user: user.toAuthJSON() }));
                         return;
                     }

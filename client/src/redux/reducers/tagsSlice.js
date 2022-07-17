@@ -24,20 +24,15 @@ const tagsSlice = createSlice({
 });
 
 export const getAllTags = createAsyncThunk('tags/getAllTags', async () => {
-    try {
-        const result = await API.getTags();
-        const tags = result.data;
-        return tags;
-    } catch (error) {
-        console.log('tag:', error);
-    }
+    const result = await API.getTags();
+    const tags = result.data;
+    return tags;
 });
 
 const selectTagsState = (state) => state.tags;
 
 export const selectTags = (state) => selectTagsState(state).tags;
 
-export const selectIsLoading = (state) =>
-    selectTagsState(state).status === Status.LOADING;
+export const selectIsLoading = (state) => selectTagsState(state).status === Status.LOADING;
 
 export default tagsSlice.reducer;

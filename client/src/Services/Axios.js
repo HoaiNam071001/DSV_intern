@@ -46,7 +46,8 @@ export const API = {
 
     getArticle: (slug) => axios.get(`/api/articles/${slug}`, config),
 
-    updateArticle: (data) => axios.put(`/api/articles/${data.slug}`, { article: data.article }, config),
+    updateArticle: (data) =>
+        axios.put(`/api/articles/${data.slug}`, { article: data.article }, config),
 
     deleteArticle: (slug) => axios.delete(`/api/articles/${slug}`, config),
 
@@ -61,4 +62,10 @@ export const API = {
     unfavoriteArticle: (slug) => axios.delete(`/api/articles/${slug}/favorite`, config),
 
     getTags: () => axios.get(`/api/tags`, config),
+
+    getRooms: () => axios.get(`/api/messenger`, config),
+
+    getbyUser: (data) => axios.post(`/api/messenger/user`, data, config),
+
+    getbyRoom: (data) => axios.post(`/api/messenger/room`, data, config),
 };

@@ -3,7 +3,9 @@
     & .header-article {
         padding: 20px 10px;
         background-color: rgb(255, 255, 255);
-        border-radius: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 5px 1px rgb(231, 231, 231);
+
         & h1 {
             margin-bottom: 10px;
         }
@@ -50,10 +52,18 @@
                 box-shadow: 0px 2px 5px 0px rgb(133, 133, 133);
             }
             & .btn-editor-article {
-                background: linear-gradient(90deg, rgba(34, 252, 209, 1) 0%, rgba(20, 0, 255, 1) 100%);
+                background: linear-gradient(
+                    90deg,
+                    rgba(34, 252, 209, 1) 0%,
+                    rgba(20, 0, 255, 1) 100%
+                );
             }
             & .btn-delete-article {
-                background: linear-gradient(90deg, rgba(223, 111, 71, 1) 0%, rgba(255, 0, 0, 1) 100%);
+                background: linear-gradient(
+                    90deg,
+                    rgba(223, 111, 71, 1) 0%,
+                    rgba(255, 0, 0, 1) 100%
+                );
             }
             ///
             & .btn-follow-article {
@@ -63,7 +73,11 @@
             }
 
             & .btn-follow-article-active {
-                background: linear-gradient(90deg, rgba(34, 252, 165, 1) 0%, rgba(113, 255, 0, 1) 100%);
+                background: linear-gradient(
+                    90deg,
+                    rgba(34, 252, 165, 1) 0%,
+                    rgba(113, 255, 0, 1) 100%
+                );
                 color: #fff;
                 border: 0px;
                 padding: 9px 11px;
@@ -76,17 +90,17 @@
             }
             & .btn-favorite-article-active {
                 padding: 9px 11px;
-                background: linear-gradient(90deg, rgba(252, 34, 203, 1) 0%, rgba(209, 0, 255, 1) 100%);
+                background: linear-gradient(
+                    90deg,
+                    rgba(252, 34, 203, 1) 0%,
+                    rgba(209, 0, 255, 1) 100%
+                );
 
                 color: #fff;
                 border: 0px;
             }
             ////
         }
-    }
-
-    & .header-article:hover {
-        box-shadow: 0 0 5px 1px rgb(219, 219, 219);
     }
 
     & .script-article {
@@ -104,7 +118,7 @@
         padding: 20px;
         font-size: 20px;
         background-color: #fff;
-        border-radius: 20px;
+        border-radius: 10px;
         & img {
             max-width: 100%;
             height: auto;

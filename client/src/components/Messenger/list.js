@@ -1,70 +1,71 @@
-function MessengerList() {
+import React, { memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectRooms } from '../../redux/reducers/roomSlice';
+import { getMessByRoom, messUnUser, selectRoom } from '../../redux/reducers/messengerSlice';
+import Badge from '@mui/material/Badge';
+
+const Item = ({ room, active, status }) => {
+    const dispatch = useDispatch();
+
+    const onMessenger = () => {
+        dispatch(messUnUser());
+        dispatch(getMessByRoom({ roomId: room.id }));
+    };
+    return (
+        <button
+            className={`messenger-item row ${active === room.id ? 'active' : ''}`}
+            onClick={onMessenger}
+        >
+            <div className="col-3 item-image d-flex align-items-center justify-content-center">
+                <Badge
+                    badgeContent=" "
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    sx={{
+                        '& span': {
+                            background: status === true ? '#0DFF00' : '#FF0000',
+                            height: 15,
+                            minWidth: 15,
+                            bottom: 3,
+                            right: 3,
+                        },
+                    }}
+                >
+                    <img
+                        src={room.members.image || require('../../Assets/avatar-thumbnail.jpg')}
+                        width="30"
+                        height="30"
+                        alt="Avatar"
+                    />
+                </Badge>
+            </div>
+            <div className="col-8 item-user-mess">{room.members.username}</div>
+        </button>
+    );
+};
+
+function MessengerList({ roomStatus }) {
+    const { rooms } = useSelector(selectRooms);
+    const CurrentRoom = useSelector(selectRoom);
+
+    if (!rooms) return <div>Loading</div>;
     return (
         <div className="messenger-list">
-            <div className="messenger-item row">
-                <div className="col-3 item-image d-flex align-items-center justify-content-center">
-                    <img src={require('../../Assets/avatar-thumbnail.jpg')} width="30" height="30" alt="Avatar" />
-                </div>
-                <div className="col-8 item-user-mess">
-                    <div className="item-username">Name</div>
-                    <div className="item-message">I love You! </div>
-                </div>
-            </div>
-            <hr />
-            <div className="messenger-item row">
-                <div className="col-3 item-image d-flex align-items-center justify-content-center">
-                    <img src={require('../../Assets/avatar-thumbnail.jpg')} width="30" height="30" alt="Avatar" />
-                </div>
-                <div className="col-8  item-user-mess">
-                    <div className="item-username">Name</div>
-                    <div className="item-message">I love You! </div>
-                </div>
-            </div>
-            <hr />
-            <div className="messenger-item row">
-                <div className="col-3 item-image d-flex align-items-center justify-content-center">
-                    <img src={require('../../Assets/avatar-thumbnail.jpg')} width="30" height="30" alt="Avatar" />
-                </div>
-                <div className="col-8 item-user-mess">
-                    <div className="item-username">Name</div>
-                    <div className="item-message">I love You! </div>
-                </div>
-            </div>
-            <hr />
+            {rooms.map((room) => {
+                return (
+                    <div key={room.id}>
+                        <Item
+                            room={room}
+                            active={CurrentRoom?.id}
+                            status={roomStatus.includes(room.members.id) ? true : false}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 }
 
-export default MessengerList;
-
-//import React, { useState, useEffect } from 'react';
-//import { io } from 'socket.io-client';
-
-//const socket = io('localhost', { reconnection: false });
-// const [isConnected, setIsConnected] = useState(socket.connected);
-// const [user, setUser] = useState('');
-// const [message, setMessage] = useState('');
-// useEffect(() => {
-//     socket.on('connect', () => {
-//         setIsConnected(true);
-//     });
-//     socket.on('disconnect', () => {
-//         setIsConnected(false);
-//     });
-//     socket.on('private message', (data) => {
-//         const node = document.createElement('li');
-//         const textnode = document.createTextNode(`${data.from}: ${data.content}`);
-//         node.appendChild(textnode);
-//         document.getElementById('message').appendChild(node);
-//     });
-//     return () => {
-//         socket.off('connect');
-//         socket.off('disconnect');
-//         socket.off('private message');
-//     };
-// }, []);
-
-// const sendMessage = (e) => {
-//     e.preventDefault();
-//     socket.emit('private message', { content: message, to: user });
-// };
+export default memo(MessengerList);

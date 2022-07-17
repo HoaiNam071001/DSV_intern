@@ -9,7 +9,6 @@ const HeaderLogin = ({ location }) => {
     const currentUser = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const LogOutUser = () => {
         dispatch(logout());
         navigate('/');
@@ -36,7 +35,11 @@ const HeaderLogin = ({ location }) => {
             </Link>
 
             <div className="p-2">
-                <div className="nav-link d-flex align-items-center" role="button" data-bs-toggle="dropdown">
+                <div
+                    className="nav-link d-flex align-items-center"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                >
                     <img
                         title="Your Profile"
                         width="40"
@@ -95,10 +98,16 @@ const HeaderLogin = ({ location }) => {
 const HeaderLogout = ({ location }) => {
     return (
         <React.Fragment>
-            <Link to="/login" className={`sign-header ${location === '/login' ? 'btn-active-out' : ''}`}>
+            <Link
+                to="/login"
+                className={`sign-header ${location === '/login' ? 'btn-active-out' : ''}`}
+            >
                 Sign in
             </Link>
-            <Link to="/register" className={`sign-header ${location === '/register' ? 'btn-active-out' : ''}`}>
+            <Link
+                to="/register"
+                className={`sign-header ${location === '/register' ? 'btn-active-out' : ''}`}
+            >
                 Sign up
             </Link>
         </React.Fragment>
@@ -127,7 +136,11 @@ const Header = () => {
                         >
                             <i className="bi bi-house-fill fs-5"></i>
                         </Link>
-                        {isAuthenticated ? <HeaderLogin location={location} /> : <HeaderLogout location={location} />}
+                        {isAuthenticated ? (
+                            <HeaderLogin location={location} />
+                        ) : (
+                            <HeaderLogout location={location} />
+                        )}
                     </div>
                 </div>
             </div>

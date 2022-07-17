@@ -19,7 +19,7 @@ export const ItemLoading = () => {
 };
 export const LoadingWrite = () => {
     return (
-        <div class="loader">
+        <div className="loader">
             <span></span>
             <span></span>
             <span></span>

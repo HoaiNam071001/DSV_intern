@@ -30,7 +30,7 @@ const Auth = ({ isRegister }) => {
     useEffect(() => () => dispatch(translate()), [dispatch]);
     return (
         <div className="container sign-in_up">
-            <div className="row col-md-6 offset-md-3 col-xs-12 shadow-lg bg-body rounded">
+            <div className="row col-md-8 offset-md-2 col-lg-6 offset-lg-3  col-xs-12 shadow-lg bg-body rounded">
                 <div className="my-3 text-center">
                     <h1 className="text-xs-center mb-3">{isRegister ? 'Sign Up' : 'Sign In'}</h1>
                 </div>

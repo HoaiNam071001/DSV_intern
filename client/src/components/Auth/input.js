@@ -12,7 +12,7 @@ const style = {
     '& .MuiOutlinedInput-root': {
         background: '#fff',
         fontSize: 17,
-        borderRadius: 4,
+        borderRadius: 2,
     },
     '& label': { fontSize: 17 },
 };

@@ -1,8 +1,10 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { follow, unfollow } from '../../redux/reducers/profileSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
+import { getMessByUser, selectMessages } from '../../redux/reducers/messengerSlice';
+
 import { ItemLoading } from '../Loading';
 import UploadAvatar from './uploadAvatar';
 const Setting = () => {
@@ -65,16 +67,43 @@ const Follow = ({ username, following }) => {
     );
 };
 
-function UserInfo({ profile, author }) {
+const OnChat = ({ profile }) => {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { status } = useSelector(selectMessages);
+
+    const handleChat = () => {
+        dispatch(getMessByUser({ userId: profile.id }));
+    };
+    useEffect(() => {
+        if (status === 'success') navigate(`/messages`);
+    }, [status, navigate]);
+    return (
+        <button
+            onClick={handleChat}
+            className={`float-end d-flex align-items-center btn-follow-profile 
+            }`}
+        >
+            Chat
+        </button>
+    );
+};
+
+const UserInfo = ({ profile }) => {
     const currentUser = useSelector(selectUser);
-    const isCurrentUser = profile.username === currentUser?.username;
+    const isCurrentUser = profile.id === currentUser?.id;
     const [modal, setModal] = useState(false);
+    const changeAvatar = () => {
+        if (isCurrentUser) setModal(!modal);
+    };
     return (
         <div className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
                 <div
-                    className="rounded-circle text-center container-avt-img"
-                    onClick={() => setModal(!modal)}
+                    className={`rounded-circle text-center container-avt-img ${
+                        isCurrentUser ? 'current-user' : ''
+                    }`}
+                    onClick={changeAvatar}
                 >
                     <img
                         src={profile.image || require('../../Assets/avatar-thumbnail.jpg')}
@@ -82,9 +111,7 @@ function UserInfo({ profile, author }) {
                         alt={profile.username}
                     />
                 </div>
-                {modal && profile.username === author.username && (
-                    <UploadAvatar image={profile.image} setModal={setModal} />
-                )}
+                {modal && <UploadAvatar image={profile.image} setModal={setModal} />}
             </div>
             <div className="text-center m-2">
                 {profile.username ? (
@@ -99,11 +126,14 @@ function UserInfo({ profile, author }) {
                 {isCurrentUser ? (
                     <Setting />
                 ) : (
-                    <Follow username={profile.username} following={profile.following} />
+                    <>
+                        {currentUser && <OnChat profile={profile} />}
+                        <Follow username={profile.username} following={profile.following} />
+                    </>
                 )}
             </div>
         </div>
     );
-}
+};
 
 export default memo(UserInfo);

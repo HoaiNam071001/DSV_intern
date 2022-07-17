@@ -11,12 +11,13 @@ $bg-blog: #003c97;
     width: 100%;
     font-size: 20px;
     font-weight: bold;
-    transition: transform 0.5s, box-shadow 0.5s;
+    transition: all 0.3s;
+    border-radius: 20px;
 }
 .btn-home-title:hover {
     transform: translateY(-2px);
     opacity: 0.8;
-    box-shadow: 0px 5px 5px 0px rgb(137, 137, 137);
+    box-shadow: 0px 2px 5px 0px rgb(137, 137, 137);
 }
 
 .btn-home-title-active {
@@ -36,6 +37,7 @@ $bg-blog: #003c97;
     margin: 5px;
     padding: 5px;
     & .tag-item {
+        border-radius: 15px;
         margin-right: 5px;
         margin-bottom: 10px;
         background-color: rgb(255, 255, 255);

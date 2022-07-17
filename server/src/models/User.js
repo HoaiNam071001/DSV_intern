@@ -22,7 +22,6 @@ const UserSchema = new mongoose.Schema(
         image: String,
         bio: String,
         following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-        rooms: [String],
     },
     { timestamps: true }
 );
@@ -44,17 +43,18 @@ UserSchema.methods.generateJWT = function () {
 
 UserSchema.methods.toAuthJSON = function () {
     return {
+        id: this._id,
         username: this.username,
         email: this.email,
         token: this.generateJWT(),
         bio: this.bio,
         image: this.image,
-        rooms: this.rooms || [],
     };
 };
 
 UserSchema.methods.toProfileJSONFor = function (user) {
     return {
+        id: this._id,
         username: this.username,
         bio: this.bio,
         image: this.image || null,
@@ -64,6 +64,7 @@ UserSchema.methods.toProfileJSONFor = function (user) {
 
 UserSchema.methods.toMessJSON = function () {
     return {
+        id: this._id,
         username: this.username,
         image: this.image || null,
     };

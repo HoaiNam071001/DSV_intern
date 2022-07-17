@@ -7,7 +7,8 @@ import tagsSlice from './reducers/tagsSlice';
 import profileSlice from './reducers/profileSlice';
 import articleSlice from './reducers/articleSlice';
 import commentsSlice from './reducers/commentsSlice';
-
+import roomsSlice from './reducers/roomSlice';
+import messengerSlice from './reducers/messengerSlice';
 export function makeStore(preloadedState) {
     return configureStore({
         reducer: {
@@ -17,6 +18,8 @@ export function makeStore(preloadedState) {
             profile: profileSlice,
             article: articleSlice,
             comments: commentsSlice,
+            room: roomsSlice,
+            messenger: messengerSlice,
         },
         devTools: true,
         preloadedState,

@@ -1,16 +1,18 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-require('./models/User');
 require('./models/Article');
+require('./models/User');
 require('./models/Comment');
+require('./models/Room');
 require('./models/Message');
+
 const port = 3060;
 const route = require('./routes');
-const socket = require('./socket');
+const socket = require('./socket/socket');
 
 const cors = require('cors');
-const connectDB = require('./Db');
+const connectDB = require('./database');
 connectDB();
 app.use(cors());
 // define : post
@@ -21,7 +23,8 @@ var server = app.listen(process.env.PORT || port, () => {
     console.log(`Example app listening on port ${server.address().port}`);
 });
 
-//socket(server);
+socket(server);
+
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

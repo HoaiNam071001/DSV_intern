@@ -13,11 +13,7 @@ router.delete('/:slug_article', VerifyToken, articles.deleteArticle);
 
 router.get('/:slug_article/comments', CheckToken, comments.getComments);
 router.post('/:slug_article/comments', VerifyToken, comments.createComments);
-router.delete(
-    '/:slug_article/comments/:id_comment',
-    VerifyToken,
-    comments.deleteComment,
-);
+router.delete('/:slug_article/comments/:id_comment', VerifyToken, comments.deleteComment);
 
 router.post('/:slug_article/favorite', VerifyToken, favorites.favorite);
 router.delete('/:slug_article/favorite', VerifyToken, favorites.unfavorite);
