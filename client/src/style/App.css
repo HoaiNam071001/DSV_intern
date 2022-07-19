@@ -55,9 +55,11 @@
   top: 0px;
   left: 0px;
   right: 0px;
-  background-color: white;
-  border-bottom: 1px solid #e1e1e1;
+  background-color: rgba(215, 215, 215, 0.052);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.27);
   z-index: 10; }
+  .header-container .title-header img {
+    height: 50px; }
   .header-container .btn-header {
     color: #000;
     background: #fafafa;
@@ -89,12 +91,27 @@
     background: rgba(0, 89, 255, 0.088);
     color: #0008ff; }
 
+.init-web {
+  background-image: url(../Assets/bckground-main2.png);
+  background-size: 40vw;
+  background-repeat: no-repeat;
+  background-position: top left;
+  height: 43vw; }
+  @media (min-width: 576px) and (max-width: 767px) {
+    .init-web {
+      background-size: 60vw;
+      height: 55vw; } }
+  @media (max-width: 575px) {
+    .init-web {
+      background-size: 70%;
+      height: 65vw; } }
+
 .tab-home-head {
-  margin-bottom: 30px; }
+  margin-bottom: 20px; }
 
 .btn-home-title {
   border: 0px;
-  background-color: white;
+  background-color: rgba(255, 255, 255, 0.786);
   padding: 8px 10px;
   color: #000;
   width: 100%;
@@ -136,13 +153,14 @@
     box-shadow: 0px 1px 5px 1px #c1c1c1; }
 
 .feed-container .list-article {
+  min-height: 800px;
   padding-right: 3px; }
   .feed-container .list-article .feed-item {
     border: 0;
     padding: 15px 10px;
     margin-bottom: 15px;
     transition: transform 0.3s, box-shadow 0.3s;
-    background-color: #fff;
+    background-color: rgba(255, 255, 255, 0.904);
     border-radius: 10px;
     min-height: 170px; }
     .feed-container .list-article .feed-item .item-author {
@@ -181,25 +199,12 @@
     overflow: hidden;
     height: 25px; }
   .feed-container .list-article .btn-favorate {
-    width: 100%;
-    margin-right: 10px;
-    border-radius: 20px;
-    border: 0px;
-    background-color: #eaeaea; }
-    .feed-container .list-article .btn-favorate img {
-      width: 15px;
-      display: inline; }
-    .feed-container .list-article .btn-favorate div {
-      margin: 4px;
-      display: inline;
-      font-size: 15px;
-      color: black; }
-  .feed-container .list-article .btn-favorate-active {
-    background: linear-gradient(90deg, #ff00e4 0%, #ae00ff 100%); }
-    .feed-container .list-article .btn-favorate-active div {
-      color: white; }
-  .feed-container .list-article .btn-favorate:hover {
-    opacity: 0.7; }
+    background-color: white;
+    color: #ff2212;
+    margin-right: 3px;
+    font-size: 30px; }
+    .feed-container .list-article .btn-favorate:hover {
+      opacity: 0.7; }
 
 .container-info-profile {
   border-radius: 10px;
@@ -361,6 +366,19 @@
     transform: translateY(-1px);
     color: #000fb5;
     box-shadow: 0px 1px 3px 0px #a5a5a5; }
+
+.thumbnail-container .image {
+  padding-bottom: 20px;
+  text-align: center; }
+  .thumbnail-container .image img {
+    width: 50%;
+    border-radius: 10px; }
+    @media (min-width: 576px) and (max-width: 767px) {
+      .thumbnail-container .image img {
+        width: 60%; } }
+    @media (max-width: 575px) {
+      .thumbnail-container .image img {
+        width: 70%; } }
 
 .tag-item-article {
   cursor: pointer;
@@ -552,7 +570,6 @@
   list-style-type: none;
   padding: 15px 5px;
   border-radius: 10px;
-  background-color: #fff;
   margin-top: 10px; }
   .pagination-container .pagination-item {
     padding: 0 12px;
@@ -601,17 +618,22 @@
   padding: 10px;
   margin-bottom: 15px; }
 
-.messenger-container .messenger-list {
+@media (max-width: 575px) {
+  .messenger-container .messenger-list-container {
+    display: none; } }
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .messenger-container .messenger-list-container {
+    display: none; } }
+
+.messenger-container .messenger-list-container .messenger-list {
   background-color: #fff;
   border-radius: 10px;
   padding: 15px; }
-  @media (max-width: 575px) {
-    .messenger-container .messenger-list {
-      display: none; } }
-  .messenger-container .messenger-list .active {
+  .messenger-container .messenger-list-container .messenger-list .active {
     background-color: #f3f3f3 !important;
     box-shadow: 0px 1px 2px 0px #7e7e7e; }
-  .messenger-container .messenger-list .messenger-item {
+  .messenger-container .messenger-list-container .messenger-list .messenger-item {
     background-color: #fff;
     padding: 0px 5px;
     border-radius: 5px;
@@ -619,20 +641,20 @@
     border: 1px solid #f3f3f3;
     margin: 5px 0 0 0;
     width: 100%; }
-    .messenger-container .messenger-list .messenger-item:hover {
+    .messenger-container .messenger-list-container .messenger-list .messenger-item:hover {
       transform: translateY(-1px);
       box-shadow: 0px 2px 3px 1px #888888; }
-    .messenger-container .messenger-list .messenger-item .item-image {
+    .messenger-container .messenger-list-container .messenger-list .messenger-item .item-image {
       padding: 5px; }
-      .messenger-container .messenger-list .messenger-item .item-image img {
+      .messenger-container .messenger-list-container .messenger-list .messenger-item .item-image img {
         border-radius: 50px; }
-    .messenger-container .messenger-list .messenger-item .item-user-mess {
-      padding: 0px;
-      color: #005eff;
+    .messenger-container .messenger-list-container .messenger-list .messenger-item .item-user-mess {
+      padding: 5px;
+      color: #0003c2;
       font-size: 20px;
-      text-align: center;
-      margin: 10px 0;
-      font-weight: bold; }
+      margin: 5px 0;
+      font-weight: bold;
+      text-align: left; }
 
 .messenger-container .messenger-body {
   margin-bottom: 20px;
@@ -664,8 +686,10 @@
     .messenger-container .messenger-body .messenger-body-header .chatbox-header-info {
       margin-left: 5px; }
       .messenger-container .messenger-body .messenger-body-header .chatbox-header-info .chatbox-info-name {
-        font-size: 17px;
-        font-weight: bold; }
+        font-size: 18px;
+        font-weight: bold;
+        color: #3d00cc;
+        text-decoration: none; }
       .messenger-container .messenger-body .messenger-body-header .chatbox-header-info .chatbox-info-status {
         font-size: 15px;
         color: red; }
@@ -782,11 +806,15 @@
         opacity: 0.8; }
 
 .container-app {
-  margin-top: 80px;
+  margin-top: 70px;
   margin-bottom: 10px; }
 
 body {
-  background-color: #ebf0f5; }
+  background: #e1fdff;
+  background-image: url(../Assets/background-s.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: top left; }
 
 .link-nodecoration {
   text-decoration: none; }

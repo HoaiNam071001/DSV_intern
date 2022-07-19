@@ -116,7 +116,7 @@ const Articles = (() => {
     };
     const updateArticle = (req, res, next) => {
         try {
-            const { title, description, body, tagList } = req.body.article,
+            const { title, description, body, tagList, thumbnail } = req.body.article,
                 slug = req.params.slug_article,
                 id = req.payload.id;
             Promise.all([Article.findOne({ slug }).populate('author').exec(), User.findById(id)]).then(
@@ -128,7 +128,7 @@ const Articles = (() => {
                     if (description !== undefined) article.description = description;
                     if (body !== undefined) article.body = body;
                     if (tagList !== undefined) article.tagList = tagList;
-
+                    if (thumbnail !== undefined) article.thumbnail = thumbnail;
                     article
                         .save()
                         .then((article) => res.json({ article: article.toJSONFor(user) }))

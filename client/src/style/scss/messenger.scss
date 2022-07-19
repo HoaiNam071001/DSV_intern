@@ -6,6 +6,11 @@ $desktop-width: 1024px;
         @content;
     }
 }
+@mixin mobiletable {
+    @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1px}) {
+        @content;
+    }
+}
 @mixin tablet {
     @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
         @content;
@@ -24,43 +29,49 @@ $desktop-width: 1024px;
         padding: 10px;
         margin-bottom: 15px;
     }
-    & .messenger-list {
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 15px;
+    & .messenger-list-container {
         @include mobile {
             display: none;
         }
-        & .active {
-            background-color: rgb(243, 243, 243) !important;
-            box-shadow: 0px 1px 2px 0px rgb(126, 126, 126);
+        @include mobiletable {
+            display: none;
         }
-        & .messenger-item {
+        & .messenger-list {
             background-color: #fff;
+            border-radius: 10px;
+            padding: 15px;
 
-            padding: 0px 5px;
-            border-radius: 5px;
-            transition: all 0.3s;
-            border: 1px solid rgb(243, 243, 243);
-            margin: 5px 0 0 0;
-            width: 100%;
-            &:hover {
-                transform: translateY(-1px);
-                box-shadow: 0px 2px 3px 1px rgb(136, 136, 136);
+            & .active {
+                background-color: rgb(243, 243, 243) !important;
+                box-shadow: 0px 1px 2px 0px rgb(126, 126, 126);
             }
-            & .item-image {
-                padding: 5px;
-                & img {
-                    border-radius: 50px;
+            & .messenger-item {
+                background-color: #fff;
+
+                padding: 0px 5px;
+                border-radius: 5px;
+                transition: all 0.3s;
+                border: 1px solid rgb(243, 243, 243);
+                margin: 5px 0 0 0;
+                width: 100%;
+                &:hover {
+                    transform: translateY(-1px);
+                    box-shadow: 0px 2px 3px 1px rgb(136, 136, 136);
                 }
-            }
-            & .item-user-mess {
-                padding: 0px;
-                color: rgb(0, 94, 255);
-                font-size: 20px;
-                text-align: center;
-                margin: 10px 0;
-                font-weight: bold;
+                & .item-image {
+                    padding: 5px;
+                    & img {
+                        border-radius: 50px;
+                    }
+                }
+                & .item-user-mess {
+                    padding: 5px;
+                    color: rgb(0, 3, 194);
+                    font-size: 20px;
+                    margin: 5px 0;
+                    font-weight: bold;
+                    text-align: left;
+                }
             }
         }
     }
@@ -99,8 +110,10 @@ $desktop-width: 1024px;
             & .chatbox-header-info {
                 margin-left: 5px;
                 & .chatbox-info-name {
-                    font-size: 17px;
+                    font-size: 18px;
                     font-weight: bold;
+                    color: rgb(61, 0, 204);
+                    text-decoration: none;
                 }
                 & .chatbox-info-status {
                     font-size: 15px;

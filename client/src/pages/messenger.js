@@ -68,7 +68,7 @@ const Messenger = () => {
             <div className="row">
                 <div className="col-12 col-lg-10 offset-lg-1 col-xl-8 offset-xl-2">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-4 ">
                             <List roomStatus={roomStatus} />
                         </div>
                         <div className="col-md-8 col-sm-12">

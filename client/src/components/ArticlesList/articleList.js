@@ -6,18 +6,19 @@ import Loading from '../Loading';
 import Pagination from '../pagination/pagination';
 const Articles = () => {
     const { articles } = useSelector(selectarticleListSlice);
-    if (!articles) return <Loading />;
-    if (articles.length === 0)
-        return <div className="text-center fs-3">No articles are here... yet.</div>;
     return (
         <div className="feed-container">
             <div className="list-article">
-                {articles.map((article) => (
-                    <ArticleItem key={article.slug} article={article} />
-                ))}
+                {!articles ? (
+                    <Loading />
+                ) : articles.length === 0 ? (
+                    <div className="text-center fs-3">No articles are here... yet.</div>
+                ) : (
+                    articles.map((article) => <ArticleItem key={article.slug} article={article} />)
+                )}
             </div>
 
-            <Pagination />
+            {articles && <Pagination />}
         </div>
     );
 };

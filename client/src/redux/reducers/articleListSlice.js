@@ -56,23 +56,37 @@ const articleListSlice = createSlice({
                 state.articles = null;
             });
 
-        builder.addCase(getArticlesByTag.fulfilled, (state, action) => {
-            state.articles = action.payload.articles;
-            state.pagination = action.payload.pagination;
-            state.tag = action.meta.arg?.tag;
-        });
+        builder
+            .addCase(getArticlesByTag.fulfilled, (state, action) => {
+                state.articles = action.payload.articles;
+                state.pagination = action.payload.pagination;
+                state.tag = action.meta.arg?.tag;
+            })
+            .addCase(getArticlesByTag.pending, (state, action) => {
+                state.articles = null;
+            });
 
-        builder.addCase(getArticlesByAuthor.fulfilled, (state, action) => {
-            state.articles = action.payload.articles;
-            state.pagination = action.payload.pagination;
-            state.author = action.meta.arg?.author;
-        });
+        builder
+            .addCase(getArticlesByAuthor.fulfilled, (state, action) => {
+                state.articles = action.payload.articles;
+                state.pagination = action.payload.pagination;
+                state.author = action.meta.arg?.author;
+                state.favorited = undefined;
+            })
+            .addCase(getArticlesByAuthor.pending, (state, action) => {
+                state.articles = null;
+            });
 
-        builder.addCase(getFavoriteArticles.fulfilled, (state, action) => {
-            state.articles = action.payload.articles;
-            state.pagination = action.payload.pagination;
-            state.favorited = action.meta.arg?.favorited;
-        });
+        builder
+            .addCase(getFavoriteArticles.fulfilled, (state, action) => {
+                state.articles = action.payload.articles;
+                state.pagination = action.payload.pagination;
+                state.favorited = action.meta.arg?.favorited;
+                state.author = undefined;
+            })
+            .addCase(getFavoriteArticles.pending, (state, action) => {
+                state.articles = null;
+            });
         builder.addMatcher(
             (action) => [profilePageUnloaded.type].includes(action.type),
             () => initialState
@@ -148,11 +162,14 @@ export const favoriteArticle = createAsyncThunk('articleList/favoriteArticle', a
     return articles;
 });
 
-export const unfavoriteArticle = createAsyncThunk('articleList/unfavoriteArticle', async (title) => {
-    const result = await API.unfavoriteArticle(title);
-    const articles = result.data;
-    return articles;
-});
+export const unfavoriteArticle = createAsyncThunk(
+    'articleList/unfavoriteArticle',
+    async (title) => {
+        const result = await API.unfavoriteArticle(title);
+        const articles = result.data;
+        return articles;
+    }
+);
 
 export const selectarticleListSlice = (state) => state.articleList;
 

@@ -15,6 +15,7 @@ const Pagination = () => {
     });
     const onPageChange = (current) => {
         dispatch(getAllArticles({ page: current }));
+        document.getElementById('topscroll').scrollIntoView({ behavior: 'smooth' });
     };
 
     if (currentPage === 0 || paginationRange.length < 2) {

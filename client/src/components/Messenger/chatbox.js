@@ -11,7 +11,7 @@ import {
     getMessByRoom,
 } from '../../redux/reducers/messengerSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
-
+// import Emoji from './emoji';
 function Chatbox({ socket, messenger, room }) {
     const dispatch = useDispatch();
     const { count } = useSelector(selectMessages);
@@ -88,6 +88,7 @@ function Chatbox({ socket, messenger, room }) {
                     />
                     <div className="col-1 icon-chatbox d-flex justify-content-end">
                         <i className="bi bi-emoji-smile"></i>
+                        {/* <Emoji onEmojiSelect={console.log} /> */}
                     </div>
                 </div>
                 <div className="chatbox-send col-2 d-flex justify-content-center align-items-center">

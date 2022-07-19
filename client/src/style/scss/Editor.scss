@@ -1,3 +1,21 @@
+@import './responsive.scss';
+
+.thumbnail-container {
+    & .image {
+        padding-bottom: 20px;
+        text-align: center;
+        & img {
+            width: 50%;
+            border-radius: 10px;
+            @include mobiletable {
+                width: 60%;
+            }
+            @include mobile {
+                width: 70%;
+            }
+        }
+    }
+}
 .tag-item-article {
     cursor: pointer;
     background: rgb(112, 228, 255);

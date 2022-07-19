@@ -1,9 +1,9 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { follow, unfollow } from '../../redux/reducers/profileSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
-import { getMessByUser, selectMessages } from '../../redux/reducers/messengerSlice';
+import { getMessByUser } from '../../redux/reducers/messengerSlice';
 
 import { ItemLoading } from '../Loading';
 import UploadAvatar from './uploadAvatar';
@@ -70,14 +70,11 @@ const Follow = ({ username, following }) => {
 const OnChat = ({ profile }) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { status } = useSelector(selectMessages);
 
     const handleChat = () => {
         dispatch(getMessByUser({ userId: profile.id }));
+        navigate(`/messages`);
     };
-    useEffect(() => {
-        if (status === 'success') navigate(`/messages`);
-    }, [status, navigate]);
     return (
         <button
             onClick={handleChat}
@@ -97,7 +94,7 @@ const UserInfo = ({ profile }) => {
         if (isCurrentUser) setModal(!modal);
     };
     return (
-        <div className="p-3 container-info-profile">
+        <div id="topscroll" className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
                 <div
                     className={`rounded-circle text-center container-avt-img ${

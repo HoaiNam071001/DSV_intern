@@ -24,6 +24,7 @@ const EditArticle = () => {
     const { article, errors, inProgress, success } = useSelector(selectArticle);
     const { slug } = useParams();
 
+    const [thumbnail, setThumbnail] = useState('');
     const [body, setBody] = useState('');
     const [tagList, setTagList] = useState([]);
     const [tagIn, setTagin] = useState('');
@@ -40,6 +41,7 @@ const EditArticle = () => {
     };
     useEffect(() => {
         if (slug && article) {
+            setThumbnail(article.thumbnail);
             setBody(article.body);
             setTagList(article.tagList);
         }
@@ -84,6 +86,7 @@ const EditArticle = () => {
                                 description: values.description,
                                 body,
                                 tagList,
+                                thumbnail,
                             };
                             dispatch(
                                 slug ? updateArticle({ slug, article }) : createArticle(article)
@@ -114,6 +117,25 @@ const EditArticle = () => {
                                     type="text"
                                     placeholder="Write description for Article"
                                 />
+                                <div className="thumbnail-container row">
+                                    <div className="col-6 col-md-8">
+                                        <Input
+                                            label="Thumnail"
+                                            name="thumnail"
+                                            value={thumbnail}
+                                            onChange={(e) => setThumbnail(e.target.value)}
+                                            type="text"
+                                            placeholder="Write description for Article"
+                                        />
+                                    </div>
+                                    <div className="col-6 col-md-4 image">
+                                        <img
+                                            src={thumbnail || require('../../Assets/blog.jpg')}
+                                            alt="thumnail"
+                                        />
+                                    </div>
+                                </div>
+
                                 <div className="mb-4 text-body">
                                     <JoditEditor
                                         body={body}

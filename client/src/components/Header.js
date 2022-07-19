@@ -122,8 +122,8 @@ const Header = () => {
             <div className="container">
                 <div className="row">
                     <div className="col d-flex align-items-center">
-                        <Link to="/" className="navbar-brand fs-2 fw-bolder">
-                            Blog
+                        <Link to="/" className="title-header navbar-brand fs-2 fw-bolder">
+                            <img src={require('../Assets/logo.png')} alt="Blog" />
                         </Link>
                     </div>
                     <div className="col d-flex justify-content-end align-items-center">

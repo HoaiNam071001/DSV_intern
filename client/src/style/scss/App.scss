@@ -25,11 +25,15 @@
 @import './pagination.scss';
 @import './messenger.scss';
 .container-app {
-    margin-top: 80px;
+    margin-top: 70px;
     margin-bottom: 10px;
 }
 body {
-    background-color: #ebf0f5;
+    background: rgb(225, 253, 255);
+    background-image: url(../Assets/background-s.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: top left;
 }
 .link-nodecoration {
     text-decoration: none;

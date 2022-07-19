@@ -52,18 +52,21 @@ function MessengerList({ roomStatus }) {
 
     if (!rooms) return <div>Loading</div>;
     return (
-        <div className="messenger-list">
-            {rooms.map((room) => {
-                return (
-                    <div key={room.id}>
-                        <Item
-                            room={room}
-                            active={CurrentRoom?.id}
-                            status={roomStatus.includes(room.members.id) ? true : false}
-                        />
-                    </div>
-                );
-            })}
+        <div className="messenger-list-container">
+            <button>List Friend</button>
+            <div className="messenger-list">
+                {rooms.map((room) => {
+                    return (
+                        <div key={room.id}>
+                            <Item
+                                room={room}
+                                active={CurrentRoom?.id}
+                                status={roomStatus.includes(room.members.id) ? true : false}
+                            />
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

@@ -19,17 +19,26 @@ const Home = () => {
         };
     }, [dispatch, isAuthenticated]);
     return (
-        <div className="container my-3">
-            <div className="row">
-                <div className="col-sm-12 col-lg-9">
-                    <Tabhome />
-                    <ArticleList />
-                </div>
-                <div className="col-sm-auto col-lg-3">
-                    <TagsSidebar />
+        <>
+            <div className="init-web">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-5 offset-sm-7 col-md-6 offset-md-6 col-12">Blog</div>
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="container my-3">
+                <div className="row">
+                    <div className="col-sm-12 col-lg-9">
+                        <Tabhome />
+                        <ArticleList />
+                    </div>
+                    <div className="col-sm-auto col-lg-3">
+                        <TagsSidebar />
+                    </div>
+                </div>
+            </div>
+        </>
     );
 };
 

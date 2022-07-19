@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
+
 import { Formik, Form } from 'formik';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,7 +36,6 @@ const Auth = ({ isRegister }) => {
                     <h1 className="text-xs-center mb-3">{isRegister ? 'Sign Up' : 'Sign In'}</h1>
                 </div>
                 <div className="px-4">
-                    <Message messagess={errors} />
                     <Formik
                         initialValues={isRegister ? initSignUp : initSignIn}
                         validationSchema={isRegister ? objSignUp : objSignIn}
@@ -94,12 +94,19 @@ const Auth = ({ isRegister }) => {
                                 className={`btn-submit-sign ${inProgress ? 'btn-disabled' : ''}`}
                                 disabled={inProgress}
                             >
+                                {inProgress && (
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                )}
+
                                 {isRegister ? 'Sign Up' : 'Sign In'}
                             </button>
                         </Form>
                     </Formik>
                 </div>
-
                 <div className="my-3 text-center">
                     <p className="text-xs-center">
                         {isRegister ? (
@@ -108,6 +115,7 @@ const Auth = ({ isRegister }) => {
                             <Link to="/register">Need an account?</Link>
                         )}
                     </p>
+                    <Message messagess={errors} />
                 </div>
             </div>
         </div>

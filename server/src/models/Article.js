@@ -9,6 +9,7 @@ const ArticleSchema = new mongoose.Schema(
         title: String,
         description: String,
         body: String,
+        thumbnail: String,
         tagList: {
             type: Array,
             default: [],
@@ -25,7 +26,7 @@ const ArticleSchema = new mongoose.Schema(
             unique: true,
         },
     },
-    { timestamps: true },
+    { timestamps: true }
 );
 
 ArticleSchema.methods.toJSONFor = function (user) {
@@ -34,6 +35,7 @@ ArticleSchema.methods.toJSONFor = function (user) {
         title: this.title,
         description: this.description,
         body: this.body,
+        thumbnail: this.thumbnail,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
         tagList: this.tagList,
@@ -54,9 +56,7 @@ ArticleSchema.methods.unfavorite = function (id) {
 };
 
 ArticleSchema.methods.isFavorite = function (id) {
-    return this.favoriteList.some(
-        (userId) => userId.toString() === id.toString(),
-    );
+    return this.favoriteList.some((userId) => userId.toString() === id.toString());
 };
 
 mongoose.model('Article', ArticleSchema);
