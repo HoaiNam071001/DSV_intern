@@ -1,15 +1,22 @@
-FROM --platform=linux/amd64 node:16.13.0
+FROM node:16-alpine AS builder
 
 WORKDIR /app
-COPY package*.json ./
 ENV PORT=80
 ENV REACT_APP_SERVER="https://namnh.api.internship.designveloper.com"
 
-RUN npm install npm@8.5.3 -g
-
-RUN npm install
+COPY package*.json .
+RUN npm install --legacy-peer-deps
 
 COPY . .
 
+RUN npm run build
 
-CMD ["npm","start"]
+# Bundle static assets with nginx
+FROM nginx:1.22.0-alpine
+# Copy built assets from builder
+COPY --from=builder /app/build /usr/share/nginx/html
+# Add your nginx.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

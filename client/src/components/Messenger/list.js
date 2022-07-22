@@ -32,7 +32,7 @@ const Item = ({ room, active, status }) => {
                     }}
                     sx={{
                         '& span': {
-                            background: status === true ? '#0DFF00' : '#FF0000',
+                            background: status === true ? '#0DFF00' : '#e8e8e8',
                             height: 15,
                             minWidth: 15,
                             bottom: 3,

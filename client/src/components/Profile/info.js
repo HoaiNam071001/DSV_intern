@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-
+import ChatIcon from '@mui/icons-material/Chat';
 import { follow, unfollow } from '../../redux/reducers/profileSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
 import { getMessByUser } from '../../redux/reducers/messengerSlice';
@@ -61,9 +61,10 @@ const OnChat = ({ profile }) => {
     return (
         <button
             onClick={handleChat}
-            className={`float-end d-flex align-items-center btn-follow-profile 
+            className={`float-end d-flex align-items-center btn-chat-profile 
             }`}
         >
+            <ChatIcon className="mx-1" />
             Chat
         </button>
     );

@@ -158,12 +158,26 @@ $desktop-width: 1024px;
         color: #fff;
         border-radius: 20px;
         transition: all 0.3s;
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0px 4px 5px 1px rgb(163, 163, 163);
+        }
     }
-    & .btn-edit-profile:hover {
-        transform: translateY(-1px);
-        box-shadow: 0px 4px 5px 1px rgb(163, 163, 163);
-    }
+    & .btn-chat-profile {
+        margin-right: 10px;
+        background: rgb(43, 202, 255);
+        background: linear-gradient(90deg, rgb(0, 200, 255) 0%, rgb(0, 115, 255) 100%);
 
+        color: rgb(255, 255, 255);
+        border-radius: 20px;
+        padding: 7px 15px;
+        border: 1px solid rgb(204, 204, 204);
+        transition: all 0.3s;
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0px 4px 5px 1px rgb(166, 166, 166);
+        }
+    }
     & .btn-follow-profile {
         margin-right: 10px;
         background: rgb(255, 255, 255);
@@ -171,6 +185,11 @@ $desktop-width: 1024px;
         border-radius: 20px;
         padding: 7px 15px;
         border: 1px solid rgb(204, 204, 204);
+        transition: all 0.3s;
+        &:hover {
+            transform: translateY(-1px);
+            box-shadow: 0px 4px 5px 1px rgb(166, 166, 166);
+        }
     }
     & .btn-follow-profile-active {
         background: linear-gradient(90deg, rgb(36, 226, 255) 0%, rgb(0, 255, 149) 100%);

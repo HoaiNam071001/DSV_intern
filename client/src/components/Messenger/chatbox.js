@@ -12,6 +12,7 @@ import {
 } from '../../redux/reducers/messengerSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
 // import Emoji from './emoji';
+let cmt = /^ *$/;
 function Chatbox({ socket, messenger, room }) {
     const dispatch = useDispatch();
     const { count } = useSelector(selectMessages);
@@ -19,7 +20,7 @@ function Chatbox({ socket, messenger, room }) {
     const [content, setContent] = useState('');
     const _inputchat = useRef(null);
     const add = () => {
-        if (content === '') return;
+        if (cmt.test(content)) return;
         const messageClient = { content, id: uuidv4(), createdAt: Date.now(), sender: currentUser };
         dispatch(addMessage({ message: messageClient }));
         socket.emit('send', { message: messageClient, to: room.id }, ({ message }) => {
@@ -28,7 +29,9 @@ function Chatbox({ socket, messenger, room }) {
         setContent('');
         _inputchat.current.focus();
     };
-
+    const keyPress = (e) => {
+        if (e.keyCode === 13 && !e.shiftKey) add();
+    };
     const olderMessages = () => {
         dispatch(getMessByRoom({ roomId: room.id, next: true }));
     };
@@ -39,9 +42,6 @@ function Chatbox({ socket, messenger, room }) {
     return (
         <>
             <div className="body-chatbox d-flex flex-column-reverse">
-                {/* <div className="loading-write d-flex align-items-center justify-content-center">
-                    <LoadingWrite />
-                </div> */}
                 <div className="d-flex flex-column-reverse">
                     {messenger.map((mess) => {
                         if (mess.sender.id === currentUser.id)
@@ -61,7 +61,13 @@ function Chatbox({ socket, messenger, room }) {
                                 className="chatbox-left d-flex"
                             >
                                 <div className="chatbox-image">
-                                    <img src={mess.sender.image} alt="Avatar" />
+                                    <img
+                                        src={
+                                            mess.sender.image ||
+                                            require('../../Assets/avatar-thumbnail.jpg')
+                                        }
+                                        alt="Avatar"
+                                    />
                                 </div>
                                 <div className="chatbox-content d-flex align-items-start flex-column">
                                     <div className="chatbox-content-item">{mess.content}</div>
@@ -83,7 +89,7 @@ function Chatbox({ socket, messenger, room }) {
                         placeholder="Type a message"
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
-                        onKeyUp={(e) => (e.key === 'Enter' ? add() : null)}
+                        onKeyDown={keyPress}
                     />
                     <div className="col-1 icon-chatbox d-flex justify-content-end">
                         <i className="bi bi-emoji-smile"></i>
