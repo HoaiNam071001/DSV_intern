@@ -5,7 +5,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
-
+import ClearIcon from '@mui/icons-material/Clear';
 import Message from '../Message';
 import {
     getArticle,
@@ -29,21 +29,26 @@ const EditArticle = () => {
     const [tagList, setTagList] = useState([]);
     const [tagIn, setTagin] = useState('');
 
-    const handleEnter = (e) => {
-        e.preventDefault();
-        if (e.key === 'Enter') {
+    const handleTab = (e) => {
+        if (e.keyCode == 9) {
+            e.preventDefault();
             if (tagIn && !tagList.includes(tagIn)) setTagList([...tagList, tagIn]);
             setTagin('');
         }
     };
-    const removeTag = (e) => {
-        setTagList((pre) => pre.filter((value) => value !== e.target.outerText));
+    const removeTag = (tag) => {
+        const fileterOldTag = (tagList) => tagList.filter((value) => value !== tag);
+        setTagList((pre) => fileterOldTag(pre));
     };
     useEffect(() => {
         if (slug && article) {
             setThumbnail(article.thumbnail);
             setBody(article.body);
             setTagList(article.tagList);
+        } else if (!slug) {
+            setThumbnail('');
+            setBody('');
+            setTagList([]);
         }
     }, [article, slug]);
 
@@ -52,13 +57,13 @@ const EditArticle = () => {
         return () => dispatch(articlePageUnloaded());
     }, [slug, dispatch]);
 
-    if ((slug && !article) || (!slug && article)) return <Loading />;
+    if (slug && !article) return <Loading />;
     return (
         <div className="container ">
             <div className="row">
                 <div className=" col-12 col-md-10 offset-md-1 editor-container">
                     <div className="text-center fs-2 fw-bold m-2">
-                        {slug ? 'Update Article' : 'Create a New Article'}
+                        {slug ? 'Update Article' : 'New Article'}
                     </div>
                     <div className="text-center col-12 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
                         {success && (
@@ -71,9 +76,10 @@ const EditArticle = () => {
                     </div>
                     <Formik
                         initialValues={{
-                            title: article?.title || '',
-                            description: article?.description || '',
+                            title: article ? article.title : '',
+                            description: article ? article.description : '',
                         }}
+                        enableReinitialize
                         validationSchema={Yup.object({
                             title: Yup.string()
                                 .min(5, 'Title must be at least 5 characters.')
@@ -158,7 +164,7 @@ const EditArticle = () => {
                                     variant="outlined"
                                     value={tagIn}
                                     onChange={(e) => setTagin(e.target.value)}
-                                    onKeyUp={handleEnter}
+                                    onKeyDown={handleTab}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
@@ -166,10 +172,15 @@ const EditArticle = () => {
                                                     return (
                                                         <div
                                                             key={tag}
-                                                            className="px-2 py-1 mx-1 tag-item-article"
-                                                            onClick={removeTag}
+                                                            className="px-2 py-1 mx-1 tag-item-article d-flex"
                                                         >
                                                             {tag}
+                                                            <div
+                                                                className=""
+                                                                onClick={() => removeTag(tag)}
+                                                            >
+                                                                <ClearIcon />
+                                                            </div>
                                                         </div>
                                                     );
                                                 })}

@@ -1,23 +1,18 @@
-const mongoose = require('mongoose');
-const User = mongoose.model('User');
-const Article = mongoose.model('Article');
+const { Article } = require('../services/mongoose');
 
 const Favorites = (() => {
     const favorite = (req, res, next) => {
         try {
             const id = req.payload.id,
                 slug = req.params.slug_article;
-            Promise.all([
-                User.findById(id),
-                Article.findOne({ slug }).populate('author').exec(),
-            ])
-                .then((results) => {
-                    if (!results[0]) return res.sendStatus(401);
-                    if (!results[1]) return res.sendStatus(422);
-                    return results[1].favorite(id).then((article) =>
+            Article.getArticle({ id, slug })
+                .then(([user, article]) => {
+                    if (!user) return res.sendStatus(401);
+                    if (!article) return res.sendStatus(422);
+                    return article.favorite(id).then((article) =>
                         res.json({
-                            article: article.toJSONFor(results[0]),
-                        }),
+                            article: article.toJSONFor(user),
+                        })
                     );
                 })
                 .catch(next);
@@ -29,19 +24,16 @@ const Favorites = (() => {
         try {
             const id = req.payload.id,
                 slug = req.params.slug_article;
-            Promise.all([
-                User.findById(id),
-                Article.findOne({ slug }).populate('author').exec(),
-            ])
-                .then((results) => {
-                    if (!results[0]) {
+            Article.getArticle({ id, slug })
+                .then(([user, article]) => {
+                    if (!user) {
                         return res.sendStatus(401);
                     }
-                    if (!results[1]) return res.sendStatus(422);
-                    return results[1].unfavorite(id).then((article) =>
+                    if (!article) return res.sendStatus(422);
+                    return article.unfavorite(id).then((article) =>
                         res.json({
-                            article: article.toJSONFor(results[0]),
-                        }),
+                            article: article.toJSONFor(user),
+                        })
                     );
                 })
                 .catch(next);

@@ -28,12 +28,12 @@ const authSlice = createSlice({
         setToken(state, action) {
             state.token = action.payload;
         },
-        setIdle(state, action) {
+        setIdle(state) {
             delete state.statusUpdate;
             state.status = Status.IDLE;
             delete state.errors;
         },
-        translate: (state, action) => (state.errors = undefined),
+        translate: (state) => (state.errors = undefined),
     },
     extraReducers(builder) {
         builder
@@ -42,14 +42,14 @@ const authSlice = createSlice({
             .addCase(getUser.fulfilled, successReducer)
             .addCase(updateUser.fulfilled, successUpdateReducer);
         builder
-            .addCase(updateUser.pending, (state, action) => {
+            .addCase(updateUser.pending, (state) => {
                 state.statusUpdate = Status.LOADING;
             })
-            .addCase(login.pending, (state, action) => {
+            .addCase(login.pending, (state) => {
                 state.errors = null;
                 state.status = Status.LOADING;
             })
-            .addCase(register.pending, (state, action) => {
+            .addCase(register.pending, (state) => {
                 state.errors = null;
                 state.status = Status.LOADING;
             });
@@ -143,6 +143,7 @@ export const updateUser = createAsyncThunk(
 
 // Get auth slice
 const selectAuthSlice = (state) => state.auth;
+export const selectToken = (state) => selectAuthSlice(state).token;
 
 // Get current user
 export const selectUser = (state) => selectAuthSlice(state).user;

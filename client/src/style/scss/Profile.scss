@@ -1,26 +1,16 @@
 $mobile-width: 576px;
 $tablet-width: 768px;
 $desktop-width: 1024px;
-@mixin mobile {
-    @media (max-width: #{$mobile-width - 1px}) {
-        @content;
-    }
-}
-@mixin tablet {
-    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-        @content;
-    }
-}
+@import './responsive.scss';
 
-@mixin desktop {
-    @media (min-width: #{$desktop-width}) {
-        @content;
-    }
+.profile-container {
+    background: #fff;
+    border-radius: 5px;
 }
 .container-info-profile {
-    border-radius: 10px;
-    background: #fff;
-
+    border-radius: 5px 5px 0 0;
+    background: rgb(245, 253, 255);
+    border-bottom: 1px solid rgb(133, 133, 133);
     & .container-avt-img {
         padding: 5px;
         width: 200px;
@@ -192,10 +182,12 @@ $desktop-width: 1024px;
 
 .nav-link-profile {
     margin: 20px 0px;
+    padding: 5px;
+    border-bottom: 1px solid rgb(206, 206, 206);
     & .item-link-profile {
         display: inline-block;
         padding: 10px;
-        border-radius: 20px;
+        border-radius: 10px;
         width: 100%;
         background-color: rgb(255, 255, 255);
         color: rgb(0, 0, 0);

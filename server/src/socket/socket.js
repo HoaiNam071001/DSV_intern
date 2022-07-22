@@ -1,4 +1,5 @@
 const request = require('supertest');
+const jwt = require('jsonwebtoken');
 const Users = require('./user');
 
 const socket = (server) => {
@@ -8,10 +9,12 @@ const socket = (server) => {
         },
     });
     io.use((socket, next) => {
-        const { userId } = socket.handshake.auth;
-        if (!userId) return next(new Error('User invalid'));
-        socket.userId = userId;
-        next();
+        if (!socket.handshake.auth?.token) return next(new Error('User invalid'));
+        jwt.verify(socket.handshake.auth.token, process.env.JWT_SECRET, function (err, decoded) {
+            if (err) return next(new Error('User invalid'));
+            socket.userId = decoded._id;
+            next();
+        });
     });
     io.on('connection', (socket) => {
         Users.addUser({ socketId: socket.id, id: socket.userId, rooms: [] });

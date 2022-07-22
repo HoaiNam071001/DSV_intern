@@ -5,7 +5,7 @@ import { API } from '../../Services/Axios';
 
 const initialState = {
     status: Status.IDLE,
-    rooms: null,
+    rooms: [],
     errors: null,
 };
 
@@ -15,9 +15,12 @@ const roomSlice = createSlice({
     reducers: {
         roomUnloaded: () => initialState,
     },
+    addRooms: (state, action) => {
+        state.rooms = state.rooms.push(action.payload.room);
+    },
     extraReducers(builder) {
         builder
-            .addCase(getRooms.pending, (state, action) => {
+            .addCase(getRooms.pending, (state) => {
                 state.status = Status.LOADING;
             })
             .addCase(getRooms.fulfilled, (state, action) => {
@@ -27,7 +30,7 @@ const roomSlice = createSlice({
             .addCase(getRooms.rejected, failureReducer);
     },
 });
-export const { roomUnloaded } = roomSlice.actions;
+export const { roomUnloaded, updateRooms } = roomSlice.actions;
 
 export const getRooms = createAsyncThunk('messenger/getRooms', async () => {
     const result = await API.getRooms();

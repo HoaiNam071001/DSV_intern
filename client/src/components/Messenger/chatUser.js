@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ChatUser = ({ room, status }) => {
@@ -5,7 +6,10 @@ const ChatUser = ({ room, status }) => {
     return (
         <div className="messenger-body-header d-flex">
             <Link to={`/@${room.members?.username}`} className="chatbox-image">
-                <img src={room.members?.image} alt="Avatar" />
+                <img
+                    src={room.members?.image || require('../../Assets/avatar-thumbnail.jpg')}
+                    alt="Avatar"
+                />
             </Link>
             <div className="chatbox-header-info d-flex justify-content-center flex-column">
                 <Link to={`/@${room.members?.username}`} className="chatbox-info-name">

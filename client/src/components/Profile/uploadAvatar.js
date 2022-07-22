@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import ClearIcon from '@mui/icons-material/Clear';
 import FileUploadIcon from '@mui/icons-material/FileUploadRounded';
 import { updateUser } from '../../redux/reducers/authSlice';
@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 function Avatar({ image, setModal }) {
     const [avatar, setAvatar] = useState();
     const dispatch = useDispatch();
-
+    const [load, setLoad] = useState(false);
     useEffect(() => {
         return () => {
             avatar && URL.revokeObjectURL(avatar.preview);
@@ -30,6 +30,7 @@ function Avatar({ image, setModal }) {
         data.append('file', avatar);
         data.append('upload_preset', 'h5z4ewnk');
         data.append('api_key', '441634564439267');
+        setLoad(true);
         fetch('  https://api.cloudinary.com/v1_1/h5z4ewnk/image/upload', {
             method: 'post',
             body: data,
@@ -39,9 +40,10 @@ function Avatar({ image, setModal }) {
                 const user = {
                     image: String(data.url),
                 };
+                setLoad(false);
                 dispatch(updateUser(user));
                 setModal(false);
-                alert('Avatar update Success!');
+                window.location.reload();
             })
             .catch((err) => alert(err));
     };
@@ -79,6 +81,13 @@ function Avatar({ image, setModal }) {
                         </div>
                         <div className="d-flex flex-column align-items-center">
                             <button className="btn-save-img" onClick={changephotonow}>
+                                {load && (
+                                    <span
+                                        className="spinner-border spinner-border-sm"
+                                        role="status"
+                                        aria-hidden="true"
+                                    ></span>
+                                )}
                                 Save
                             </button>
                         </div>

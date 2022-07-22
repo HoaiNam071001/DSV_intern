@@ -26,7 +26,7 @@ const Favorite = ({ article }) => {
         }
     };
     return (
-        <div className="d-flex align-items-center justify-content-center">
+        <div className="d-flex align-items-center">
             <Tooltip title="Like this article" placement="top" arrow>
                 {article.favorited ? (
                     <FavoriteIconActive className="btn-favorate" onClick={handleClick} />
@@ -44,58 +44,70 @@ const ArticleItem = ({ article }) => {
         <>
             <div key={article.slug} className="feed-item">
                 <div className="row">
-                    <div className="col-8 col-sm-10 item-author d-flex align-items-center">
-                        <Link to={`/@${article.author.username}`}>
-                            <img
-                                className="img-thumbnail"
-                                src={
-                                    article.author.image ||
-                                    require('../../Assets/avatar-thumbnail.jpg')
-                                }
-                                alt="author"
-                            />
-                        </Link>
-                        <div className="col-auto">
-                            <Link to={`/@${article.author.username}`} className="item-author-name">
-                                {article.author.username}
+                    <div className="col-4 thumnail-article">
+                        <img
+                            src={article.thumbnail || require('../../Assets/blog.jpg')}
+                            alt="thumnail-article"
+                        />
+                    </div>
+                    <div className="col-8 feed-content">
+                        <div className="item-author d-flex align-items-center">
+                            <Link to={`/@${article.author.username}`}>
+                                <img
+                                    className="img-thumbnail"
+                                    src={
+                                        article.author.image ||
+                                        require('../../Assets/avatar-thumbnail.jpg')
+                                    }
+                                    alt="author"
+                                />
                             </Link>
-                            <div className="item-author-date">
-                                <Tooltip
-                                    title={`createdAt:${dayjs(article.createdAt).format(
-                                        'DD/MM/YYYY HH:mm'
-                                    )} \n updatedAt: ${dayjs(article.updatedAt).format(
-                                        'DD/MM/YYYY HH:mm'
-                                    )}
-                                    `}
-                                    placement="top"
-                                    arrow
+                            <div className="col-auto">
+                                <Link
+                                    to={`/@${article.author.username}`}
+                                    className="item-author-name"
                                 >
-                                    <time dateTime={article.createdAt}>
-                                        {dayjs(article.createdAt).format('DD/MM/YYYY HH:mm')}
-                                    </time>
-                                </Tooltip>
+                                    {article.author.username}
+                                </Link>
+                                <div className="item-author-date">
+                                    <Tooltip
+                                        title={`createdAt:${dayjs(article.createdAt).format(
+                                            'DD/MM/YYYY HH:mm'
+                                        )} \n updatedAt: ${dayjs(article.updatedAt).format(
+                                            'DD/MM/YYYY HH:mm'
+                                        )}
+                                    `}
+                                        placement="top"
+                                        arrow
+                                    >
+                                        <time dateTime={article.createdAt}>
+                                            {dayjs(article.createdAt).format('DD/MM/YYYY HH:mm')}
+                                        </time>
+                                    </Tooltip>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="col-4 col-sm-2">
-                        <Favorite article={article} />
-                    </div>
-
-                    <div className="col-12">
                         <Link to={`/article/${article.slug}`} className="link-nodecoration">
-                            <div className="item-title text-truncate">{article.title}</div>
+                            <Tooltip title={article.title} placement="top" arrow>
+                                <div className="item-title text-truncate">{article.title}</div>
+                            </Tooltip>
                             <div className="item-content text-truncate">{article.description}</div>
                         </Link>
-                        <div>
-                            {article.tagList.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="p-1 bg-light m-1 rounded-pill border float-end"
-                                >
-                                    {tag}
-                                </span>
-                            ))}
+                        <div className="row">
+                            <div className="col-4 col-sm-3 favorited d-flex align-items-center">
+                                <Favorite article={article} />
+                            </div>
+                            <div className="col-8 col-sm-9 d-flex align-items-center justify-content-end">
+                                {article.tagList.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="p-1 bg-light m-1 rounded-pill border text-truncate"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>

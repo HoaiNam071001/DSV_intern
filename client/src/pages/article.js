@@ -5,9 +5,11 @@ import Comments from '../components/Comments/comments';
 function detailArticle() {
     return (
         <div className="container">
-            <div className="row col-12 col-md-10 offset-md-1 detail-article">
-                <Article />
-                <Comments />
+            <div className="row detail-article">
+                <div className="col-12 ">
+                    <Article />
+                    <Comments />
+                </div>
             </div>
         </div>
     );

@@ -1,20 +1,20 @@
-import React, { lazy, Suspense } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Loading from './components/Loading';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
 import './style/App.css';
 import { setAuthorization } from './Services/Axios';
-const Login = lazy(() => import('./pages/login'));
-const Register = lazy(() => import('./pages/register'));
-const Settings = lazy(() => import('./pages/settings'));
-const Home = lazy(() => import('./pages/home'));
-const Article = lazy(() => import('./pages/article'));
-const Profile = lazy(() => import('./pages/profile'));
-const EditArticle = lazy(() => import('./pages/edit'));
-const Message = lazy(() => import('./pages/messenger'));
-const Avatar = lazy(() => import('./components/Profile/uploadAvatar'));
+
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './pages/home';
+import Login from './pages/login';
+import Register from './pages/register';
+import Settings from './pages/settings';
+import Article from './pages/article';
+import Profile from './pages/profile';
+import EditArticle from './pages/edit';
+import Message from './pages/messenger';
 
 function App() {
     const dispatch = useDispatch();
@@ -27,23 +27,21 @@ function App() {
         <React.Fragment>
             <Header />
             <div className="container-app">
-                <Suspense fallback={<Loading />}>
-                    <Routes>
-                        <Route exact path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
-                        <Route path="/settings" element={<Settings />} />
-                        <Route path="/setpassword" element={<Settings isPassword />} />
-                        <Route path="/article/:slug" element={<Article />} />
-                        <Route path="/@:username" element={<Profile />} />
-                        <Route path="/@:username/favorites" element={<Profile isFavoritePage />} />
-                        <Route path="/editor" element={<EditArticle />} />
-                        <Route path="/editor/:slug" element={<EditArticle />} />
-                        <Route path="/messages" element={<Message />} />
-                        <Route path="/avatar" element={<Avatar />} />
-                    </Routes>
-                </Suspense>
+                <Routes>
+                    <Route exact path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/setpassword" element={<Settings isPassword />} />
+                    <Route path="/article/:slug" element={<Article />} />
+                    <Route path="/@:username" element={<Profile />} />
+                    <Route path="/@:username/favorites" element={<Profile isFavoritePage />} />
+                    <Route path="/editor" element={<EditArticle />} />
+                    <Route path="/editor/:slug" element={<EditArticle />} />
+                    <Route path="/messages" element={<Message />} />
+                </Routes>
             </div>
+            <Footer />
         </React.Fragment>
     );
 }

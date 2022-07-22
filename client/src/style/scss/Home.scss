@@ -2,33 +2,47 @@ $bg-blog: #003c97;
 $mobile-width: 576px;
 $tablet-width: 768px;
 $desktop-width: 1024px;
-@mixin mobile {
-    @media (max-width: #{$mobile-width - 1px}) {
-        @content;
-    }
-}
-@mixin mobiletable {
-    @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1px}) {
-        @content;
-    }
-}
-@mixin tablet {
-    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-        @content;
-    }
-}
+@import './responsive.scss';
 
-@mixin desktop {
-    @media (min-width: #{$desktop-width}) {
-        @content;
-    }
-}
 .init-web {
     background-image: url(../Assets/bckground-main2.png);
     background-size: 40vw;
     background-repeat: no-repeat;
     background-position: top left;
-    height: 43vw;
+    height: 40vw;
+    @include mobile {
+        display: none;
+    }
+    & .title-page {
+        margin-top: 4vw;
+        color: rgb(13, 0, 112);
+        font-size: calc(30px + 3vw);
+        font-family: Arial;
+    }
+    & .message {
+        font-family: cursive;
+        font-size: calc(18px + 1vw);
+        color: rgb(255, 255, 255);
+    }
+
+    & a {
+        margin: 5px 10px;
+        background: rgb(91, 255, 52);
+        background: linear-gradient(90deg, rgba(91, 255, 52, 1) 0%, rgb(255, 226, 96) 100%);
+        width: 150px;
+        text-align: center;
+        display: block;
+        padding: 10px;
+        font-size: 20px;
+        text-decoration: none;
+        color: rgb(18, 26, 255);
+        border-radius: 50px;
+        font-weight: bold;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+
     @include mobiletable {
         background-size: 60vw;
         height: 55vw;

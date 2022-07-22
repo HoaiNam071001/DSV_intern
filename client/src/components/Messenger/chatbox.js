@@ -32,7 +32,6 @@ function Chatbox({ socket, messenger, room }) {
     const olderMessages = () => {
         dispatch(getMessByRoom({ roomId: room.id, next: true }));
     };
-
     useEffect(() => () => dispatch(messUnloaded()), [dispatch]);
 
     if (!messenger) return <div className="messenger-body"></div>;

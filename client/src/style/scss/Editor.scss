@@ -17,17 +17,19 @@
     }
 }
 .tag-item-article {
-    cursor: pointer;
     background: rgb(112, 228, 255);
     background: linear-gradient(90deg, rgb(79, 144, 255) 0%, rgb(162, 0, 255) 100%);
     border-radius: 15px;
     color: white;
-}
-.tag-item-article:hover {
-    opacity: 0.6;
+    &:hover {
+        opacity: 0.6;
+    }
+    & div {
+        cursor: pointer;
+    }
 }
 .text-body {
-    background-color: #fff;
+    background-color: rgb(255, 255, 255);
     & .jodit-react-container {
         & .jodit-workplace {
             height: 300px !important;
@@ -49,7 +51,7 @@
     }
 }
 .editor-container {
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.934);
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;

@@ -17,7 +17,21 @@ import {
 import Message from '../Message';
 import { Input, InputPassword } from './input';
 import { initSignUp, initSignIn, objSignUp, objSignIn } from './value';
-
+const FormBox = ({ children }) => {
+    return (
+        <Form className="text-center">
+            <Box
+                sx={{
+                    '& .MuiTextField-root': { my: 2, width: '100%' },
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                {children}
+            </Box>
+        </Form>
+    );
+};
 const Auth = ({ isRegister }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -27,7 +41,17 @@ const Auth = ({ isRegister }) => {
     useEffect(() => {
         if (isSuccess) navigate('/');
     }, [isSuccess, navigate]);
-
+    const submission = (values) => {
+        dispatch(
+            isRegister
+                ? register({
+                      username: values.username,
+                      email: values.email,
+                      password: values.password,
+                  })
+                : login({ email: values.email, password: values.password })
+        );
+    };
     useEffect(() => () => dispatch(translate()), [dispatch]);
     return (
         <div className="container sign-in_up">
@@ -35,60 +59,45 @@ const Auth = ({ isRegister }) => {
                 <div className="my-3 text-center">
                     <h1 className="text-xs-center mb-3">{isRegister ? 'Sign Up' : 'Sign In'}</h1>
                 </div>
-                <div className="px-4">
+                <div className="px-4 ">
+                    <Message messagess={errors} />
+
                     <Formik
                         initialValues={isRegister ? initSignUp : initSignIn}
                         validationSchema={isRegister ? objSignUp : objSignIn}
                         onSubmit={(values, { setSubmitting }) => {
-                            dispatch(
-                                isRegister
-                                    ? register({
-                                          username: values.username,
-                                          email: values.email,
-                                          password: values.password,
-                                      })
-                                    : login({ email: values.email, password: values.password })
-                            );
+                            submission(values);
                             setSubmitting(true);
                         }}
                     >
-                        <Form className="text-center">
-                            <Box
-                                sx={{
-                                    '& .MuiTextField-root': { my: 2, width: '100%' },
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-                                {isRegister && (
-                                    <Input
-                                        label="Username"
-                                        name="username"
-                                        type="text"
-                                        placeholder="Enter my username"
-                                    />
-                                )}
+                        <FormBox>
+                            {isRegister && (
                                 <Input
-                                    label="Email Address"
-                                    name="email"
-                                    type="email"
-                                    placeholder="admin@gmail.com"
+                                    label="Username"
+                                    name="username"
+                                    type="text"
+                                    placeholder="Enter my username"
                                 />
+                            )}
+                            <Input
+                                label="Email Address"
+                                name="email"
+                                type="email"
+                                placeholder="admin@gmail.com"
+                            />
 
+                            <InputPassword
+                                label="Password"
+                                name="password"
+                                placeholder="Enter my password"
+                            />
+                            {isRegister && (
                                 <InputPassword
-                                    label="Password"
-                                    name="password"
+                                    label="Confirm Password"
+                                    name="repassword"
                                     placeholder="Enter my password"
                                 />
-                                {isRegister && (
-                                    <InputPassword
-                                        label="Confirm Password"
-                                        name="repassword"
-                                        placeholder="Enter my password"
-                                    />
-                                )}
-                            </Box>
-
+                            )}
                             <button
                                 type="submit"
                                 className={`btn-submit-sign ${inProgress ? 'btn-disabled' : ''}`}
@@ -104,7 +113,7 @@ const Auth = ({ isRegister }) => {
 
                                 {isRegister ? 'Sign Up' : 'Sign In'}
                             </button>
-                        </Form>
+                        </FormBox>
                     </Formik>
                 </div>
                 <div className="my-3 text-center">
@@ -115,7 +124,6 @@ const Auth = ({ isRegister }) => {
                             <Link to="/register">Need an account?</Link>
                         )}
                     </p>
-                    <Message messagess={errors} />
                 </div>
             </div>
         </div>

@@ -8,6 +8,7 @@ function TagItem({ tag }) {
     const handleClickTag = () => {
         dispatch(changenewTab('tag'));
         dispatch(getArticlesByTag({ tag }));
+        document.getElementById('topscroll').scrollIntoView({ behavior: 'smooth' });
     };
     return (
         <Link

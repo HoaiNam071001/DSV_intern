@@ -1,28 +1,12 @@
 $mobile-width: 576px;
 $tablet-width: 768px;
 $desktop-width: 1024px;
-@mixin mobile {
-    @media (max-width: #{$mobile-width - 1px}) {
-        @content;
-    }
-}
-@mixin mobiletable {
-    @media (min-width: #{$mobile-width}) and (max-width: #{$tablet-width - 1px}) {
-        @content;
-    }
-}
-@mixin tablet {
-    @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {
-        @content;
-    }
-}
+@import './responsive.scss';
 
-@mixin desktop {
-    @media (min-width: #{$desktop-width}) {
-        @content;
-    }
-}
 .messenger-container {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
     & .messenger-header {
         background-color: #fff;
         border-radius: 20px;
@@ -30,17 +14,15 @@ $desktop-width: 1024px;
         margin-bottom: 15px;
     }
     & .messenger-list-container {
-        @include mobile {
-            display: none;
-        }
-        @include mobiletable {
-            display: none;
-        }
+        margin-bottom: 20px;
+
         & .messenger-list {
             background-color: #fff;
             border-radius: 10px;
-            padding: 15px;
+            max-height: 400px;
 
+            padding: 15px;
+            overflow: auto;
             & .active {
                 background-color: rgb(243, 243, 243) !important;
                 box-shadow: 0px 1px 2px 0px rgb(126, 126, 126);

@@ -56,7 +56,7 @@ const ChangeProfile = ({ currentUser, onSaveSettings }) => {
                         />
                     </Box>
 
-                    <button className="float-end btn-submit-sign" type="submit">
+                    <button className="btn-submit-sign" type="submit">
                         Update Profile
                     </button>
                 </Form>

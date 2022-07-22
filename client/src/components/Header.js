@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsAuthenticated, logout, selectUser } from '../redux/reducers/authSlice';
-import { useNavigate, useLocation } from 'react-router';
+import { useNavigate } from 'react-router';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-const HeaderLogin = ({ location }) => {
+const HeaderLogin = () => {
     const currentUser = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -15,26 +17,23 @@ const HeaderLogin = ({ location }) => {
     };
     return (
         <>
-            <Link
-                to="/editor"
-                className={`mx-2 btn-header d-flex align-items-center justify-content-center ${
-                    location === '/editor' ? 'btn-active-in' : ''
-                }`}
-                title="New article"
-            >
-                <i className="bi bi-plus-circle fs-5"></i>
-            </Link>
-            <Link
-                to="/messages"
-                className={`mx-2 btn-header d-flex align-items-center justify-content-center ${
-                    location === '/messages' ? 'btn-active-in' : ''
-                }`}
-                title="messages"
-            >
-                <i className="bi bi-messenger fs-5"></i>
-            </Link>
-
-            <div className="p-2">
+            <Tooltip title="New Article" placement="bottom" arrow>
+                <Link
+                    to="/editor"
+                    className="mx-3 btn-header d-flex align-items-center justify-content-center"
+                >
+                    <i className="bi bi-plus-circle fs-3"></i>
+                </Link>
+            </Tooltip>
+            <Tooltip title="Chat box" placement="bottom" arrow>
+                <Link
+                    to="/messages"
+                    className="mx-3 btn-header d-flex align-items-center justify-content-center"
+                >
+                    <i className="bi bi-messenger fs-3"></i>
+                </Link>
+            </Tooltip>
+            <div className="px-3">
                 <div
                     className="nav-link d-flex align-items-center"
                     role="button"
@@ -95,56 +94,60 @@ const HeaderLogin = ({ location }) => {
     );
 };
 
-const HeaderLogout = ({ location }) => {
+const HeaderLogout = () => {
     return (
         <React.Fragment>
-            <Link
-                to="/login"
-                className={`sign-header ${location === '/login' ? 'btn-active-out' : ''}`}
-            >
+            <Link to="/login" className="sign-header">
                 Sign in
             </Link>
-            <Link
-                to="/register"
-                className={`sign-header ${location === '/register' ? 'btn-active-out' : ''}`}
-            >
+            <Link to="/register" className="sign-header">
                 Sign up
             </Link>
         </React.Fragment>
     );
 };
 
+function ElevationScroll(props) {
+    const { children, window } = props;
+
+    const trigger = useScrollTrigger({
+        disableHysteresis: true,
+        threshold: 0,
+        target: window ? window() : undefined,
+    });
+    return React.cloneElement(children, {
+        className: trigger ? 'header-container' : 'header-scroll header-container',
+    });
+}
 const Header = () => {
-    const location = useLocation().pathname;
     const isAuthenticated = useSelector(selectIsAuthenticated);
+
     return (
-        <nav className="header-container">
-            <div className="container">
-                <div className="row">
-                    <div className="col d-flex align-items-center">
-                        <Link to="/" className="title-header navbar-brand fs-2 fw-bolder">
-                            <img src={require('../Assets/logo.png')} alt="Blog" />
-                        </Link>
-                    </div>
-                    <div className="col d-flex justify-content-end align-items-center">
-                        <Link
-                            to="/"
-                            className={`mx-2 btn-header d-flex align-items-center justify-content-center ${
-                                location === '/' ? 'btn-active-in' : ''
-                            }`}
-                            title="home"
-                        >
-                            <i className="bi bi-house-fill fs-5"></i>
-                        </Link>
-                        {isAuthenticated ? (
-                            <HeaderLogin location={location} />
-                        ) : (
-                            <HeaderLogout location={location} />
-                        )}
+        <ElevationScroll>
+            <nav className="header-container">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-3 d-flex align-items-center">
+                            <Link to="/" className="title-header navbar-brand fs-2 fw-bolder m-1">
+                                <img src={require('../Assets/logo.png')} alt="Blog" />
+                            </Link>
+                        </div>
+                        <div className="col-9 d-flex justify-content-end align-items-center">
+                            <Tooltip title="HomePage" placement="bottom" arrow>
+                                <Link
+                                    to="/"
+                                    className="mx-3 btn-header d-flex align-items-center justify-content-center"
+                                >
+                                    <i className="bi bi-house-fill fs-3"></i>
+                                </Link>
+                            </Tooltip>
+
+                            {isAuthenticated ? <HeaderLogin /> : <HeaderLogout />}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </ElevationScroll>
     );
 };
 

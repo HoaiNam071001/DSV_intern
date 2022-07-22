@@ -43,12 +43,10 @@ function Profile({ isFavoritePage }) {
     );
     return (
         <div className="container">
-            <div className="row">
-                <div className="col-md-10 offset-md-1 col-12">
-                    <UserInfo profile={profile} author={selectUserAuthor} />
-                    <ProfileTabs username={profile.username} isFavorites={isFavoritePage} />
-                </div>
-                <div className="col-md-8 offset-md-2 col-12">
+            <div className="row profile-container">
+                <UserInfo profile={profile} author={selectUserAuthor} />
+                <ProfileTabs username={profile.username} isFavorites={isFavoritePage} />
+                <div className="col-lg-8 offset-lg-2">
                     <ArticleList />
                 </div>
             </div>

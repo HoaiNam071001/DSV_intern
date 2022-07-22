@@ -13,15 +13,14 @@ import {
 } from '../../redux/reducers/commentsSlice';
 import { selectArticle } from '../../redux/reducers/articleSlice';
 import Loading from '../Loading';
-
+let cmt = /^ *$/;
 function CommentForm() {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
     const { slug } = useParams();
     const [body, setBody] = useState('');
-    const saveComment = (event) => {
-        event.preventDefault();
-        if (body === '') return;
+    const saveComment = () => {
+        if (cmt.test(body)) return;
         dispatch(createComment({ articleSlug: slug, comment: { body } }));
         setBody('');
     };
@@ -31,13 +30,14 @@ function CommentForm() {
     };
 
     return (
-        <div className="my-4 comment-item border">
+        <div className="my-4 comment-item">
             <TextField
                 sx={{
                     '& .MuiOutlinedInput-root': {
                         background: '#fff',
-                        borderRadius: 5,
+                        borderRadius: 10,
                         margin: 2,
+                        marginBottom: 1,
                     },
                     '& label': { fontSize: 16, margin: 2 },
                 }}
@@ -60,13 +60,14 @@ function CommentForm() {
                 />
                 <span className="mx-2 fs-5 info-username">{currentUser.username}</span>
                 <button
-                    className="btn btn-primary ms-auto rounded-pill m-1"
+                    className="ms-auto btn-addcmt"
                     onClick={saveComment}
                     onKeyUp={saveCommentEnter}
                 >
-                    Post Comment
+                    <i className="bi bi-send-fill"></i>
                 </button>
             </div>
+            <hr />
         </div>
     );
 }
@@ -82,7 +83,9 @@ function CommentSection() {
         return <Loading />;
     }
     return (
-        <div className="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+        <div className="col-12 col-lg-8 offset-lg-2">
+            <hr />
+            <h2>Comments</h2>
             <Message messagess={errors} />
             {isAuthenticaded ? (
                 <CommentForm />

@@ -1,39 +1,54 @@
 .comment-item {
-    border-radius: 20px;
     background-color: rgb(255, 255, 255);
+    & hr {
+        margin: 0px;
+        padding: 0px;
+        color: rgb(140, 140, 140);
+    }
     & .comment-item-user {
-        background: linear-gradient(
-            90deg,
-            rgb(54, 175, 255) 0%,
-            rgb(231, 231, 231) 100%
-        );
-        border-radius: 0 0 20px 20px;
+        margin-left: 20px;
         & .info-username {
-            color: rgb(255, 255, 255);
+            color: rgb(10, 0, 145);
+        }
+        & .btn-addcmt {
+            border: 0px;
+            background: rgb(0, 237, 255);
+            background: linear-gradient(90deg, rgba(0, 237, 255, 1) 0%, rgb(0, 128, 255) 100%);
+            border-radius: 50%;
+            padding: 10px;
+            width: 40px;
+            height: 40px;
+            color: #fff;
+            margin-right: 30px;
+            &:hover {
+                opacity: 0.8;
+            }
         }
     }
-
-    & .comment-item-write {
-        border-radius: 20px;
-    }
-
     & .comment-item-info {
-        background: linear-gradient(
-            90deg,
-            rgb(44, 167, 255) 0%,
-            rgb(255, 165, 248) 100%
-        );
         border-radius: 20px 20px 0 0;
         padding: 5px;
+
         & .info-username {
             padding-left: 10px;
             padding-right: 5px;
             font-size: 20px;
+            font-weight: bold;
             text-decoration: none;
-            color: rgb(255, 255, 255);
+            color: rgb(10, 10, 10);
         }
         & .date-posted {
-            color: rgb(234, 234, 234);
+            color: rgb(132, 132, 132);
+        }
+        & > button {
+            background-color: rgb(255, 255, 255);
+            margin-right: 20px;
+            border: 0;
+            padding: 10px;
+            border-radius: 50%;
+            &:hover {
+                background-color: rgb(210, 208, 208);
+            }
         }
     }
     & .comment-item-body {

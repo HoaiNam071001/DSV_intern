@@ -17,7 +17,7 @@ export const objSignUp = Yup.object({
         .required('Please enter Password'),
     repassword: Yup.string().when('password', (password, schema) =>
         password
-            ? schema.test('password', 'Password mismatched', (value, context) => value === password)
+            ? schema.test('password', 'Password mismatched', (value) => value === password)
             : schema.required('Confirm Password is Required')
     ),
 });
@@ -62,7 +62,7 @@ export const objPass = Yup.object({
         .required('Please enter Password'),
     confirm: Yup.string().when('password', (password, schema) =>
         password
-            ? schema.test('password', 'Password mismatched', (value, context) => value === password)
+            ? schema.test('password', 'Password mismatched', (value) => value === password)
             : schema.required('Confirm Password is Required')
     ),
 });

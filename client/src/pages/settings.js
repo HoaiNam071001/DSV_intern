@@ -37,15 +37,15 @@ function Settings({ isPassword }) {
                     <h1 className="text-center p-3">
                         {isPassword ? 'Change Your Password' : 'Settings Your Profile'}
                     </h1>
-                    {errors && <Message messagess={errors} />}
-                    {isSuccess && (
-                        <Message messagess={{ Updated: ['Success'] }} state={'success'} />
-                    )}
 
                     {isPassword ? (
                         <ChangePassword onSaveSettings={saveSettings} />
                     ) : (
                         <ChangeProfile currentUser={currentUser} onSaveSettings={saveSettings} />
+                    )}
+                    {errors && <Message messagess={errors} />}
+                    {isSuccess && (
+                        <Message messagess={{ Updated: ['Success'] }} state={'success'} />
                     )}
                 </div>
             </div>

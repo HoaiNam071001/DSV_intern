@@ -47,7 +47,7 @@ const ChangePassword = ({ onSaveSettings }) => {
                         />
                     </Box>
 
-                    <button className="btn-submit-sign float-end" type="submit">
+                    <button className="btn-submit-sign" type="submit">
                         Update Password
                     </button>
                 </Form>

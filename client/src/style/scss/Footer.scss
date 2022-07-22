@@ -1,0 +1,54 @@
+@import './responsive.scss';
+
+.footer {
+    background-image: url(../Assets/footer-background.png);
+    background-position: top left;
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    background-attachment: cover;
+    background-color: rgb(255, 255, 255);
+    & .contain-profile {
+        margin: 5px;
+        & .username {
+            font-size: calc(12px + 1vw);
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+        }
+        & .job {
+            color: rgb(78, 78, 78);
+        }
+        & .link-contact {
+            & a {
+                margin: 5px;
+                & img {
+                    border-radius: 50%;
+                    border: 1px solid rgb(231, 231, 231);
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+        }
+    }
+    & .contact {
+        @include mobiletable {
+            display: none;
+        }
+        @include mobile {
+            display: none;
+        }
+        & .item {
+            margin: 5px;
+            & a {
+                & img {
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            & span {
+                color: rgb(0, 5, 64);
+                padding: 5px;
+                font-weight: bold;
+            }
+        }
+    }
+}

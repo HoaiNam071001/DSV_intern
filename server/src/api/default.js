@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
-const Article = mongoose.model('Article');
-
+const { getTag } = require('../services/mongoose');
 const Default = (() => {
-    const getTags = async (req, res,next) => {
+    const getTags = async (req, res, next) => {
         try {
-            Article.find().distinct('tagList').then((tags)=>res.json({tags: tags})).catch(next);
+            getTag()
+                .then((tags) => res.json({ tags }))
+                .catch(next);
         } catch (err) {
             res.status(422).json({
                 errors: {

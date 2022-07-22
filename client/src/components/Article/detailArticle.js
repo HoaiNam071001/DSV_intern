@@ -7,8 +7,7 @@ import { articlePageUnloaded, getArticle, selectArticle } from '../../redux/redu
 import { selectUser } from '../../redux/reducers/authSlice';
 import OptionArticle from './option';
 import InteractArticle from './interact';
-import Loading from '../Loading';
-
+import Skeleton from './skeletonDetail';
 const Detail = () => {
     const dispatch = useDispatch();
     const { article, inProgress, deleted } = useSelector(selectArticle);
@@ -22,7 +21,7 @@ const Detail = () => {
     }, [dispatch, slug]);
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     if (!article) {
-        return <div>{inProgress && <Loading />}</div>;
+        return <div>{inProgress && <Skeleton />}</div>;
     }
     return (
         <>
@@ -31,7 +30,10 @@ const Detail = () => {
                 <div className="author-article d-flex">
                     <Link to={`/@${article?.author?.username}`}>
                         <img
-                            src={article?.author?.image || require('../../Assets/avatar-thumbnail.jpg')}
+                            src={
+                                article?.author?.image ||
+                                require('../../Assets/avatar-thumbnail.jpg')
+                            }
                             alt="avatar_img"
                             width="50"
                             height="50"
@@ -43,7 +45,9 @@ const Detail = () => {
                             {article.author.username}
                         </Link>
                         <div className="create-article">
-                            <time dateTime={article.createdAt}>{new Date(article.createdAt).toDateString()}</time>
+                            <time dateTime={article.createdAt}>
+                                {new Date(article.createdAt).toDateString()}
+                            </time>
                         </div>
                     </div>
 
@@ -67,7 +71,10 @@ const Detail = () => {
                     {article &&
                         article.tagList.map((tag) => {
                             return (
-                                <div className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light" key={tag}>
+                                <div
+                                    className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light"
+                                    key={tag}
+                                >
                                     {tag}
                                 </div>
                             );

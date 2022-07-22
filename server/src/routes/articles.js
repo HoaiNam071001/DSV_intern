@@ -4,7 +4,7 @@ const comments = require('../api/comments');
 const favorites = require('../api/favorites');
 const { VerifyToken, CheckToken } = require('../middleware/Token');
 
-router.get('/feed', VerifyToken, articles.getRecentArticlesUser);
+router.get('/feed', VerifyToken, articles.getRecentArticlesFollow);
 router.get('/', CheckToken, articles.getRecentArticlesGlobal);
 router.post('/', VerifyToken, articles.createArticle);
 router.get('/:slug_article', CheckToken, articles.getArticle);
