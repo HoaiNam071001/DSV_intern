@@ -80,7 +80,11 @@ function Avatar({ image, setModal }) {
                             </label>
                         </div>
                         <div className="d-flex flex-column align-items-center">
-                            <button className="btn-save-img" onClick={changephotonow}>
+                            <button
+                                className="btn-save-img"
+                                onClick={changephotonow}
+                                disabled={load}
+                            >
                                 {load && (
                                     <span
                                         className="spinner-border spinner-border-sm"

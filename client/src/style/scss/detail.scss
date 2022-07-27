@@ -120,9 +120,8 @@
         font-size: 20px;
         background-color: #fff;
         border-radius: 10px;
-        & img {
-            max-width: 100%;
-            height: auto;
+        & * {
+            max-width: 100% !important;
         }
     }
 

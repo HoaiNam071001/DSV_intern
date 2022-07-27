@@ -69,7 +69,7 @@ $desktop-width: 1024px;
         }
         & .messenger-body-header {
             padding: 5px 10px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             border-radius: 20px 20px 0px 0px;
             border-bottom: 1px solid rgb(222, 215, 215);
             & .chatbox-image {
@@ -106,16 +106,17 @@ $desktop-width: 1024px;
                 }
             }
             & .btn-videocall {
-                background: rgb(0, 255, 46);
-                background: linear-gradient(62deg, rgba(0, 255, 46, 1) 0%, rgb(33, 172, 168) 100%);
-                padding: 5px 15px;
-                color: #fff;
+                border: 0;
+                background: rgb(221, 221, 221);
+                padding: 5px 10px;
+                color: rgb(0, 0, 0);
                 font-size: 20px;
                 height: 40px;
                 border-radius: 20px;
                 margin-right: 5px;
                 &:hover {
-                    opacity: 0.7;
+                    background: rgb(0, 128, 241);
+                    color: rgb(255, 255, 255);
                 }
             }
         }
@@ -160,6 +161,18 @@ $desktop-width: 1024px;
                     width: 50%;
                 }
             }
+            & .content-item-call {
+                width: 100%;
+                height: 100%;
+                color: rgb(0, 0, 0);
+                background-color: rgb(247, 247, 247);
+                padding: 10px;
+                border-radius: 5px;
+                min-width: 130px;
+                & * {
+                    margin-right: 5px;
+                }
+            }
             & .chatbox-left {
                 & .chatbox-image {
                     padding: 5px;
@@ -178,10 +191,13 @@ $desktop-width: 1024px;
                 & .chatbox-content {
                     & .chatbox-content-item {
                         display: inline-block;
-                        padding: 10px;
-                        background-color: rgb(247, 247, 247);
-                        border-radius: 0px 10px 10px 10px;
                         margin: 5px;
+                        max-width: 80%;
+                        & .chatbox-x {
+                            background-color: rgb(247, 247, 247);
+                            border-radius: 0px 10px 10px 10px;
+                            padding: 10px;
+                        }
                         @include mobile {
                             max-width: 90%;
                         }
@@ -191,17 +207,21 @@ $desktop-width: 1024px;
             & .chatbox-right {
                 margin-right: 10px;
                 & .chatbox-content-item {
-                    padding: 5px;
                     color: #fff;
-                    background: rgb(0, 85, 255);
-                    background: linear-gradient(
-                        62deg,
-                        rgb(0, 140, 255) 0%,
-                        rgba(213, 123, 255, 1) 100%
-                    );
-                    border-radius: 10px 0px 10px 10px;
+
                     margin: 5px;
                     max-width: 80%;
+                    & .chatbox-x {
+                        border-radius: 10px 0px 10px 10px;
+                        background: rgb(0, 85, 255);
+                        background: linear-gradient(
+                            62deg,
+                            rgb(0, 140, 255) 0%,
+                            rgba(213, 123, 255, 1) 100%
+                        );
+                        box-sizing: border-box;
+                        padding: 5px;
+                    }
                     @include mobile {
                         max-width: 90%;
                     }
@@ -237,6 +257,9 @@ $desktop-width: 1024px;
                     padding: 0px;
                     & * {
                         font-size: 20px;
+                        &:hover {
+                            color: rgb(22, 197, 255);
+                        }
                     }
                 }
             }

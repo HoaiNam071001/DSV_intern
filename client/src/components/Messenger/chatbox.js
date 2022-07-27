@@ -2,7 +2,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-
 import {
     selectMessages,
     messUnloaded,
@@ -11,8 +10,33 @@ import {
     getMessByRoom,
 } from '../../redux/reducers/messengerSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
-// import Emoji from './emoji';
+import Picker from 'emoji-picker-react';
+import VideoIcon from '@mui/icons-material/VideoCameraFront';
+import dayjs from 'dayjs';
+
 let cmt = /^ *$/;
+const DivVideo = () => {
+    return (
+        <div className="content-item-call">
+            <VideoIcon />
+            Video chat
+        </div>
+    );
+};
+const ItemMess = ({ mess }) => {
+    return (
+        <div
+            className="chatbox-content-item"
+            title={dayjs(mess.updatedAt).format('DD/MM/YYYY HH:mm')}
+        >
+            {mess.content === ':<<<<<callvideo>>>>>:' ? (
+                <DivVideo />
+            ) : (
+                <div className="chatbox-x">{mess.content}</div>
+            )}
+        </div>
+    );
+};
 function Chatbox({ socket, messenger, room }) {
     const dispatch = useDispatch();
     const { count } = useSelector(selectMessages);
@@ -23,7 +47,7 @@ function Chatbox({ socket, messenger, room }) {
         if (cmt.test(content)) return;
         const messageClient = { content, id: uuidv4(), createdAt: Date.now(), sender: currentUser };
         dispatch(addMessage({ message: messageClient }));
-        socket.emit('send', { message: messageClient, to: room.id }, ({ message }) => {
+        socket.emit('send', { message: messageClient, roomId: room.id }, ({ message }) => {
             if (message) dispatch(updateMessage({ message, id: messageClient.id }));
         });
         setContent('');
@@ -34,6 +58,10 @@ function Chatbox({ socket, messenger, room }) {
     };
     const olderMessages = () => {
         dispatch(getMessByRoom({ roomId: room.id, next: true }));
+    };
+
+    const onEmojiClick = (event, emojiObject) => {
+        setContent((pre) => pre + emojiObject.emoji);
     };
     useEffect(() => () => dispatch(messUnloaded()), [dispatch]);
 
@@ -47,20 +75,15 @@ function Chatbox({ socket, messenger, room }) {
                         if (mess.sender.id === currentUser.id)
                             return (
                                 <div
-                                    title={mess.updatedAt}
                                     key={mess.id}
                                     className="chatbox-right d-flex align-items-end flex-column"
                                 >
-                                    <div className="chatbox-content-item">{mess.content}</div>
+                                    <ItemMess mess={mess} />
                                 </div>
                             );
                         return (
-                            <div
-                                title={mess.updatedAt}
-                                key={mess.id}
-                                className="chatbox-left d-flex"
-                            >
-                                <div className="chatbox-image">
+                            <div key={mess.id} className="chatbox-left d-flex">
+                                {/* <div className="chatbox-image">
                                     <img
                                         src={
                                             mess.sender.image ||
@@ -68,9 +91,9 @@ function Chatbox({ socket, messenger, room }) {
                                         }
                                         alt="Avatar"
                                     />
-                                </div>
+                                </div> */}
                                 <div className="chatbox-content d-flex align-items-start flex-column">
-                                    <div className="chatbox-content-item">{mess.content}</div>
+                                    <ItemMess mess={mess} />
                                 </div>
                             </div>
                         );
@@ -92,8 +115,19 @@ function Chatbox({ socket, messenger, room }) {
                         onKeyDown={keyPress}
                     />
                     <div className="col-1 icon-chatbox d-flex justify-content-end">
-                        <i className="bi bi-emoji-smile"></i>
-                        {/* <Emoji onEmojiSelect={console.log} /> */}
+                        <div
+                            className="nav-link d-flex align-items-center"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                        >
+                            <i className="bi bi-emoji-smile"></i>
+                        </div>
+
+                        <ul className="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <Picker onEmojiClick={onEmojiClick} />
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <div className="chatbox-send col-2 d-flex justify-content-center align-items-center">

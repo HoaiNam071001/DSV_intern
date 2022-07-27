@@ -18,8 +18,11 @@ import JoditEditor from './textEditor';
 import { useParams } from 'react-router';
 import Loading from '../Loading';
 import { Input } from '../Auth/input';
+import { useNavigate } from 'react-router-dom';
 
+let isEmpty = /^ *$/;
 const EditArticle = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const { article, errors, inProgress, success } = useSelector(selectArticle);
     const { slug } = useParams();
@@ -30,6 +33,10 @@ const EditArticle = () => {
     const [tagIn, setTagin] = useState('');
 
     const handleTab = (e) => {
+        if (isEmpty.test(tagIn)) {
+            setTagin('');
+            return;
+        }
         if (e.keyCode == 9) {
             e.preventDefault();
             if (tagIn && !tagList.includes(tagIn)) setTagList([...tagList, tagIn]);
@@ -56,6 +63,9 @@ const EditArticle = () => {
         if (slug) dispatch(getArticle({ slug }));
         return () => dispatch(articlePageUnloaded());
     }, [slug, dispatch]);
+    useEffect(() => {
+        if (success) navigate('/');
+    }, [success, navigate]);
 
     if (slug && !article) return <Loading />;
     return (
@@ -65,15 +75,7 @@ const EditArticle = () => {
                     <div className="text-center fs-2 fw-bold m-2">
                         {slug ? 'Update Article' : 'New Article'}
                     </div>
-                    <div className="text-center col-12 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
-                        {success && (
-                            <Message
-                                messagess={slug ? { Update: ['Success'] } : { Create: ['Success'] }}
-                                state={'success'}
-                            />
-                        )}
-                        {errors && <Message messagess={errors} />}
-                    </div>
+
                     <Formik
                         initialValues={{
                             title: article ? article.title : '',
@@ -83,7 +85,7 @@ const EditArticle = () => {
                         validationSchema={Yup.object({
                             title: Yup.string()
                                 .min(5, 'Title must be at least 5 characters.')
-                                .required('Title Required'),
+                                .required('Title is Required'),
                             description: Yup.string().required('Description is Required'),
                         })}
                         onSubmit={(values, { setSubmitting }) => {
@@ -198,6 +200,10 @@ const EditArticle = () => {
                             </Box>
                         </Form>
                     </Formik>
+
+                    <div className="text-center col-12 col-lg-8 offset-lg-2 col-md-10 offset-md-1">
+                        {errors && <Message messagess={errors} />}
+                    </div>
                 </div>
             </div>
         </div>

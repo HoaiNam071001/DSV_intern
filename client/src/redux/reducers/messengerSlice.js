@@ -36,11 +36,15 @@ const messengerSlice = createSlice({
     initialState,
     reducers: {
         messUnloaded: () => initialState,
-        messUnUser: (state, action) => resetState(state),
+        messUnUser: (state) => resetState(state),
         addMessage: (state, action) => {
-            state.messenger = action.payload.message
-                ? [action.payload.message, ...state.messenger]
-                : state.messenger;
+            const { roomId, message } = action.payload;
+            if ((roomId && roomId === state.room.id) || !roomId) {
+                // if (message?.sender.id === state.room?.members.id) {
+                //     message.sender.image = state.room.members.image;
+                // }
+                state.messenger = message ? [message, ...state.messenger] : state.messenger;
+            }
         },
         updateMessage: (state, action) => {
             state.messenger = state.messenger

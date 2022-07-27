@@ -33,7 +33,6 @@ export const objSignIn = Yup.object({
 
 export const initprofile = (props) => {
     return {
-        image: props?.image ?? '',
         username: props?.username ?? '',
         bio: props?.bio ?? '',
         email: props?.email ?? '',
@@ -45,8 +44,7 @@ export const objProfile = Yup.object({
         .min(3, 'Username must be between 3 and 20 characters long.')
         .required('Please enter Username'),
     email: Yup.string().email('Invalid email address').required('Please enter Email'),
-    image: Yup.string(),
-    bio: Yup.string(),
+    bio: Yup.string().max(100, 'Username must most 100 characters.'),
 });
 
 export const initPass = {

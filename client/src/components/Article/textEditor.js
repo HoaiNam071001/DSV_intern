@@ -1,3 +1,4 @@
+import React from 'react';
 import JoditEditor from 'jodit-react';
 
 const TextEditor = ({ body, setBody, style }) => {

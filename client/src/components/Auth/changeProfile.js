@@ -42,12 +42,7 @@ const ChangeProfile = ({ currentUser, onSaveSettings }) => {
                             type="text"
                             placeholder="Enter my username"
                         />
-                        <Input
-                            label="URL of profile picture"
-                            name="image"
-                            type="text"
-                            placeholder="Enter URL picture"
-                        />
+
                         <Input
                             label="Short Bio about you"
                             name="bio"

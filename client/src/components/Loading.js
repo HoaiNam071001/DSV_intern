@@ -1,3 +1,4 @@
+import React from 'react';
 export const Loading2 = () => {
     return (
         <p className="placeholder-glow tag-container">

@@ -1,4 +1,9 @@
-import { createAsyncThunk, createEntityAdapter, createSelector, createSlice } from '@reduxjs/toolkit';
+import {
+    createAsyncThunk,
+    createEntityAdapter,
+    createSelector,
+    createSlice,
+} from '@reduxjs/toolkit';
 
 import { isApiError, Status } from '../../common/utils';
 import { selectUser } from './authSlice';
@@ -26,6 +31,7 @@ const commentsSlice = createSlice({
                     commentAdapter.addOne(state, {
                         ...action.meta.arg.comment,
                         author: action.meta.author,
+                        createdAt: Date.now(),
                         id: action.meta.requestId,
                     });
                 }
@@ -73,18 +79,27 @@ export const createComment = createAsyncThunk(
 
             throw error;
         }
+    },
+    {
+        getPendingMeta: (_, { getState }) => ({ author: selectUser(getState()) }),
     }
 );
 
-export const getCommentsForArticle = createAsyncThunk('comments/getCommentsForArticle', async (articleSlug) => {
-    const result = await API.getComments(articleSlug);
-    const { comments } = result.data;
-    return comments;
-});
+export const getCommentsForArticle = createAsyncThunk(
+    'comments/getCommentsForArticle',
+    async (articleSlug) => {
+        const result = await API.getComments(articleSlug);
+        const { comments } = result.data;
+        return comments;
+    }
+);
 
-export const removeComment = createAsyncThunk('comments/removeComment', async ({ articleSlug, commentId }) => {
-    await API.deleteComment(articleSlug, commentId);
-});
+export const removeComment = createAsyncThunk(
+    'comments/removeComment',
+    async ({ articleSlug, commentId }) => {
+        await API.deleteComment(articleSlug, commentId);
+    }
+);
 
 const selectCommentsSlice = (state) => state.comments;
 

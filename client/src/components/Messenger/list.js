@@ -10,6 +10,7 @@ import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import Tooltip from '@mui/material/Tooltip';
 
 const Item = ({ room, active, status }) => {
     const dispatch = useDispatch();
@@ -48,7 +49,9 @@ const Item = ({ room, active, status }) => {
                     />
                 </Badge>
             </div>
-            <div className="col-8 item-user-mess">{room.members.username}</div>
+            <Tooltip title={room.members?.username} placement="right" arrow>
+                <div className="col-8 item-user-mess text-truncate">{room.members?.username}</div>
+            </Tooltip>
         </button>
     );
 };
@@ -56,7 +59,7 @@ const Item = ({ room, active, status }) => {
 function MessengerList({ roomStatus }) {
     const { rooms } = useSelector(selectRooms);
     const CurrentRoom = useSelector(selectRoom);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(true);
 
     const handleClick = () => {
         setOpen(!open);

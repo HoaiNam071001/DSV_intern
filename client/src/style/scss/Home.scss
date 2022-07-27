@@ -10,19 +10,22 @@ $desktop-width: 1024px;
     background-repeat: no-repeat;
     background-position: top left;
     height: 40vw;
+    @include mobiletable {
+        display: none;
+    }
     @include mobile {
         display: none;
     }
     & .title-page {
         margin-top: 4vw;
-        color: rgb(13, 0, 112);
+        color: rgb(255, 255, 255);
         font-size: calc(30px + 3vw);
         font-family: Arial;
     }
     & .message {
         font-family: cursive;
         font-size: calc(18px + 1vw);
-        color: rgb(255, 255, 255);
+        color: rgb(0, 11, 130);
     }
 
     & a {
@@ -42,7 +45,19 @@ $desktop-width: 1024px;
             opacity: 0.8;
         }
     }
-
+    @include desktop {
+        & .title-page {
+            margin-left: 15%;
+            margin-top: 5vw;
+            font-size: calc(35px + 3vw);
+        }
+        & .message {
+            margin-left: 15%;
+        }
+        & a {
+            margin-left: 15%;
+        }
+    }
     @include mobiletable {
         background-size: 60vw;
         height: 55vw;
@@ -58,7 +73,7 @@ $desktop-width: 1024px;
 }
 .btn-home-title {
     border: 0px;
-    background-color: rgba(255, 255, 255, 0.786);
+    background-color: rgb(255, 255, 255);
     padding: 8px 10px;
     color: #000;
     width: 100%;

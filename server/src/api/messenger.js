@@ -57,7 +57,7 @@ const Messenger = (() => {
         try {
             Message.newMessage(
                 {
-                    roomId: req.body.to,
+                    roomId: req.body.roomId,
                     content: req.body.message.content,
                     createdAt: req.body.message.createdAt,
                     sender: req.body.message.sender.id,

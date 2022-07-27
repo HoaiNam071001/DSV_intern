@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsAuthenticated, logout, selectUser } from '../redux/reducers/authSlice';
+import { logout, selectUser } from '../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
 
-const HeaderLogin = () => {
+const avatar = require('../../Assets/avatar-thumbnail.jpg');
+
+const NavLogin = () => {
     const currentUser = useSelector(selectUser);
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -45,7 +46,7 @@ const HeaderLogin = () => {
                         height="40"
                         className="rounded-circle"
                         alt="avatar"
-                        src={currentUser.image || require('../Assets/avatar-thumbnail.jpg')}
+                        src={currentUser.image || avatar}
                     />
                 </div>
 
@@ -61,7 +62,7 @@ const HeaderLogin = () => {
                                 height="30"
                                 className="rounded-circle"
                                 alt="avatar"
-                                src={currentUser.image || require('../Assets/avatar-thumbnail.jpg')}
+                                src={currentUser.image || avatar}
                             />
                             <span className="p-1 ">{currentUser?.username}</span>
                         </Link>
@@ -93,62 +94,4 @@ const HeaderLogin = () => {
         </>
     );
 };
-
-const HeaderLogout = () => {
-    return (
-        <React.Fragment>
-            <Link to="/login" className="sign-header">
-                Sign in
-            </Link>
-            <Link to="/register" className="sign-header">
-                Sign up
-            </Link>
-        </React.Fragment>
-    );
-};
-
-function ElevationScroll(props) {
-    const { children, window } = props;
-
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-        target: window ? window() : undefined,
-    });
-    return React.cloneElement(children, {
-        className: trigger ? 'header-container' : 'header-scroll header-container',
-    });
-}
-const Header = () => {
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-
-    return (
-        <ElevationScroll>
-            <nav className="header-container">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-3 d-flex align-items-center">
-                            <Link to="/" className="title-header navbar-brand fs-2 fw-bolder m-1">
-                                <img src={require('../Assets/logo.png')} alt="Blog" />
-                            </Link>
-                        </div>
-                        <div className="col-9 d-flex justify-content-end align-items-center">
-                            <Tooltip title="HomePage" placement="bottom" arrow>
-                                <Link
-                                    to="/"
-                                    className="mx-3 btn-header d-flex align-items-center justify-content-center"
-                                >
-                                    <i className="bi bi-house-fill fs-3"></i>
-                                </Link>
-                            </Tooltip>
-
-                            {isAuthenticated ? <HeaderLogin /> : <HeaderLogout />}
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </ElevationScroll>
-    );
-};
-
-export default Header;
+export default NavLogin;

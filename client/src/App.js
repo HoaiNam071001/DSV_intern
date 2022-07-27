@@ -2,10 +2,10 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
-import './style/App.css';
 import { setAuthorization } from './Services/Axios';
+import './style/App.css';
 
-import Header from './components/Header';
+import Header from './components/Header/header';
 import Footer from './components/Footer';
 import Home from './pages/home';
 import Login from './pages/login';
@@ -15,6 +15,7 @@ import Article from './pages/article';
 import Profile from './pages/profile';
 import EditArticle from './pages/edit';
 import Message from './pages/messenger';
+import Search from './pages/search';
 
 function App() {
     const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
                     <Route path="/editor" element={<EditArticle />} />
                     <Route path="/editor/:slug" element={<EditArticle />} />
                     <Route path="/messages" element={<Message />} />
+                    <Route path="/search" element={<Search />} />
                 </Routes>
             </div>
             <Footer />

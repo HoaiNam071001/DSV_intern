@@ -142,7 +142,7 @@ export const updateUser = createAsyncThunk(
 );
 
 // Get auth slice
-const selectAuthSlice = (state) => state.auth;
+export const selectAuthSlice = (state) => state.auth;
 export const selectToken = (state) => selectAuthSlice(state).token;
 
 // Get current user

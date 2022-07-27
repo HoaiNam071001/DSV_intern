@@ -32,12 +32,13 @@
     background-color: rgb(255, 255, 255);
     //border-bottom: 1px solid rgba(255, 255, 255, 0.27);
     box-shadow: 0px 1px 2px 0px rgb(160, 160, 160);
-    z-index: 10;
+    z-index: 10000;
     & .title-header {
         & img {
             height: 50px;
         }
     }
+
     & .btn-header {
         color: #000;
         border: 0;
@@ -59,17 +60,9 @@
         margin: 5px 10px;
         font-size: 18px;
         &:hover {
-            color: #fff;
+            color: rgb(199, 199, 199);
             opacity: 0.8;
         }
-    }
-    & .btn-active-out {
-        background: rgb(0, 89, 255);
-        color: #fff;
-    }
-    & .btn-active-in {
-        background: rgba(0, 89, 255, 0.088);
-        color: rgb(0, 8, 255);
     }
 }
 .header-scroll {

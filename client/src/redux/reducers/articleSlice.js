@@ -16,7 +16,7 @@ const articleSlice = createSlice({
     initialState,
     reducers: {
         articlePageUnloaded: () => initialState,
-        setSuccess: (state, action) => (state.success = undefined),
+        setSuccess: (state) => (state.success = undefined),
     },
     extraReducers: (builder) => {
         builder

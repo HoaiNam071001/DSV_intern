@@ -52,7 +52,7 @@ const articleListSlice = createSlice({
                 state.articles = action.payload.articles;
                 state.pagination = action.payload.pagination;
             })
-            .addCase(getAllArticles.pending, (state, action) => {
+            .addCase(getAllArticles.pending, (state) => {
                 state.articles = null;
             });
 
@@ -62,7 +62,7 @@ const articleListSlice = createSlice({
                 state.pagination = action.payload.pagination;
                 state.tag = action.meta.arg?.tag;
             })
-            .addCase(getArticlesByTag.pending, (state, action) => {
+            .addCase(getArticlesByTag.pending, (state) => {
                 state.articles = null;
             });
 
@@ -73,7 +73,7 @@ const articleListSlice = createSlice({
                 state.author = action.meta.arg?.author;
                 state.favorited = undefined;
             })
-            .addCase(getArticlesByAuthor.pending, (state, action) => {
+            .addCase(getArticlesByAuthor.pending, (state) => {
                 state.articles = null;
             });
 
@@ -84,7 +84,7 @@ const articleListSlice = createSlice({
                 state.favorited = action.meta.arg?.favorited;
                 state.author = undefined;
             })
-            .addCase(getFavoriteArticles.pending, (state, action) => {
+            .addCase(getFavoriteArticles.pending, (state) => {
                 state.articles = null;
             });
         builder.addMatcher(

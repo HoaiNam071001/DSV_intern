@@ -68,4 +68,6 @@ export const API = {
     getbyUser: (data) => axios.post(`/api/messenger/user`, data, config),
 
     getbyRoom: (data) => axios.post(`/api/messenger/room`, data, config),
+
+    Search: (data) => axios.get(`/api/search?keyword=${data}`, config),
 };

@@ -24,7 +24,7 @@ const Home = () => {
             <div className="init-web ">
                 <div className="container">
                     <div className="row">
-                        <div className="col-sm-6 offset-sm-6 col-sm-7 offset-sm-5">
+                        <div className="col-sm-6 offset-sm-6">
                             <div className="title-page">Simple Blog</div>
                             <div className="message">A place to share knowledge</div>
                             <a href="#topscroll">

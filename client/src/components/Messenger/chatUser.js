@@ -1,7 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addMessage } from '../../redux/reducers/messengerSlice';
 
-const ChatUser = ({ room, status }) => {
+import { Link } from 'react-router-dom';
+const ChatUser = ({ room, status, authId, socket }) => {
+    const dispatch = useDispatch();
+    const handleVideoCall = () => {
+        const roomid = room.id;
+        const windowref = window.open(
+            `/videocall?room=${roomid}&iscaller=true&auth=${authId}`,
+            '',
+            'height=500,width=800,left=300,top=100'
+        );
+        windowref.onload = function () {
+            windowref.onunload = function () {
+                socket.emit('call-end', roomid, authId, true, ({ message, roomId }) => {
+                    if (message) dispatch(addMessage({ message, roomId }));
+                });
+            };
+        };
+    };
     if (!room) return <div className="messenger-body-header d-flex"></div>;
     return (
         <div className="messenger-body-header d-flex">
@@ -19,8 +37,10 @@ const ChatUser = ({ room, status }) => {
                     {status ? 'Online' : 'Offline'}
                 </div>
             </div>
-            <div className="btn-videocall ms-auto align-self-center">
-                <i className="bi bi-camera-video"></i>
+            <div className="ms-auto align-self-center">
+                <button className="btn-videocall " onClick={handleVideoCall}>
+                    <i className="bi bi-camera-video"></i>
+                </button>
             </div>
         </div>
     );

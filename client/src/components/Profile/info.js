@@ -1,13 +1,11 @@
 import React, { memo, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import AddTaskIcon from '@mui/icons-material/AddTask';
-import ChatIcon from '@mui/icons-material/Chat';
-import { follow, unfollow } from '../../redux/reducers/profileSlice';
-import { selectUser } from '../../redux/reducers/authSlice';
-import { getMessByUser } from '../../redux/reducers/messengerSlice';
 
+import { selectUser } from '../../redux/reducers/authSlice';
+import Follow from './followBtn';
+import OnChat from './chatBtn';
 import { ItemLoading } from '../Loading';
 import UploadAvatar from './uploadAvatar';
 const Setting = () => {
@@ -16,57 +14,6 @@ const Setting = () => {
             <BorderColorIcon />
             Edit Profile
         </Link>
-    );
-};
-
-const Follow = ({ username, following }) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const currentUser = useSelector(selectUser);
-
-    const handleClick = () => {
-        if (!currentUser) {
-            navigate(`/login`);
-            return;
-        }
-
-        if (following) {
-            dispatch(unfollow({ username }));
-        } else {
-            dispatch(follow({ username }));
-        }
-    };
-
-    return (
-        <button
-            onClick={handleClick}
-            className={`float-end d-flex align-items-center btn-follow-profile ${
-                following ? 'btn-follow-profile-active' : ''
-            }`}
-        >
-            <AddTaskIcon />
-            {following ? 'Unfollow' : 'Follow'}
-        </button>
-    );
-};
-
-const OnChat = ({ profile }) => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-
-    const handleChat = () => {
-        dispatch(getMessByUser({ userId: profile.id }));
-        navigate(`/messages`);
-    };
-    return (
-        <button
-            onClick={handleChat}
-            className={`float-end d-flex align-items-center btn-chat-profile 
-            }`}
-        >
-            <ChatIcon className="mx-1" />
-            Chat
-        </button>
     );
 };
 
@@ -114,7 +61,7 @@ const UserInfo = ({ profile }) => {
                     <Setting />
                 ) : (
                     <>
-                        {currentUser && <OnChat profile={profile} />}
+                        {currentUser && <OnChat id={profile.id} />}
                         <Follow username={profile.username} following={profile.following} />
                     </>
                 )}

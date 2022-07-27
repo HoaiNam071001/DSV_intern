@@ -54,5 +54,9 @@
     & .comment-item-body {
         padding: 0px 0px 0px 15px;
         margin: 10px;
+        overflow-wrap: break-word;
+        max-height: 300px;
+        overflow: auto;
+        text-align: justify;
     }
 }

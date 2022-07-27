@@ -1,3 +1,4 @@
+import React from 'react';
 import CreateArticle from '../components/Article/editorArticle';
 
 function NewArticle() {

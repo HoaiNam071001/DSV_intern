@@ -147,8 +147,21 @@ const getTag = () =>
             return result;
         });
 
+const Searchs = (input, id) => {
+    return Promise.all([
+        User.find({
+            $or: [{ email: { $regex: input, $options: 'i' } }, { username: { $regex: input, $options: 'i' } }],
+        }),
+        id ? UserbyId(id) : null,
+    ]).then(([users, own]) => {
+        return users.map((user) => user.toProfileJSONFor(own));
+    });
+    // return User.find({ $username_1: { $search: input } });
+};
+
 module.exports = {
     getTag,
+    Searchs,
     Article: {
         getFollow,
         getUsername,
