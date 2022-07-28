@@ -545,7 +545,11 @@
     background-color: white;
     border-radius: 5px; }
     .detail-article .header-article h1 {
-      margin-bottom: 10px; }
+      overflow-wrap: break-word;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 2em;
+      line-height: 0.9em; }
     .detail-article .header-article .author-article img {
       border-radius: 50%; }
     .detail-article .header-article .author-article img:hover {
@@ -603,6 +607,7 @@
   .detail-article .script-article .tag-article {
     margin: 10px; }
   .detail-article .content-article {
+    overflow-wrap: break-word;
     padding: 20px;
     font-size: 20px;
     background-color: #fff;

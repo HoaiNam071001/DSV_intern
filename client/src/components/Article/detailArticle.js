@@ -1,5 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
+import Tooltip from '@mui/material/Tooltip';
 
 import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +9,7 @@ import { selectUser } from '../../redux/reducers/authSlice';
 import OptionArticle from './option';
 import InteractArticle from './interact';
 import Skeleton from './skeletonDetail';
+
 const Detail = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -30,7 +32,9 @@ const Detail = () => {
     return (
         <>
             <div className="header-article">
-                <h1>{article.title} </h1>
+                <Tooltip title={article.title} placement="top" arrow>
+                    <h1>{article.title} </h1>
+                </Tooltip>
                 <div className="author-article d-flex">
                     <Link to={`/@${article?.author?.username}`}>
                         <img

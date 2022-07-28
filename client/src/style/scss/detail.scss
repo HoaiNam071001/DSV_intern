@@ -8,7 +8,12 @@
         border-radius: 5px;
 
         & h1 {
-            margin-bottom: 10px;
+            //word-wrap: break-word;
+            overflow-wrap: break-word;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 2em;
+            line-height: 0.9em;
         }
         & .author-article {
             & img {
@@ -116,6 +121,7 @@
         }
     }
     & .content-article {
+        overflow-wrap: break-word;
         padding: 20px;
         font-size: 20px;
         background-color: #fff;
