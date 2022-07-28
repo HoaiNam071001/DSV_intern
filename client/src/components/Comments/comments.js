@@ -4,8 +4,9 @@ import { Link, useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 
 import Message from '../Message';
-import { selectIsAuthenticated, selectUser } from '../../redux/reducers/authSlice';
+import { selectIsAuthenticated } from '../../redux/reducers/authSlice';
 import CommentList from './commentList';
+import InputAdornment from '@mui/material/InputAdornment';
 import {
     createComment,
     selectErrors,
@@ -13,10 +14,9 @@ import {
 } from '../../redux/reducers/commentsSlice';
 import { selectArticle } from '../../redux/reducers/articleSlice';
 import Loading from '../Loading';
-let cmt = /^ *$/;
+let cmt = /^(\n| )*$/;
 function CommentForm() {
     const dispatch = useDispatch();
-    const currentUser = useSelector(selectUser);
     const { slug } = useParams();
     const [body, setBody] = useState('');
     const saveComment = () => {
@@ -25,49 +25,32 @@ function CommentForm() {
         setBody('');
     };
     const saveCommentEnter = (e) => {
-        e.preventDefault();
-        if (e.key === 'Enter') saveComment(e);
+        if (e.keyCode === 13 && !e.shiftKey) saveComment(e);
     };
 
     return (
         <div className="my-4 comment-item">
             <TextField
-                sx={{
-                    '& .MuiOutlinedInput-root': {
-                        background: '#fff',
-                        borderRadius: 10,
-                        margin: 2,
-                        marginBottom: 1,
-                    },
-                    '& label': { fontSize: 16, margin: 2 },
-                }}
-                className="form-control comment-item-write"
                 label="Comment"
-                variant="outlined"
+                className="form-control"
                 placeholder="Write your comment..."
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                onKeyUp={saveCommentEnter}
+                onKeyDown={saveCommentEnter}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <button
+                                className="ms-auto btn-addcmt"
+                                onClick={saveComment}
+                                onKeyUp={saveCommentEnter}
+                            >
+                                <i className="bi bi-send-fill"></i>
+                            </button>
+                        </InputAdornment>
+                    ),
+                }}
             />
-
-            <div className="d-flex align-items-center comment-item-user">
-                <img
-                    className="rounded-circle m-1"
-                    width="40"
-                    height="40"
-                    alt={currentUser.username}
-                    src={currentUser.image || require('../../Assets/avatar-thumbnail.jpg')}
-                />
-                <span className="mx-2 fs-5 info-username">{currentUser.username}</span>
-                <button
-                    className="ms-auto btn-addcmt"
-                    onClick={saveComment}
-                    onKeyUp={saveCommentEnter}
-                >
-                    <i className="bi bi-send-fill"></i>
-                </button>
-            </div>
-            <hr />
         </div>
     );
 }

@@ -288,7 +288,7 @@
     .container-info-profile .container-uploadimg .upload-avt-body {
       background-color: #fff;
       padding: 10px;
-      margin: 20px auto;
+      margin: 80px auto;
       overflow: auto;
       border-radius: 10px; }
       .container-info-profile .container-uploadimg .upload-avt-body h2 {
@@ -619,22 +619,16 @@
     margin: 0px;
     padding: 0px;
     color: #8c8c8c; }
-  .comment-item .comment-item-user {
-    margin-left: 20px; }
-    .comment-item .comment-item-user .info-username {
-      color: #0a0091; }
-    .comment-item .comment-item-user .btn-addcmt {
-      border: 0px;
-      background: #00edff;
-      background: linear-gradient(90deg, #00edff 0%, #0080ff 100%);
-      border-radius: 50%;
-      padding: 10px;
-      width: 40px;
-      height: 40px;
-      color: #fff;
-      margin-right: 30px; }
-      .comment-item .comment-item-user .btn-addcmt:hover {
-        opacity: 0.8; }
+  .comment-item .btn-addcmt {
+    border: 0px;
+    background: white;
+    border-radius: 50%;
+    padding: 10px;
+    width: 40px;
+    font-size: 18px;
+    color: black; }
+    .comment-item .btn-addcmt:hover {
+      opacity: 0.8; }
   .comment-item .comment-item-info {
     border-radius: 20px 20px 0 0;
     padding: 5px; }

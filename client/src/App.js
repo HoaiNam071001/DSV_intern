@@ -16,6 +16,7 @@ import Profile from './pages/profile';
 import EditArticle from './pages/edit';
 import Message from './pages/messenger';
 import Search from './pages/search';
+import BadRequest from './pages/badRequest';
 
 function App() {
     const dispatch = useDispatch();
@@ -41,6 +42,7 @@ function App() {
                     <Route path="/editor/:slug" element={<EditArticle />} />
                     <Route path="/messages" element={<Message />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/badrequest" element={<BadRequest />} />
                 </Routes>
             </div>
             <Footer />

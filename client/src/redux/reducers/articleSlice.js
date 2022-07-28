@@ -21,14 +21,17 @@ const articleSlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(getArticle.fulfilled, (state, action) => {
+                state.errors = undefined;
                 state.article = action.payload.article;
                 state.inProgress = false;
             })
             .addCase(createArticle.fulfilled, (state) => {
+                state.errors = undefined;
                 state.inProgress = false;
                 state.success = true;
             })
             .addCase(updateArticle.fulfilled, (state) => {
+                state.errors = undefined;
                 state.inProgress = false;
                 state.success = true;
             })
@@ -48,15 +51,19 @@ const articleSlice = createSlice({
                 state.article = action.payload.article;
             });
 
-        builder.addCase(createArticle.rejected, (state, action) => {
-            state.errors = action.error.errors;
-            state.inProgress = false;
-        });
-
-        builder.addCase(updateArticle.rejected, (state, action) => {
-            state.errors = action.error.errors;
-            state.inProgress = false;
-        });
+        builder
+            .addCase(getArticle.rejected, (state, action) => {
+                state.errors = action.error.code;
+                state.inProgress = false;
+            })
+            .addCase(createArticle.rejected, (state, action) => {
+                state.errors = action.error.errors;
+                state.inProgress = false;
+            })
+            .addCase(updateArticle.rejected, (state, action) => {
+                state.errors = action.error.errors;
+                state.inProgress = false;
+            });
 
         builder.addMatcher(
             (action) => action.type.endsWith('/pending'),

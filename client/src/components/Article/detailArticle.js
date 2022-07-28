@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
 
 import React, { useEffect, memo } from 'react';
@@ -9,8 +9,9 @@ import OptionArticle from './option';
 import InteractArticle from './interact';
 import Skeleton from './skeletonDetail';
 const Detail = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { article, inProgress, deleted } = useSelector(selectArticle);
+    const { article, inProgress, deleted, errors } = useSelector(selectArticle);
     const user = useSelector(selectUser);
     const { slug } = useParams();
     useEffect(() => {
@@ -19,6 +20,9 @@ const Detail = () => {
             fetchArticle.abort();
         };
     }, [dispatch, slug]);
+    useEffect(() => {
+        if (errors) navigate('/badrequest');
+    }, [errors, navigate]);
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     if (!article) {
         return <div>{inProgress && <Skeleton />}</div>;

@@ -12,7 +12,9 @@ const Articles = () => {
                 {!articles ? (
                     <Skeleton />
                 ) : articles.length === 0 ? (
-                    <div className="text-center fs-3">No articles are here... yet.</div>
+                    <div className="text-center fs-3">
+                        <img width="100%" src={require('../../Assets/no-item.png')} />
+                    </div>
                 ) : (
                     articles.map((article) => <ArticleItem key={article.slug} article={article} />)
                 )}

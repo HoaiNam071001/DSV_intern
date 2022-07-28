@@ -77,7 +77,7 @@ const VideoStream = () => {
                     socket.on('user-connected', (userId) => {
                         // If a new user connect
                         //connectToNewUser(userId, stream)
-                        setTimeout(connectToNewUser, 4000, userId, stream);
+                        setTimeout(connectToNewUser, 3000, userId, stream);
                         ring.current.pause();
                     });
                 })
