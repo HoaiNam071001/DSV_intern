@@ -11,7 +11,7 @@ import ChatBox from '../components/Messenger/chatbox';
 import CallBox from '../components/Messenger/callbox';
 import SearchInput from '../components/Search/searchInput';
 import { io } from 'socket.io-client';
-const socket = io(process.env.REACT_APP_SERVER, { reconnection: false });
+const socket = io(process.env.REACT_APP_SERVER, { reconnection: false, autoConnect: false });
 
 const Messenger = () => {
     const auth = useSelector(selectAuthSlice);

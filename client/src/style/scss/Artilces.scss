@@ -79,6 +79,13 @@ $bg-blur: #36a1ff;
             height: 25px;
         }
 
+        & button {
+            background-color: #fff;
+            border: #fff;
+            &:focus {
+                outline: none;
+            }
+        }
         & .btn-favorate {
             background-color: rgb(255, 255, 255);
             color: rgb(255, 34, 18);

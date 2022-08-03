@@ -39,7 +39,7 @@ const messengerSlice = createSlice({
         messUnUser: (state) => resetState(state),
         addMessage: (state, action) => {
             const { roomId, message } = action.payload;
-            if ((roomId && roomId === state.room.id) || !roomId) {
+            if ((roomId && roomId === state.room?.id) || !roomId) {
                 // if (message?.sender.id === state.room?.members.id) {
                 //     message.sender.image = state.room.members.image;
                 // }

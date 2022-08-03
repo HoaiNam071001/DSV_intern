@@ -23,7 +23,7 @@ const Detail = () => {
         };
     }, [dispatch, slug]);
     useEffect(() => {
-        if (errors) navigate('/badrequest');
+        if (errors) navigate('/404.json');
     }, [errors, navigate]);
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     if (!article) {
@@ -32,7 +32,7 @@ const Detail = () => {
     return (
         <>
             <div className="header-article">
-                <Tooltip title={article.title} placement="top" arrow>
+                <Tooltip title={article.title} placement="top" followCursor arrow>
                     <h1>{article.title} </h1>
                 </Tooltip>
                 <div className="author-article d-flex">
@@ -58,20 +58,19 @@ const Detail = () => {
                             </time>
                         </div>
                     </div>
-
-                    {user &&
-                        (user.username === article.author.username ? (
-                            <OptionArticle slug={slug} deleted={deleted} />
-                        ) : (
-                            <InteractArticle
-                                username={article.author.username}
-                                following={article.author.following}
-                                slug={slug}
-                                favorited={article.favorited}
-                                count={article.favoritesCount}
-                            />
-                        ))}
                 </div>
+                {user &&
+                    (user.username === article.author.username ? (
+                        <OptionArticle slug={slug} deleted={deleted} />
+                    ) : (
+                        <InteractArticle
+                            username={article.author.username}
+                            following={article.author.following}
+                            slug={slug}
+                            favorited={article.favorited}
+                            count={article.favoritesCount}
+                        />
+                    ))}
             </div>
             <div className="script-article">
                 {/* <div className="description-article">{article.description}</div> */}

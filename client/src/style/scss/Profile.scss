@@ -24,8 +24,29 @@ $desktop-width: 1024px;
     }
     & .current-user {
         cursor: pointer;
+        & .upload {
+            display: none;
+        }
         &:hover {
             transform: scale(1.05);
+            & .upload {
+                display: flex;
+                border-radius: 50%;
+                display: block;
+                position: absolute;
+                top: 5px;
+                left: 5px;
+                bottom: 5px;
+                right: 5px;
+                background-color: rgba(43, 43, 43, 0.288);
+                align-items: center;
+
+                & p {
+                    color: #fff;
+                    font-size: 28px;
+                    padding: 40px 20px;
+                }
+            }
         }
     }
     & .container-uploadimg {

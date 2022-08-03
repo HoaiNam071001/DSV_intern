@@ -27,6 +27,7 @@ export const Input = ({ label, ...props }) => {
                 {...field}
                 {...props}
                 variant="outlined"
+                inputProps={{ maxLength: 70 }}
                 helperText={meta.touched ? meta.error : null}
             />
         </>
@@ -47,6 +48,7 @@ export const InputPassword = ({ label, ...props }) => {
                 {...props}
                 variant="outlined"
                 helperText={meta.touched ? meta.error : null}
+                inputProps={{ maxLength: 100 }}
                 InputProps={{
                     endAdornment: (
                         <InputAdornment position="end">

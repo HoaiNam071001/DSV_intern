@@ -4,9 +4,13 @@ import { useLocation } from 'react-router-dom';
 import CallIcon from '@mui/icons-material/Call';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import { io } from 'socket.io-client';
-//import ReactAudioPlayer from 'react-audio-player';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import Tooltip from '@mui/material/Tooltip';
 
 const socket = io(process.env.REACT_APP_SERVER, {
+    reconnection: false,
+    autoConnect: false,
     auth: {
         token: window.localStorage.getItem('jwt'),
     },
@@ -23,6 +27,7 @@ const VideoStream = () => {
     const [audio, setAudio] = useState(true);
     const [camera, setCamera] = useState(true);
     useEffect(() => {
+        socket.connect();
         socket.on('connect', () => {
             setIsConnected(true);
         });
@@ -38,6 +43,7 @@ const VideoStream = () => {
             socket.off('disconnect');
             socket.off('user-connected');
             socket.off('user-disconnected');
+            socket.disconnect();
         };
     }, []);
 
@@ -127,15 +133,24 @@ const VideoStream = () => {
             />
             <div ref={videoGrid}></div>
             <div className="btn-container">
-                <button onClick={myPeerAudio} className={audio ? '' : 'btn-active'}>
-                    <VolumeOffIcon />
-                </button>
+                <Tooltip
+                    title={audio ? 'Mute microphone' : 'Unmute microphone'}
+                    placement="top"
+                    arrow
+                >
+                    <button onClick={myPeerAudio}>
+                        {audio ? <VolumeUpIcon /> : <VolumeOffIcon />}
+                    </button>
+                </Tooltip>
+
                 <button onClick={() => window.close()} className="danger">
                     <CallIcon />
                 </button>
-                <button onClick={myPeerCamera} className={camera ? '' : 'btn-active'}>
-                    <VideocamOffIcon />
-                </button>
+                <Tooltip title={camera ? 'Turn off video' : 'Turn on video'} placement="top" arrow>
+                    <button onClick={myPeerCamera}>
+                        {camera ? <VideocamIcon /> : <VideocamOffIcon />}
+                    </button>
+                </Tooltip>
             </div>
         </div>
     );

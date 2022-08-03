@@ -7,6 +7,7 @@ import FavoriteIconActive from '@mui/icons-material/Favorite';
 import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
+import Avatar from '@mui/material/Avatar';
 
 const Favorite = ({ article }) => {
     const dispatch = useDispatch();
@@ -28,13 +29,17 @@ const Favorite = ({ article }) => {
     return (
         <div className="d-flex align-items-center">
             <Tooltip title="Like this article" placement="top" arrow>
-                {article.favorited ? (
-                    <FavoriteIconActive className="btn-favorate" onClick={handleClick} />
-                ) : (
-                    <FavoriteIcon onClick={handleClick} className="btn-favorate" />
-                )}
+                <button onClick={handleClick}>
+                    {article.favorited ? (
+                        <FavoriteIconActive className="btn-favorate" />
+                    ) : (
+                        <FavoriteIcon className="btn-favorate" />
+                    )}
+                </button>
             </Tooltip>
-            <div className="text-truncate"> {article.favoritesCount} Likes</div>
+            <div className="text-truncate">
+                {article.favoritesCount} {Number(article.favoritesCount) > 1 ? 'Likes' : 'Like'}
+            </div>
         </div>
     );
 };
@@ -45,22 +50,19 @@ const ArticleItem = ({ article }) => {
             <div key={article.slug} className="feed-item">
                 <div className="row">
                     <div className="col-4 thumnail-article">
-                        <img
-                            src={article.thumbnail || require('../../Assets/blog.jpg')}
-                            alt="thumnail-article"
-                        />
+                        <Avatar alt="thumnail-article" src={article.thumbnail}>
+                            <img alt="thumnail-article" src={require('../../Assets/blog.jpg')} />
+                        </Avatar>
                     </div>
                     <div className="col-8 feed-content">
                         <div className="item-author d-flex align-items-center">
                             <Link to={`/@${article.author.username}`}>
-                                <img
-                                    className="img-thumbnail"
-                                    src={
-                                        article.author.image ||
-                                        require('../../Assets/avatar-thumbnail.jpg')
-                                    }
-                                    alt="author"
-                                />
+                                <Avatar alt="author" src={article.author.image}>
+                                    <img
+                                        alt="author"
+                                        src={require('../../Assets/avatar-thumbnail.jpg')}
+                                    />
+                                </Avatar>
                             </Link>
                             <div className="col-auto">
                                 <Link
@@ -89,7 +91,7 @@ const ArticleItem = ({ article }) => {
                         </div>
 
                         <Link to={`/article/${article.slug}`} className="link-nodecoration">
-                            <Tooltip title={article.title} placement="top" arrow>
+                            <Tooltip title={article.title} placement="top" followCursor arrow>
                                 <div className="item-title text-truncate">{article.title}</div>
                             </Tooltip>
                             <div className="item-content text-truncate">{article.description}</div>

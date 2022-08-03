@@ -28,7 +28,7 @@ const UserInfo = ({ profile }) => {
         <div id="topscroll" className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
                 <div
-                    className={`rounded-circle text-center container-avt-img ${
+                    className={`rounded-circle text-center container-avt-img  ${
                         isCurrentUser ? 'current-user' : ''
                     }`}
                     onClick={changeAvatar}
@@ -38,6 +38,9 @@ const UserInfo = ({ profile }) => {
                         className="avt-img rounded-circle"
                         alt={profile.username}
                     />
+                    <div className="upload">
+                        <p>Upload Avatar</p>
+                    </div>
                 </div>
                 {modal && (
                     <UploadAvatar

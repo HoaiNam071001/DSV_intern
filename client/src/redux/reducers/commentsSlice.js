@@ -5,7 +5,7 @@ import {
     createSlice,
 } from '@reduxjs/toolkit';
 
-import { isApiError, Status } from '../../common/utils';
+import { Status } from '../../common/utils';
 import { selectUser } from './authSlice';
 import { API } from '../../Services/Axios';
 
@@ -46,7 +46,7 @@ const commentsSlice = createSlice({
             })
             .addCase(createComment.rejected, (state, action) => {
                 state.status = Status.FAILURE;
-                state.errors = action.payload?.errors;
+                state.errors = action.payload;
                 commentAdapter.removeOne(state, action.meta.requestId);
             });
 
@@ -55,10 +55,15 @@ const commentsSlice = createSlice({
             commentAdapter.setAll(state, action.payload);
         });
 
-        builder.addCase(removeComment.fulfilled, (state, action) => {
-            state.status = Status.SUCCESS;
-            commentAdapter.removeOne(state, action.meta.arg.commentId);
-        });
+        builder
+            .addCase(removeComment.fulfilled, (state, action) => {
+                state.status = Status.SUCCESS;
+                commentAdapter.removeOne(state, action.meta.arg.commentId);
+            })
+            .addCase(removeComment.rejected, (state, action) => {
+                state.status = Status.FAILURE;
+                state.errors = action.payload;
+            });
     },
 });
 export const { commentPageUnloaded } = commentsSlice.actions;
@@ -73,11 +78,7 @@ export const createComment = createAsyncThunk(
             const { comment } = result.data;
             return comment;
         } catch (error) {
-            if (isApiError(error)) {
-                return thunkApi.rejectWithValue(error);
-            }
-
-            throw error;
+            return thunkApi.rejectWithValue(error.response.status);
         }
     },
     {
@@ -98,6 +99,9 @@ export const removeComment = createAsyncThunk(
     'comments/removeComment',
     async ({ articleSlug, commentId }) => {
         await API.deleteComment(articleSlug, commentId);
+    },
+    {
+        getPendingMeta: (_, { getState }) => ({ author: selectUser(getState()) }),
     }
 );
 

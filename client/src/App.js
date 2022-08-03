@@ -42,7 +42,7 @@ function App() {
                     <Route path="/editor/:slug" element={<EditArticle />} />
                     <Route path="/messages" element={<Message />} />
                     <Route path="/search" element={<Search />} />
-                    <Route path="/badrequest" element={<BadRequest />} />
+                    <Route path="/404.json" element={<BadRequest />} />
                 </Routes>
             </div>
             <Footer />

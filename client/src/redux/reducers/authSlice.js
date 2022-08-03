@@ -74,10 +74,7 @@ export const register = createAsyncThunk(
 
             return { token, user };
         } catch (error) {
-            if (isApiError(error.response.data)) {
-                return thunkApi.rejectWithValue(error.response.data);
-            }
-            throw error;
+            return thunkApi.rejectWithValue(error.response.data);
         }
     }
 );
@@ -90,10 +87,7 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
         } = result.data;
         return { token, user };
     } catch (error) {
-        if (isApiError(error.response.data)) {
-            return thunkApi.rejectWithValue(error.response.data);
-        }
-        throw error;
+        return thunkApi.rejectWithValue(error.response.data);
     }
 });
 
@@ -101,16 +95,11 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
  * Send a get current user request
  */
 export const getUser = createAsyncThunk('auth/getUser', async () => {
-    try {
-        const result = await API.getUser();
-        const {
-            user: { token, ...user },
-        } = result.data;
-        return { token, user };
-    } catch (error) {
-        throw error;
-        //window.localStorage.removeItem('jwt');
-    }
+    const result = await API.getUser();
+    const {
+        user: { token, ...user },
+    } = result.data;
+    return { token, user };
 });
 
 export const updateUser = createAsyncThunk(

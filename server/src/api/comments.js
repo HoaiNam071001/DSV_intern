@@ -28,7 +28,7 @@ const Comments = (() => {
             Article.getArticle({ slug, id })
                 .then(([user, article]) => {
                     if (!user) return res.sendStatus(401);
-
+                    if(!article) return res.sendStatus(404);
                     Comment.newComment(body, article, user).then((cmt) => res.json(cmt));
                 })
                 .catch(next);

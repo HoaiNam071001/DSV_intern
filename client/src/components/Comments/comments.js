@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 
 import Message from '../Message';
@@ -57,10 +57,16 @@ function CommentForm() {
 
 function CommentSection() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const isAuthenticaded = useSelector(selectIsAuthenticated);
     const errors = useSelector(selectErrors);
     const { article } = useSelector(selectArticle);
 
+    useEffect(() => {
+        if (errors) {
+            if (errors === 404) navigate('/404.json');
+        }
+    }, [errors, navigate]);
     useEffect(() => () => dispatch(commentPageUnloaded()), [dispatch]);
     if (!article) {
         return <Loading />;

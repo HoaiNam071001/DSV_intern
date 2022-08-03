@@ -1,3 +1,14 @@
+@import './responsive.scss';
+
+.modal-dialog {
+    margin-top: 150px;
+}
+
+@include mobile {
+    .modal-dialog {
+        margin: 150px 10px;
+    }
+}
 .comment-item {
     background-color: rgb(255, 255, 255);
     & hr {

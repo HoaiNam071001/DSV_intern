@@ -21,7 +21,7 @@ const socket = (server) => {
     });
 
     io.on('connection', (socket) => {
-        Users.addUser({ socketId: socket.id, id: socket.userId, rooms: [] });
+        Users.addUser({ id: socket.userId, socketId: socket.id, rooms: [] });
         socket.on('join', ({ roomList = [] }, callback) => {
             const online = [];
             const rooms = roomList.map((room) => {
@@ -38,7 +38,7 @@ const socket = (server) => {
         socket.on('send', ({ message, roomId }, callback) => {
             CreateMessage({ server, message, roomId }).end(function (err, res) {
                 if (err) return callback(err);
-                socket.to(roomId).emit('receive', res.body);
+                socket.to(roomId).emit('receive', res.body, roomId);
                 callback(res.body);
             });
         });

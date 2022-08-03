@@ -5,13 +5,23 @@
         padding-bottom: 20px;
         text-align: center;
         & img {
-            width: 50%;
+            width: 60%;
             border-radius: 10px;
-            @include mobiletable {
-                width: 60%;
-            }
             @include mobile {
-                width: 70%;
+                width: 90%;
+            }
+        }
+    }
+    & .upload-thumbnail {
+        display: block;
+        text-align: center;
+        & label {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgb(220, 220, 220);
+            &:hover {
+                background-color: rgb(226, 226, 226);
+                color: rgb(114, 114, 114);
             }
         }
     }
