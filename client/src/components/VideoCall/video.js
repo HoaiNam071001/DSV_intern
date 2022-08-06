@@ -44,7 +44,6 @@ const VideoStream = () => {
                 socket.on('user-disconnected', () => {
                     window.close();
                 });
-
                 return () => {
                     socket.off('connect');
                     socket.off('disconnect');
@@ -55,20 +54,17 @@ const VideoStream = () => {
             }
         }
     }, [currentUser, CurrentUserId]);
-
     useEffect(() => {
         if (isConnected) {
             const myPeer = new Peer(CurrentUserId);
-            const myVideo = document.createElement('video'); // Create a new video tag to show our video
-            myVideo.muted = true; // Mute ourselves on our end so there is no feedback loop
+            const myVideo = document.createElement('video');
+            myVideo.muted = true;
             myVideo.id = 'own';
-
             myPeer.on('open', (userId) => {
                 if (iscaller) ring.current.play();
                 setTimeout(() => {
                     if (!ring.current.paused) window.close();
                 }, 20000);
-                // When we first open the app, have us join a room
                 socket.emit('call-start', roomId, userId, iscaller);
             });
             socket.on('user-accept', () => {
@@ -81,22 +77,16 @@ const VideoStream = () => {
                 })
                 .then((stream) => {
                     window.localStream = stream;
-                    addVideoStream(myVideo, stream); // Display our video to ourselves
-
-                    //is called
+                    addVideoStream(myVideo, stream);
                     myPeer.on('call', (call) => {
-                        // When we join someone's room we will receive a call from them
-                        call.answer(stream); // Stream them our video/audio
-                        const video = document.createElement('video'); // Create a video tag for them
+                        call.answer(stream);
+                        const video = document.createElement('video');
                         call.on('stream', (userVideoStream) => {
-                            // When we recieve their stream
-                            addVideoStream(video, userVideoStream); // Display their video to ourselves
+                            addVideoStream(video, userVideoStream);
                         });
                     });
 
                     socket.on('user-connected', (userId) => {
-                        // If a new user connect
-                        //connectToNewUser(userId, stream)
                         setTimeout(connectToNewUser, 2000, userId, stream);
                         ring.current.pause();
                     });
@@ -107,14 +97,11 @@ const VideoStream = () => {
                     videoGrid.current.append(error);
                 });
             const connectToNewUser = (userId, stream) => {
-                // This runs when someone joins our room
-                const call = myPeer.call(userId, stream); // Call the user who just joined
-                // Add their video
+                const call = myPeer.call(userId, stream);
                 const video = document.createElement('video');
                 call.on('stream', (userVideoStream) => {
                     addVideoStream(video, userVideoStream);
                 });
-                // If they leave, remove their video
                 call.on('close', () => {
                     video.remove();
                 });
@@ -124,10 +111,9 @@ const VideoStream = () => {
     const addVideoStream = (video, stream) => {
         video.srcObject = stream;
         video.addEventListener('loadedmetadata', () => {
-            // Play the video as it loads
             video.play();
         });
-        videoGrid.current.append(video); // Append video element to videoGrid
+        videoGrid.current.append(video);
     };
     const myPeerAudio = () => {
         localStream.getAudioTracks()[0].enabled = !audio;

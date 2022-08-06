@@ -5,7 +5,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import Close from '@mui/icons-material/Close';
+import PhoneCallbackIcon from '@mui/icons-material/PhoneCallback';
+import Avatar from '@mui/material/Avatar';
+const Avt = require('../../Assets/avatar-thumbnail.jpg');
+const Ring = require('../../Assets/ring.wav');
 const AlertDialog = ({ userCall, setCall, authId, socket }) => {
     const [open, setOpen] = useState(false);
     useEffect(() => {
@@ -16,11 +20,11 @@ const AlertDialog = ({ userCall, setCall, authId, socket }) => {
         setCall();
     };
 
-    const handleDecline = () => {
+    const Decline = () => {
         socket.emit('call-end', userCall.id, authId);
         handleClose();
     };
-    const handleAccept = () => {
+    const Accept = () => {
         handleClose();
         socket.emit('call-accept', userCall.id);
         const windowref = window.open(
@@ -36,43 +40,42 @@ const AlertDialog = ({ userCall, setCall, authId, socket }) => {
     };
     if (!userCall) return <></>;
     return (
-        <div>
-            <audio
-                src={require('../../Assets/ring.wav')}
-                loop={true}
-                autoPlay
-                style={{ display: 'none' }}
-            />
-            <Dialog
-                open={open}
-                onClose={handleDecline}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    {userCall.members?.username} is calling you
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        The call will as soon as you accept
+        <Dialog
+            open={open}
+            onClose={Decline}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title" className="text-center">
+                <strong>{userCall.members?.username}</strong> is calling you
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText
+                    id="alert-dialog-description"
+                    className="d-flex flex-column align-items-center"
+                >
+                    <audio src={Ring} loop={true} autoPlay style={{ display: 'none' }} />
+                    The call will as soon as you accept
+                    <Avatar alt="avatar" src={userCall.members?.image}>
                         <img
-                            width="50"
-                            height="50"
-                            src={
-                                userCall.members?.image ||
-                                require('../../Assets/avatar-thumbnail.jpg')
-                            }
+                            width="80"
+                            height="80"
+                            className="m-1 rounded-circle"
+                            alt="avatar"
+                            src={Avt}
                         />
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDecline}>Decline</Button>
-                    <Button onClick={handleAccept} autoFocus>
-                        Accept
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+                    </Avatar>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions className="d-flex justify-content-center">
+                <Button onClick={Accept}>
+                    <PhoneCallbackIcon /> Accept
+                </Button>
+                <Button onClick={Decline}>
+                    <Close /> Decline
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 };
 export default AlertDialog;

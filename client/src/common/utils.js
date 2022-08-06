@@ -21,3 +21,14 @@ export function failureReducer(state, action) {
     state.status = Status.FAILURE;
     state.errors = action.payload.errors;
 }
+
+export function saveImage(thumbnail) {
+    const data = new FormData();
+    data.append('file', thumbnail);
+    data.append('upload_preset', 'h5z4ewnk');
+    data.append('api_key', '441634564439267');
+    return fetch('https://api.cloudinary.com/v1_1/h5z4ewnk/image/upload', {
+        method: 'post',
+        body: data,
+    }).then((resp) => resp.json());
+}

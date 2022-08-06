@@ -3,22 +3,17 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FileUploadIcon from '@mui/icons-material/FileUploadRounded';
 import { updateUser } from '../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
-
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { saveImage } from '../../common/utils';
+
 function Avatar({ image, setModal }) {
     const notify = () => toast('Invalid image!');
-
     const [avatar, setAvatar] = useState();
     const dispatch = useDispatch();
     const [load, setLoad] = useState(false);
-    useEffect(() => {
-        return () => {
-            avatar && URL.revokeObjectURL(avatar.preview);
-        };
-    }, [avatar]);
-
+    useEffect(() => () => avatar && URL.revokeObjectURL(avatar.preview), [avatar]);
     const handleChange = (e) => {
         if (e.target.files[0]) {
             const files = e.target.files[0];
@@ -29,20 +24,9 @@ function Avatar({ image, setModal }) {
         }
     };
     const changephotonow = () => {
-        if (!avatar) {
-            setModal(false);
-            return;
-        }
-        const data = new FormData();
-        data.append('file', avatar);
-        data.append('upload_preset', 'h5z4ewnk');
-        data.append('api_key', '441634564439267');
+        if (!avatar) return setModal(false);
         setLoad(true);
-        fetch('  https://api.cloudinary.com/v1_1/h5z4ewnk/image/upload', {
-            method: 'post',
-            body: data,
-        })
-            .then((resp) => resp.json())
+        saveImage(avatar)
             .then((data) => {
                 const user = {
                     image: String(data.url),

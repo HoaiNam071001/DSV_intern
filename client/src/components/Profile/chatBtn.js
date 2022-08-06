@@ -15,8 +15,7 @@ const OnChat = ({ id }) => {
     return (
         <button
             onClick={handleChat}
-            className={`float-end d-flex align-items-center btn-chat-profile 
-            }`}
+            className="float-end d-flex align-items-center btn-chat-profile"
         >
             <ChatIcon className="mx-1" />
             Chat

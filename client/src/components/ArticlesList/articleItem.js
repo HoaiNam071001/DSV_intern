@@ -17,15 +17,9 @@ const Favorite = ({ article }) => {
 
     const handleClick = (event) => {
         event.preventDefault();
-        if (!currentUser) {
-            navigate(`/login`);
-            return;
-        }
-        if (article.favorited) {
-            dispatch(unfavoriteArticle(article.slug));
-        } else {
-            dispatch(favoriteArticle(article.slug));
-        }
+        if (!currentUser) return navigate(`/login`);
+        if (article.favorited) dispatch(unfavoriteArticle(article.slug));
+        else dispatch(favoriteArticle(article.slug));
     };
     return (
         <div className="d-flex align-items-center">

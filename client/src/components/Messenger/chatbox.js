@@ -14,7 +14,6 @@ import Picker from 'emoji-picker-react';
 import VideoIcon from '@mui/icons-material/VideoCameraFront';
 import dayjs from 'dayjs';
 import { Skeletonchatbox } from './skeleton';
-let cmt = /^ *$/;
 
 const ItemMess = ({ mess, iscurrent }) => {
     return (
@@ -46,7 +45,7 @@ function Chatbox({ socket, messenger, room }) {
     const [content, setContent] = useState('');
     const _inputchat = useRef(null);
     const add = () => {
-        if (cmt.test(content)) return;
+        if (/^ *$/.test(content)) return;
         const messageClient = { content, id: uuidv4(), createdAt: Date.now(), sender: currentUser };
         dispatch(addMessage({ message: messageClient }));
         socket.emit('send', { message: messageClient, roomId: room.id }, ({ message }) => {

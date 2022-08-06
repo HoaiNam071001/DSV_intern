@@ -1,14 +1,11 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
-
+import { Formik } from 'formik';
 import { selectIsLoading } from '../../redux/reducers/authSlice';
-import { InputPassword } from './input';
+import Form, { InputPassword } from './form';
 import { initPass, objPass } from './value';
 const ChangePassword = ({ onSaveSettings }) => {
     const isLoading = useSelector(selectIsLoading);
-
     return (
         <div disabled={isLoading}>
             <Formik
@@ -19,34 +16,22 @@ const ChangePassword = ({ onSaveSettings }) => {
                     setSubmitting(true);
                 }}
             >
-                <Form className="text-center">
-                    <Box
-                        sx={{
-                            '& .MuiTextField-root': {
-                                my: 2,
-                                width: '100%',
-                            },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <InputPassword
-                            label="Old Password"
-                            name="oldpassword"
-                            placeholder="Enter my old password"
-                        />
-                        <InputPassword
-                            label="New Password"
-                            name="password"
-                            placeholder="Enter my new password"
-                        />
-                        <InputPassword
-                            label="Confirm Password"
-                            name="confirm"
-                            placeholder="Confirm my password"
-                        />
-                    </Box>
-
+                <Form>
+                    <InputPassword
+                        label="Old Password"
+                        name="oldpassword"
+                        placeholder="Enter my old password"
+                    />
+                    <InputPassword
+                        label="New Password"
+                        name="password"
+                        placeholder="Enter my new password"
+                    />
+                    <InputPassword
+                        label="Confirm Password"
+                        name="confirm"
+                        placeholder="Confirm my password"
+                    />
                     <button className="btn-submit-sign" type="submit">
                         Update Password
                     </button>

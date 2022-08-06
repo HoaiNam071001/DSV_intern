@@ -12,16 +12,10 @@ const Follow = ({ username, following }) => {
     const currentUser = useSelector(selectUser);
 
     const handleClick = () => {
-        if (!currentUser) {
-            navigate(`/login`);
-            return;
-        }
+        if (!currentUser) return navigate(`/login`);
 
-        if (following) {
-            dispatch(unfollow({ username }));
-        } else {
-            dispatch(follow({ username }));
-        }
+        if (following) dispatch(unfollow({ username }));
+        else dispatch(follow({ username }));
     };
 
     return (

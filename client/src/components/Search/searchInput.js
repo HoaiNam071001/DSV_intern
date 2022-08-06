@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import { useNavigate } from 'react-router';
-let isEmpty = /^ *$/;
-
 const Searchnav = () => {
     const navigate = useNavigate();
     const [input, setInput] = useState('');
 
     const handleSearch = () => {
-        if (isEmpty.test(input)) return;
+        if (/^ *$/.test(input)) return;
         navigate(`/search?k=${input}`);
     };
     const handleEnter = (e) => {

@@ -582,6 +582,9 @@
   height: 500px; }
   .badrequest img {
     width: 70%; }
+    @media (min-width: 1024px) {
+      .badrequest img {
+        width: 50%; } }
     @media (max-width: 575px) {
       .badrequest img {
         width: 100%; } }

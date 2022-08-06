@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-
 import TextField from '@mui/material/TextField';
 import ClearIcon from '@mui/icons-material/Clear';
-let isEmpty = /^ *$/;
 import TagIcon from '@mui/icons-material/Tag';
 import InputAdornment from '@mui/material/InputAdornment';
 
@@ -10,7 +8,7 @@ const TagEditor = ({ tagList, setTagList }) => {
     const [tagIn, setTagin] = useState('');
     const handleTab = (e) => {
         if (e.key === 'Enter') e.preventDefault();
-        if (isEmpty.test(tagIn)) {
+        if (/^ *$/.test(tagIn)) {
             setTagin('');
             return;
         }

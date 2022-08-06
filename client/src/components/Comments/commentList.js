@@ -8,8 +8,8 @@ import {
 } from '../../redux/reducers/commentsSlice';
 import dayjs from 'dayjs';
 import DeleteCommentButton from './deleteBtn';
-const Avt = require('../../Assets/avatar-thumbnail.jpg');
 import Avatar from '@mui/material/Avatar';
+const Avt = require('../../Assets/avatar-thumbnail.jpg');
 
 function Comment({ comment }) {
     const isAuthor = useSelector(selectIsAuthor(comment.id));

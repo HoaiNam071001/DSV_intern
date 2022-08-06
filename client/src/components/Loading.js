@@ -1,7 +1,7 @@
 import React from 'react';
 export const Loading2 = () => {
     return (
-        <p className="placeholder-glow tag-container">
+        <p className="placeholder-glow tag-container row">
             <span className="placeholder col-4 m-1 rounded-pill"></span>
             <span className="placeholder col-3 m-1 rounded-pill"></span>
             <span className="placeholder col-3 m-1 rounded-pill"></span>

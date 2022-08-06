@@ -8,8 +8,10 @@ import MarkAsUnreadIcon from '@mui/icons-material/MarkAsUnread';
 import BadgeIcon from '@mui/icons-material/Badge';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import JoinInnerIcon from '@mui/icons-material/JoinInner';
-import { useField } from 'formik';
 import KeyIcon from '@mui/icons-material/Key';
+import Box from '@mui/material/Box';
+import { Form, useField } from 'formik';
+
 const style = {
     height: 80,
     '& .MuiOutlinedInput-root': {
@@ -20,6 +22,7 @@ const style = {
     '& label': { fontSize: 17, fontWeight: 'bold' },
     '& input': { margin: '7px', padding: '10px' },
 };
+
 export const Input = ({ label, ...props }) => {
     const [field, meta] = useField(props);
     return (
@@ -84,3 +87,20 @@ export const InputPassword = ({ label, ...props }) => {
         </>
     );
 };
+const FormBox = ({ children }) => {
+    return (
+        <Form className="text-center">
+            <Box
+                sx={{
+                    '& .MuiTextField-root': { my: 2, width: '100%' },
+                }}
+                noValidate
+                autoComplete="off"
+            >
+                {children}
+            </Box>
+        </Form>
+    );
+};
+
+export default FormBox;

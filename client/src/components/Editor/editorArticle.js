@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import Message from '../Message';
-import {
-    getArticle,
-    createArticle,
-    updateArticle,
-    articlePageUnloaded,
-    selectArticle,
-} from '../../redux/reducers/articleSlice';
+import { getArticle, articlePageUnloaded, selectArticle } from '../../redux/reducers/articleSlice';
 import { useParams } from 'react-router';
 import Loading from '../Loading';
-import { Input } from './input';
+import Form, { Input, submitForm, Button } from './form';
 import { useNavigate } from 'react-router-dom';
 import { objYup } from './value';
-import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Jodit from './textEditor';
 import Tag from './tag';
+import Thumnail from './thumnail';
 import { selectUser, selectIsLoading } from '../../redux/reducers/authSlice';
+import { saveImage } from '../../common/utils';
 
 const EditArticle = () => {
     const navigate = useNavigate();
@@ -31,33 +25,12 @@ const EditArticle = () => {
     const [body, setBody] = useState('');
     const [tagList, setTagList] = useState([]);
     const [load, setLoad] = useState(false);
-    const [validateThum, setvalidateThum] = useState(false);
-
+    const isSubmit = load || inProgress;
     useEffect(() => {
         if (errors) navigate('/404.json');
-    }, [errors, navigate]);
-    useEffect(() => {
-        if (!currentUser && !loading) navigate('/');
-    }, [navigate, currentUser, loading]);
-    useEffect(() => {
-        if (slug && article && currentUser.id !== article.author?.id) navigate('/editor');
-    }, [slug, article, navigate, currentUser]);
-
-    const handleThumbnail = (e) => {
-        if (e.target.files[0]) {
-            const files = e.target.files[0];
-            if (/^image\/.*$/.test(files.type)) {
-                setvalidateThum(false);
-                files.preview = URL.createObjectURL(files);
-                setThumbnail(files);
-            } else setvalidateThum(true);
-        }
-    };
-    useEffect(() => {
-        return () => {
-            thumbnail && URL.revokeObjectURL(thumbnail.preview);
-        };
-    }, [thumbnail]);
+        else if (!currentUser && !loading) navigate('/');
+        else if (slug && article && currentUser.id !== article.author?.id) navigate('/editor');
+    }, [slug, article, navigate, currentUser, errors, loading]);
 
     useEffect(() => {
         if (slug && article) {
@@ -74,42 +47,21 @@ const EditArticle = () => {
     useEffect(() => {
         if (slug) dispatch(getArticle({ slug }));
     }, [slug, dispatch]);
+
     const handleSubmit = (values) => {
         if (thumbnail?.type) {
-            const data = new FormData();
-            data.append('file', thumbnail);
-            data.append('upload_preset', 'h5z4ewnk');
-            data.append('api_key', '441634564439267');
             setLoad(true);
-            fetch('  https://api.cloudinary.com/v1_1/h5z4ewnk/image/upload', {
-                method: 'post',
-                body: data,
-            })
-                .then((resp) => resp.json())
+            saveImage(thumbnail)
                 .then((data) => {
                     setLoad(false);
-                    const article = {
-                        title: values.title,
-                        description: values.description,
-                        body,
-                        tagList,
-                        thumbnail: String(data.url),
-                    };
-                    dispatch(slug ? updateArticle({ slug, article }) : createArticle(article));
+                    submitForm(dispatch, slug, values, body, tagList, String(data.url));
                 })
                 .catch((err) => {
                     setLoad(false);
                     alert(err);
                 });
         } else {
-            const article = {
-                title: values.title,
-                description: values.description,
-                body,
-                tagList,
-                thumbnail: thumbnail.preview,
-            };
-            dispatch(slug ? updateArticle({ slug, article }) : createArticle(article));
+            submitForm(dispatch, slug, values, body, tagList, thumbnail.preview);
         }
     };
     useEffect(() => {
@@ -138,81 +90,26 @@ const EditArticle = () => {
                         }}
                     >
                         <Form>
-                            <Box
-                                sx={{
-                                    '& .MuiTextField-root': {
-                                        my: 2,
-                                        width: '100%',
-                                    },
-                                }}
-                                noValidate
-                                autoComplete="off"
-                            >
-                                <div className="row">
-                                    <div className="col-12 col-sm-8">
-                                        <Input
-                                            label="Article Title"
-                                            name="title"
-                                            type="text"
-                                            placeholder="Write article title"
-                                        />
-                                        <Input
-                                            label="Description for Article"
-                                            name="description"
-                                            type="text"
-                                            placeholder="Write description for Article"
-                                        />
-                                    </div>
-                                    <div className="col-12 col-sm-4 thumbnail-container">
-                                        <input
-                                            id="inputthumbnail"
-                                            type="file"
-                                            onChange={handleThumbnail}
-                                            title="Upload file"
-                                            hidden
-                                        />
-
-                                        <div className="image">
-                                            <img
-                                                src={
-                                                    (thumbnail && thumbnail.preview) ||
-                                                    require('../../Assets/blog.jpg')
-                                                }
-                                                alt="thumnail"
-                                            />
-                                            <div className="upload-thumbnail">
-                                                <label
-                                                    htmlFor="inputthumbnail"
-                                                    className=" d-flex justify-content-center align-items-center"
-                                                >
-                                                    <UploadFileIcon />
-                                                </label>
-                                                <div style={{ color: 'red' }}>
-                                                    {validateThum && 'Type is not valid'}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div className="row">
+                                <div className="col-12 col-sm-8">
+                                    <Input
+                                        label="Article Title"
+                                        name="title"
+                                        type="text"
+                                        placeholder="Write article title"
+                                    />
+                                    <Input
+                                        label="Description for Article"
+                                        name="description"
+                                        type="text"
+                                        placeholder="Write description for Article"
+                                    />
                                 </div>
-                                <div className="mb-4 text-body">
-                                    <Jodit body={body} setBody={setBody} />
-                                </div>
-
-                                <Tag tagList={tagList} setTagList={setTagList} />
-                                <button
-                                    className="btn-submit-editor rounded-pill p-2 m-3 float-end"
-                                    disabled={inProgress}
-                                    type="submit"
-                                >
-                                    {inProgress || load ? (
-                                        <Loading />
-                                    ) : slug ? (
-                                        'Update'
-                                    ) : (
-                                        'Create Article'
-                                    )}
-                                </button>
-                            </Box>
+                                <Thumnail thumbnail={thumbnail} setThumbnail={setThumbnail} />
+                            </div>
+                            <Jodit body={body} setBody={setBody} />
+                            <Tag tagList={tagList} setTagList={setTagList} />
+                            <Button isSubmit={isSubmit} slug={slug} />
                         </Form>
                     </Formik>
 

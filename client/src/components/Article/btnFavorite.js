@@ -1,11 +1,11 @@
 import React from 'react';
-import FavoriteIconActive from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import { favorite, unfavorite } from '../../redux/reducers/articleSlice';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import Tooltip from '@mui/material/Tooltip';
+import { favorite, unfavorite } from '../../redux/reducers/articleSlice';
 import { selectIsAuthenticated } from '../../redux/reducers/authSlice';
+import Tooltip from '@mui/material/Tooltip';
+import FavoriteIconActive from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const FavoriteArticle = ({ slug, favorited, count }) => {
     const navigate = useNavigate();
@@ -13,16 +13,9 @@ const FavoriteArticle = ({ slug, favorited, count }) => {
     const isAuthenticated = useSelector(selectIsAuthenticated);
 
     const handleClickFavorite = () => {
-        if (!slug || !isAuthenticated) {
-            navigate(`/login`);
-            return;
-        }
-
-        if (favorited) {
-            dispatch(unfavorite(slug));
-        } else {
-            dispatch(favorite(slug));
-        }
+        if (!slug || !isAuthenticated) return navigate(`/login`);
+        if (favorited) dispatch(unfavorite(slug));
+        else dispatch(favorite(slug));
     };
     return (
         <Tooltip title={`${favorited ? 'Dislike' : 'Like'} this article`} placement="top" arrow>

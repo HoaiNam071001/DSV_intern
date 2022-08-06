@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
-
+import InputAdornment from '@mui/material/InputAdornment';
+import SmsFailedIcon from '@mui/icons-material/SmsFailed';
+import Picker from 'emoji-picker-react';
 import Message from '../Message';
 import { selectIsAuthenticated } from '../../redux/reducers/authSlice';
 import CommentList from './commentList';
-import InputAdornment from '@mui/material/InputAdornment';
 import {
     createComment,
     selectErrors,
@@ -14,8 +15,6 @@ import {
 } from '../../redux/reducers/commentsSlice';
 import { selectArticle } from '../../redux/reducers/articleSlice';
 import Loading from '../Loading';
-import SmsFailedIcon from '@mui/icons-material/SmsFailed';
-import Picker from 'emoji-picker-react';
 
 function CommentForm() {
     const dispatch = useDispatch();
@@ -83,14 +82,11 @@ function CommentSection() {
     const { article } = useSelector(selectArticle);
 
     useEffect(() => {
-        if (errors) {
-            if (errors === 404) navigate('/404.json');
-        }
+        if (errors && errors === 404) navigate('/404.json');
     }, [errors, navigate]);
     useEffect(() => () => dispatch(commentPageUnloaded()), [dispatch]);
-    if (!article) {
-        return <Loading />;
-    }
+    if (!article) return <Loading />;
+
     return (
         <div className="col-12 col-lg-8 offset-lg-2">
             <hr />

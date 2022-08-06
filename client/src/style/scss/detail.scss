@@ -3,6 +3,9 @@
     height: 500px;
     & img {
         width: 70%;
+        @include desktop {
+            width: 50%;
+        }
         @include mobile {
             width: 100%;
         }
@@ -12,7 +15,6 @@
     background-color: #fff;
     border-radius: 5px;
     padding-bottom: 10px;
-    //box-shadow: 3px 0px 5px 4px rgb(226, 226, 226);
     min-height: 500px;
     & .header-article {
         padding: 20px 10px 0px 10px;

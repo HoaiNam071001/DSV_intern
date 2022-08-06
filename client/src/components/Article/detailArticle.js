@@ -1,23 +1,21 @@
+import React, { useEffect, memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router';
-import Tooltip from '@mui/material/Tooltip';
-
-import React, { useEffect, memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { articlePageUnloaded, getArticle, selectArticle } from '../../redux/reducers/articleSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
+import Tooltip from '@mui/material/Tooltip';
+import dayjs from 'dayjs';
+import Avatar from '@mui/material/Avatar';
 import OptionArticle from './option';
 import Follow from './follow';
 import Skeleton from './skeletonDetail';
-import dayjs from 'dayjs';
-import Avatar from '@mui/material/Avatar';
 import Favorite from './btnFavorite';
 const avt = require('../../Assets/avatar-thumbnail.jpg');
 
 const Detail = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-
     const { article, inProgress, deleted, errors } = useSelector(selectArticle);
     const user = useSelector(selectUser);
     const { slug } = useParams();
@@ -31,9 +29,7 @@ const Detail = () => {
         if (errors) navigate('/404.json');
     }, [errors, navigate]);
     useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
-    if (!article) {
-        return <div>{inProgress && <Skeleton />}</div>;
-    }
+    if (!article) return <div>{inProgress && <Skeleton />}</div>;
     return (
         <>
             <div className="header-article">
@@ -75,20 +71,18 @@ const Detail = () => {
                         />
                     ))}
             </div>
-            <div className="script-article">
-                <div className="tag-article d-flex">
-                    {article &&
-                        article.tagList.map((tag) => {
-                            return (
-                                <div
-                                    className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light"
-                                    key={tag}
-                                >
-                                    {tag}
-                                </div>
-                            );
-                        })}
-                </div>
+            <div className="tag-article d-flex">
+                {article &&
+                    article.tagList.map((tag) => {
+                        return (
+                            <div
+                                className="mx-1 px-2 py-1 rounded-pill bg-secondary text-light"
+                                key={tag}
+                            >
+                                {tag}
+                            </div>
+                        );
+                    })}
             </div>
             <hr />
             <div className="content-article" dangerouslySetInnerHTML={{ __html: article.body }} />

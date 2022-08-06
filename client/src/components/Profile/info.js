@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Avatar from '@mui/material/Avatar';
-
 import { selectUser } from '../../redux/reducers/authSlice';
 import Follow from './followBtn';
 import OnChat from './chatBtn';

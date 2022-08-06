@@ -1,12 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Tooltip from '@mui/material/Tooltip';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router';
 import Avatar from '@mui/material/Avatar';
-
 const avatar = require('../../Assets/avatar-thumbnail.jpg');
 
 const NavLogin = () => {

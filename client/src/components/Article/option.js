@@ -12,9 +12,7 @@ const OptionArticle = ({ slug, deleted }) => {
         dispatch(deleteArticle(slug));
     };
     useEffect(() => {
-        if (deleted) {
-            navigate('/');
-        }
+        if (deleted) navigate('/');
     }, [deleted, navigate]);
     return (
         <div className="d-flex align-items-center justify-content-center mx-1">

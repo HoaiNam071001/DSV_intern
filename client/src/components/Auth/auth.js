@@ -1,37 +1,20 @@
 import React, { useEffect } from 'react';
-import Box from '@mui/material/Box';
-
-import { Formik, Form } from 'formik';
+import { Formik } from 'formik';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import Message from '../Message';
+import Form, { Input, InputPassword } from './form';
+import { initSignUp, initSignIn, objSignUp, objSignIn } from './value';
 import {
     login,
     register,
+    translate,
     selectErrors,
     selectIsLoading,
     selectIsAuthenticated,
-    translate,
 } from '../../redux/reducers/authSlice';
-import Message from '../Message';
-import { Input, InputPassword } from './input';
-import { initSignUp, initSignIn, objSignUp, objSignIn } from './value';
-const FormBox = ({ children }) => {
-    return (
-        <Form className="text-center">
-            <Box
-                sx={{
-                    '& .MuiTextField-root': { my: 2, width: '100%' },
-                }}
-                noValidate
-                autoComplete="off"
-            >
-                {children}
-            </Box>
-        </Form>
-    );
-};
+
 const Auth = ({ isRegister }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -70,7 +53,7 @@ const Auth = ({ isRegister }) => {
                             setSubmitting(true);
                         }}
                     >
-                        <FormBox>
+                        <Form>
                             {isRegister && (
                                 <Input
                                     label="Username"
@@ -113,18 +96,20 @@ const Auth = ({ isRegister }) => {
 
                                 {isRegister ? 'Sign Up' : 'Sign In'}
                             </button>
-                        </FormBox>
+                        </Form>
                     </Formik>
                 </div>
-                <div className="my-3 text-center">
-                    <p className="text-xs-center">
-                        {isRegister ? (
-                            <Link to="/login">Have an account?' </Link>
-                        ) : (
-                            <Link to="/register">Need an account?</Link>
-                        )}
-                    </p>
-                </div>
+                <p className="text-xs-center text-center p-3">
+                    {isRegister ? (
+                        <>
+                            Have an account? <Link to="/login">Sign in</Link>
+                        </>
+                    ) : (
+                        <>
+                            Need an account? <Link to="/register">Sign up</Link>
+                        </>
+                    )}
+                </p>
             </div>
         </div>
     );

@@ -1,10 +1,8 @@
 import React from 'react';
+import { Formik } from 'formik';
 import { useSelector } from 'react-redux';
-import Box from '@mui/material/Box';
-import { Formik, Form } from 'formik';
-
 import { selectIsLoading } from '../../redux/reducers/authSlice';
-import { Input } from './input';
+import Form, { Input } from './form';
 import { initprofile, objProfile } from './value';
 
 const ChangeProfile = ({ currentUser, onSaveSettings }) => {
@@ -19,38 +17,26 @@ const ChangeProfile = ({ currentUser, onSaveSettings }) => {
                     setSubmitting(true);
                 }}
             >
-                <Form className="text-center">
-                    <Box
-                        sx={{
-                            '& .MuiTextField-root': {
-                                my: 2,
-                                width: '100%',
-                            },
-                        }}
-                        noValidate
-                        autoComplete="off"
-                    >
-                        <Input
-                            label="Email Address"
-                            name="email"
-                            type="email"
-                            placeholder="admin@gmail.com"
-                        />
-                        <Input
-                            label="Username"
-                            name="username"
-                            type="text"
-                            placeholder="Enter my username"
-                        />
+                <Form>
+                    <Input
+                        label="Email Address"
+                        name="email"
+                        type="email"
+                        placeholder="admin@gmail.com"
+                    />
+                    <Input
+                        label="Username"
+                        name="username"
+                        type="text"
+                        placeholder="Enter my username"
+                    />
 
-                        <Input
-                            label="Short Bio about you"
-                            name="bio"
-                            type="text"
-                            placeholder="Short Bio about you"
-                        />
-                    </Box>
-
+                    <Input
+                        label="Short Bio about you"
+                        name="bio"
+                        type="text"
+                        placeholder="Short Bio about you"
+                    />
                     <button className="btn-submit-sign" type="submit">
                         Update Profile
                     </button>
