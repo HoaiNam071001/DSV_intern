@@ -32,21 +32,28 @@
     & .comment-item-info {
         border-radius: 20px 20px 0 0;
         padding: 5px;
-
-        & .info-username {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        & .user-cmt {
+            width: 80%;
             padding-left: 10px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        & .info-username {
             padding-right: 5px;
             font-size: 20px;
             font-weight: bold;
             text-decoration: none;
             color: rgb(10, 10, 10);
+            max-width: 200px;
         }
         & .date-posted {
             color: rgb(132, 132, 132);
         }
         & > button {
             background-color: rgb(255, 255, 255);
-            margin-right: 20px;
+            margin-right: 10px;
             border: 0;
             padding: 10px;
             border-radius: 50%;

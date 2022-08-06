@@ -11,11 +11,7 @@ function TagItem({ tag }) {
         document.getElementById('topscroll').scrollIntoView({ behavior: 'smooth' });
     };
     return (
-        <Link
-            to="#"
-            className="link-nodecoration float-start px-2 py-1 tag-item"
-            onClick={handleClickTag}
-        >
+        <Link to="#" className="link-nodecoration  px-2 py-1 tag-item" onClick={handleClickTag}>
             {tag}
         </Link>
     );

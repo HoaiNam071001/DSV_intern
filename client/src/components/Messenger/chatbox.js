@@ -13,26 +13,28 @@ import { selectUser } from '../../redux/reducers/authSlice';
 import Picker from 'emoji-picker-react';
 import VideoIcon from '@mui/icons-material/VideoCameraFront';
 import dayjs from 'dayjs';
-
+import { Skeletonchatbox } from './skeleton';
 let cmt = /^ *$/;
-const DivVideo = () => {
-    return (
-        <div className="content-item-call">
-            <VideoIcon />
-            Video chat
-        </div>
-    );
-};
-const ItemMess = ({ mess }) => {
+
+const ItemMess = ({ mess, iscurrent }) => {
     return (
         <div
-            className="chatbox-content-item"
+            className={`chatbox-content-item d-flex ${
+                iscurrent ? 'justify-content-end ' : 'justify-content-start'
+            }`}
             title={dayjs(mess.updatedAt).format('DD/MM/YYYY HH:mm')}
         >
             {mess.content === ':<<<<<callvideo>>>>>:' ? (
-                <DivVideo />
+                <div
+                    className={`content-item-call ${iscurrent ? 'chatbox-right ' : 'chatbox-left'}`}
+                >
+                    <VideoIcon />
+                    Video chat
+                </div>
             ) : (
-                <div className="chatbox-x">{mess.content}</div>
+                <div className={`chatbox-x ${iscurrent ? 'chatbox-right ' : 'chatbox-left'}`}>
+                    {mess.content}
+                </div>
             )}
         </div>
     );
@@ -65,37 +67,19 @@ function Chatbox({ socket, messenger, room }) {
     };
     useEffect(() => () => dispatch(messUnloaded()), [dispatch]);
 
-    if (!messenger) return <div className="messenger-body"></div>;
+    if (!messenger) return <Skeletonchatbox />;
 
     return (
         <>
             <div className="body-chatbox d-flex flex-column-reverse">
                 <div className="d-flex flex-column-reverse">
                     {messenger.map((mess) => {
-                        if (mess.sender.id === currentUser.id)
-                            return (
-                                <div
-                                    key={mess.id}
-                                    className="chatbox-right d-flex align-items-end flex-column"
-                                >
-                                    <ItemMess mess={mess} />
-                                </div>
-                            );
                         return (
-                            <div key={mess.id} className="chatbox-left d-flex">
-                                {/* <div className="chatbox-image">
-                                    <img
-                                        src={
-                                            mess.sender.image ||
-                                            require('../../Assets/avatar-thumbnail.jpg')
-                                        }
-                                        alt="Avatar"
-                                    />
-                                </div> */}
-                                <div className="chatbox-content d-flex align-items-start flex-column">
-                                    <ItemMess mess={mess} />
-                                </div>
-                            </div>
+                            <ItemMess
+                                mess={mess}
+                                key={mess.id}
+                                iscurrent={mess.sender.id === currentUser.id}
+                            />
                         );
                     })}
                 </div>

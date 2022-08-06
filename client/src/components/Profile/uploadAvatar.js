@@ -4,7 +4,12 @@ import FileUploadIcon from '@mui/icons-material/FileUploadRounded';
 import { updateUser } from '../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 function Avatar({ image, setModal }) {
+    const notify = () => toast('Invalid image!');
+
     const [avatar, setAvatar] = useState();
     const dispatch = useDispatch();
     const [load, setLoad] = useState(false);
@@ -17,8 +22,10 @@ function Avatar({ image, setModal }) {
     const handleChange = (e) => {
         if (e.target.files[0]) {
             const files = e.target.files[0];
-            files.preview = URL.createObjectURL(files);
-            setAvatar(files);
+            if (/^image\/.*$/.test(files.type)) {
+                files.preview = URL.createObjectURL(files);
+                setAvatar(files);
+            } else notify();
         }
     };
     const changephotonow = () => {
@@ -56,7 +63,9 @@ function Avatar({ image, setModal }) {
                         <button className="btn-exit" onClick={() => setModal(false)}>
                             <ClearIcon />
                         </button>
-                        <h2>Upload Avatar</h2>
+                        <h2 className="d-flex align-items-center">
+                            <AccountCircleIcon style={{ fontSize: 45 }} /> Upload Avatar
+                        </h2>
                         <input
                             id="inputuploadimg"
                             type="file"
@@ -64,7 +73,7 @@ function Avatar({ image, setModal }) {
                             title="Upload file"
                             hidden
                         />
-                        <div className="image-upload">
+                        <div className="image-upload flex-column align-items-center">
                             <label htmlFor="inputuploadimg">
                                 <img
                                     src={
@@ -79,6 +88,7 @@ function Avatar({ image, setModal }) {
                                 </div>
                             </label>
                         </div>
+                        <ToastContainer />
                         <div className="d-flex flex-column align-items-center">
                             <button
                                 className="btn-save-img"

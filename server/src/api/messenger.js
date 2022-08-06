@@ -1,61 +1,52 @@
 const { Message } = require('../services/mongoose');
 
 const Messenger = (() => {
-    const getRooms = (req, res, next) => {
+    const getRooms = async (req, res) => {
         try {
-            Message.getRoomsByUser(req.payload.id)
-                .then((rooms) => {
-                    res.json({ rooms: rooms.map((room) => room.toRoomJSON(req.payload.id)) });
-                })
-                .catch(next);
+            const rooms = await Message.getRoomsByUser(req.payload.id);
+            return res.json({ rooms: rooms.map((room) => room.toRoomJSON(req.payload.id)) });
         } catch (err) {
             return res.status(422).json({ errors: { conversation: [err] } });
         }
     };
-    const getMessByUser = async (req, res, next) => {
+    const getMessByUser = async (req, res) => {
         try {
             const id = req.payload.id,
                 { userId, where, limit = 10 } = req.body;
             if (!userId) throw ' invalid';
-            Message.getMessUser(id, userId).then(([room, user]) => {
-                if (!room) {
-                    Message.newRoom(id, userId, user).then((result) => res.json(result));
-                } else {
-                    Message.getMessage(room.id, limit, where)
-                        .then(([messages, totalCount]) => {
-                            if (room.members.findIndex((user) => String(user._id) === String(id)) === -1)
-                                return res.status(422).json({ errors: { messenger: ['Unauthentication'] } });
-                            return res.json(Message.resultMessage({ room, user, messages, totalCount }));
-                        })
-                        .catch(next);
-                }
-            });
+            const [room, user] = await Message.getMessUser(id, userId);
+            if (!room) {
+                const result = await Message.newRoom(id, userId, user);
+                return res.json(result);
+            } else {
+                const [messages, totalCount] = await Message.getMessage(room.id, limit, where);
+                if (room.members.findIndex((user) => String(user._id) === String(id)) === -1)
+                    return res.status(422).json({ errors: { messenger: ['Unauthentication'] } });
+                return res.json(Message.resultMessage({ room, user, messages, totalCount }));
+            }
         } catch (err) {
             return res.status(422).json({ errors: { messenger: [err] } });
         }
     };
-    const getMessByRoom = async (req, res, next) => {
+    const getMessByRoom = async (req, res) => {
         try {
             const id = req.payload.id,
                 { roomId, where, limit = 10 } = req.body;
             const query = { roomId, createdAt: { $lte: where ? where : Date.now() } };
             if (!roomId || typeof roomId !== 'string') throw ' invalid';
 
-            Message.getMessRoom(roomId, query, limit)
-                .then(([room, messages, totalCount]) => {
-                    if (!room) return res.status(422).json({ errors: { messenger: ['room invalid'] } });
-                    if (room.members.findIndex((user) => String(user._id) === String(id)) === -1)
-                        return res.status(422).json({ errors: { messenger: ['Unauthentication'] } });
-                    return res.json(Message.resultMessage2({ room, id, messages, totalCount }));
-                })
-                .catch(next);
+            const [room, messages, totalCount] = await Message.getMessRoom(roomId, query, limit);
+            if (!room) return res.status(422).json({ errors: { messenger: ['room invalid'] } });
+            if (room.members.findIndex((user) => String(user._id) === String(id)) === -1)
+                return res.status(422).json({ errors: { messenger: ['Unauthentication'] } });
+            return res.json(Message.resultMessage2({ room, id, messages, totalCount }));
         } catch (err) {
             return res.status(422).json({ errors: { messenger: [err] } });
         }
     };
     const createMess = async (req, res) => {
         try {
-            Message.newMessage(
+            const message = await Message.newMessage(
                 {
                     roomId: req.body.roomId,
                     content: req.body.message.content,
@@ -63,7 +54,8 @@ const Messenger = (() => {
                     sender: req.body.message.sender.id,
                 },
                 req.body.message.sender
-            ).then((message) => res.json(message));
+            );
+            return res.json(message);
         } catch (err) {
             return res.status(422).json({ errors: { messenger: [err] } });
         }

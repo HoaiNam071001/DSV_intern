@@ -12,24 +12,36 @@ import {
 } from '../../redux/reducers/articleSlice';
 import { useParams } from 'react-router';
 import Loading from '../Loading';
-import { Input } from '../Auth/input';
+import { Input } from './input';
 import { useNavigate } from 'react-router-dom';
 import { objYup } from './value';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Jodit from './textEditor';
 import Tag from './tag';
+import { selectUser, selectIsLoading } from '../../redux/reducers/authSlice';
 
 const EditArticle = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const currentUser = useSelector(selectUser);
     const { article, errors, inProgress, success } = useSelector(selectArticle);
     const { slug } = useParams();
-
+    const loading = useSelector(selectIsLoading);
     const [thumbnail, setThumbnail] = useState();
     const [body, setBody] = useState('');
     const [tagList, setTagList] = useState([]);
     const [load, setLoad] = useState(false);
     const [validateThum, setvalidateThum] = useState(false);
+
+    useEffect(() => {
+        if (errors) navigate('/404.json');
+    }, [errors, navigate]);
+    useEffect(() => {
+        if (!currentUser && !loading) navigate('/');
+    }, [navigate, currentUser, loading]);
+    useEffect(() => {
+        if (slug && article && currentUser.id !== article.author?.id) navigate('/editor');
+    }, [slug, article, navigate, currentUser]);
 
     const handleThumbnail = (e) => {
         if (e.target.files[0]) {
@@ -61,10 +73,9 @@ const EditArticle = () => {
 
     useEffect(() => {
         if (slug) dispatch(getArticle({ slug }));
-        return () => dispatch(articlePageUnloaded());
     }, [slug, dispatch]);
     const handleSubmit = (values) => {
-        if (thumbnail.type) {
+        if (thumbnail?.type) {
             const data = new FormData();
             data.append('file', thumbnail);
             data.append('upload_preset', 'h5z4ewnk');
@@ -104,7 +115,7 @@ const EditArticle = () => {
     useEffect(() => {
         if (success) navigate('/');
     }, [success, navigate]);
-
+    useEffect(() => () => dispatch(articlePageUnloaded()), [dispatch]);
     if (slug && !article) return <Loading />;
     return (
         <div className="container ">
@@ -137,20 +148,22 @@ const EditArticle = () => {
                                 noValidate
                                 autoComplete="off"
                             >
-                                <Input
-                                    label="Article Title"
-                                    name="title"
-                                    type="text"
-                                    placeholder="Write article title"
-                                />
-                                <Input
-                                    label="Description for Article"
-                                    name="description"
-                                    type="text"
-                                    placeholder="Write description for Article"
-                                />
-                                <div className="thumbnail-container row">
-                                    <div className="col-6 col-md-4">
+                                <div className="row">
+                                    <div className="col-12 col-sm-8">
+                                        <Input
+                                            label="Article Title"
+                                            name="title"
+                                            type="text"
+                                            placeholder="Write article title"
+                                        />
+                                        <Input
+                                            label="Description for Article"
+                                            name="description"
+                                            type="text"
+                                            placeholder="Write description for Article"
+                                        />
+                                    </div>
+                                    <div className="col-12 col-sm-4 thumbnail-container">
                                         <input
                                             id="inputthumbnail"
                                             type="file"
@@ -158,27 +171,29 @@ const EditArticle = () => {
                                             title="Upload file"
                                             hidden
                                         />
-                                        <div className="upload-thumbnail">
-                                            <label htmlFor="inputthumbnail">
-                                                <div>Upload Thumbnail</div>
-                                                <UploadFileIcon />
-                                            </label>
-                                            <div style={{ color: 'red' }}>
-                                                {validateThum && 'Type is not valid'}
+
+                                        <div className="image">
+                                            <img
+                                                src={
+                                                    (thumbnail && thumbnail.preview) ||
+                                                    require('../../Assets/blog.jpg')
+                                                }
+                                                alt="thumnail"
+                                            />
+                                            <div className="upload-thumbnail">
+                                                <label
+                                                    htmlFor="inputthumbnail"
+                                                    className=" d-flex justify-content-center align-items-center"
+                                                >
+                                                    <UploadFileIcon />
+                                                </label>
+                                                <div style={{ color: 'red' }}>
+                                                    {validateThum && 'Type is not valid'}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col-6 col-md-4 image">
-                                        <img
-                                            src={
-                                                (thumbnail && thumbnail.preview) ||
-                                                require('../../Assets/blog.jpg')
-                                            }
-                                            alt="thumnail"
-                                        />
-                                    </div>
                                 </div>
-
                                 <div className="mb-4 text-body">
                                     <Jodit body={body} setBody={setBody} />
                                 </div>

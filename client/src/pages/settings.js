@@ -13,7 +13,7 @@ import {
     selectIsSuccessUpdate,
     setIdle,
 } from '../redux/reducers/authSlice';
-
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 function Settings({ isPassword }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
@@ -34,8 +34,9 @@ function Settings({ isPassword }) {
         <div className="container">
             <div className="row">
                 <div className="col-md-8 offset-md-2 col-12 container-settings">
-                    <h1 className="text-center p-3">
-                        {isPassword ? 'Change Your Password' : 'Settings Your Profile'}
+                    <h1 className="p-3 d-flex align-items-center justify-content-center">
+                        <AdminPanelSettingsIcon className="fs-1" />
+                        &nbsp;{isPassword ? 'Change Password' : 'Edit Profile'}
                     </h1>
 
                     {isPassword ? (

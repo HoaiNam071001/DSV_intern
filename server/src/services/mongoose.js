@@ -54,6 +54,7 @@ const newArticle = (article, user) => {
 };
 const getArticle = ({ id, slug }) => Promise.all([id ? UserbyId(id) : null, ArticlefindOne({ slug })]);
 
+const deleteComments = (id) => Comment.deleteMany({ article: id });
 const getComments = (id) => Comment.find({ article: id }).sort({ createdAt: 'desc' }).populate('author').exec();
 const newComment = (body, article, user) => {
     var comment = new Comment(body);
@@ -170,6 +171,7 @@ module.exports = {
         newArticle,
         getArticle,
         ArticlefindOne,
+        deleteComments,
     },
     User: {
         UserfindOne,

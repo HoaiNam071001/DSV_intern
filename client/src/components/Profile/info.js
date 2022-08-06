@@ -2,12 +2,15 @@ import React, { memo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Avatar from '@mui/material/Avatar';
 
 import { selectUser } from '../../redux/reducers/authSlice';
 import Follow from './followBtn';
 import OnChat from './chatBtn';
 import { ItemLoading } from '../Loading';
 import UploadAvatar from './uploadAvatar';
+const avt = require('../../Assets/avatar-thumbnail.jpg');
+
 const Setting = () => {
     return (
         <Link to="/settings" className="btn-edit-profile d-flex align-items-center">
@@ -25,7 +28,7 @@ const UserInfo = ({ profile }) => {
         if (isCurrentUser) setModal(!modal);
     };
     return (
-        <div id="topscroll" className="p-3 container-info-profile">
+        <div className="p-3 container-info-profile">
             <div className="d-flex justify-content-center">
                 <div
                     className={`rounded-circle text-center container-avt-img  ${
@@ -33,11 +36,13 @@ const UserInfo = ({ profile }) => {
                     }`}
                     onClick={changeAvatar}
                 >
-                    <img
-                        src={profile.image || require('../../Assets/avatar-thumbnail.jpg')}
-                        className="avt-img rounded-circle"
+                    <Avatar
                         alt={profile.username}
-                    />
+                        className="avt-img rounded-circle"
+                        src={profile.image}
+                    >
+                        <img alt={profile.username} className="avt-img rounded-circle" src={avt} />
+                    </Avatar>
                     <div className="upload">
                         <p>Upload Avatar</p>
                     </div>
@@ -52,7 +57,7 @@ const UserInfo = ({ profile }) => {
             </div>
             <div className="text-center m-2">
                 {profile.username ? (
-                    <div className="fs-3 username-profile">{profile.username}</div>
+                    <div className="fs-3 username-profile text-truncate">{profile.username}</div>
                 ) : (
                     <ItemLoading />
                 )}

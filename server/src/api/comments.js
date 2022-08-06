@@ -5,16 +5,12 @@ const Comments = (() => {
         try {
             const id = req.payload ? req.payload.id : null,
                 slug = req.params.slug_article;
-            Article.getArticle({ slug, id })
-                .then(([user, article]) => {
-                    if (!article) return res.sendStatus(404);
-                    Comment.getComments(article._id).then((comments) => {
-                        return res.json({
-                            comments: comments.map((comment) => comment.toJSONFor(user)),
-                        });
-                    });
-                })
-                .catch(next);
+            const [user, article] = await Article.getArticle({ slug, id });
+            if (!article) return res.sendStatus(404);
+            const comments = await Comment.getComments(article._id);
+            return res.json({
+                comments: comments.map((comment) => comment.toJSONFor(user)),
+            });
         } catch (err) {
             res.status(422).json({ errors: { Comment: [err] } });
         }
@@ -25,13 +21,11 @@ const Comments = (() => {
                 body = req.body.comment,
                 slug = req.params.slug_article;
             if (!body) throw 'Not Body!';
-            Article.getArticle({ slug, id })
-                .then(([user, article]) => {
-                    if (!user) return res.sendStatus(401);
-                    if(!article) return res.sendStatus(404);
-                    Comment.newComment(body, article, user).then((cmt) => res.json(cmt));
-                })
-                .catch(next);
+            const [user, article] = await Article.getArticle({ slug, id });
+            if (!user) return res.sendStatus(401);
+            if (!article) return res.sendStatus(404);
+            const cmt = await Comment.newComment(body, article, user);
+            return res.json(cmt);
         } catch (err) {
             res.status(422).json({ errors: { Comment: [err] } });
         }
@@ -42,14 +36,11 @@ const Comments = (() => {
             const id = req.payload.id,
                 id_comment = req.params.id_comment;
 
-            Comment.findComment(id_comment, id)
-                .then(([comment, user]) => {
-                    if (!user) return res.sendStatus(401);
-                    if (!comment) return res.sendStatus(422);
-                    if (comment.author.toString() !== id) return res.sendStatus(403);
-                    return comment.remove().then(() => res.status(200).json({}));
-                })
-                .catch(next);
+            const [comment, user] = await Comment.findComment(id_comment, id);
+            if (!user) return res.sendStatus(401);
+            if (!comment) return res.sendStatus(422);
+            if (comment.author.toString() !== id) return res.sendStatus(403);
+            return comment.remove().then(() => res.status(200).json({}));
         } catch (err) {
             res.status(422).json({ errors: { Comment: [err] } });
         }

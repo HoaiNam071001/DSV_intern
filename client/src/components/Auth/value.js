@@ -3,19 +3,19 @@ export const initSignUp = {
     username: '',
     email: '',
     password: '',
-    repassword: '',
+    confirm: '',
 };
 export const objSignUp = Yup.object({
     username: Yup.string()
-        .max(20, 'Username must be between 3 and 20 characters long.')
-        .min(3, 'Username must be between 3 and 20 characters long.')
+        .max(40, 'Username must be between 3 and 40 characters long.')
+        .min(3, 'Username must be between 3 and 40 characters long.')
         .required('Please enter Username'),
     email: Yup.string().email('Invalid email address').required('Please enter Email'),
     password: Yup.string()
-        .max(30, 'Password must be between 5 and 30 characters long.')
-        .min(5, 'Password must be between 5 and 30 characters long.')
+        .max(40, 'Password must be between 5 and 40 characters long.')
+        .min(5, 'Password must be between 5 and 40 characters long.')
         .required('Please enter Password'),
-    repassword: Yup.string().when('password', (password, schema) =>
+    confirm: Yup.string().when('password', (password, schema) =>
         password
             ? schema.test('password', 'Password mismatched', (value) => value === password)
             : schema.required('Confirm Password is Required')
@@ -40,8 +40,8 @@ export const initprofile = (props) => {
 };
 export const objProfile = Yup.object({
     username: Yup.string()
-        .max(20, 'Username must be between 3 and 20 characters long.')
-        .min(3, 'Username must be between 3 and 20 characters long.')
+        .max(40, 'Username must be between 3 and 40 characters long.')
+        .min(3, 'Username must be between 3 and 40 characters long.')
         .required('Please enter Username'),
     email: Yup.string().email('Invalid email address').required('Please enter Email'),
     bio: Yup.string().max(100, 'Username must most 100 characters.'),
@@ -55,8 +55,8 @@ export const initPass = {
 export const objPass = Yup.object({
     oldpassword: Yup.string().required('Please enter Old Password'),
     password: Yup.string()
-        .max(30, 'Password must be between 5 and 30 characters long.')
-        .min(5, 'Password must be between 5 and 30 characters long.')
+        .max(40, 'Password must be between 5 and 40 characters long.')
+        .min(5, 'Password must be between 5 and 40 characters long.')
         .required('Please enter Password'),
     confirm: Yup.string().when('password', (password, schema) =>
         password

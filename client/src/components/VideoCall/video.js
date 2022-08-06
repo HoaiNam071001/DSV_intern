@@ -7,7 +7,9 @@ import { io } from 'socket.io-client';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import Tooltip from '@mui/material/Tooltip';
-
+import { selectUser, selectIsError } from '../../redux/reducers/authSlice';
+import { useSelector } from 'react-redux';
+const audiocall = require('../../Assets/ring.wav');
 const socket = io(process.env.REACT_APP_SERVER, {
     reconnection: false,
     autoConnect: false,
@@ -21,31 +23,38 @@ const VideoStream = () => {
     const roomId = query.get('room');
     const iscaller = query.get('iscaller');
     const CurrentUserId = query.get('auth');
+    const currentUser = useSelector(selectUser);
+    const error = useSelector(selectIsError);
     const videoGrid = useRef();
     const ring = useRef();
     const [isConnected, setIsConnected] = useState(false);
     const [audio, setAudio] = useState(true);
     const [camera, setCamera] = useState(true);
-    useEffect(() => {
-        socket.connect();
-        socket.on('connect', () => {
-            setIsConnected(true);
-        });
-        socket.on('disconnect', () => {
-            setIsConnected(false);
-        });
-        socket.on('user-disconnected', () => {
-            window.close();
-        });
 
-        return () => {
-            socket.off('connect');
-            socket.off('disconnect');
-            socket.off('user-connected');
-            socket.off('user-disconnected');
-            socket.disconnect();
-        };
-    }, []);
+    useEffect(() => {
+        if (currentUser) {
+            if (CurrentUserId === currentUser.id) {
+                socket.connect();
+                socket.on('connect', () => {
+                    setIsConnected(true);
+                });
+                socket.on('disconnect', () => {
+                    setIsConnected(false);
+                });
+                socket.on('user-disconnected', () => {
+                    window.close();
+                });
+
+                return () => {
+                    socket.off('connect');
+                    socket.off('disconnect');
+                    socket.off('user-connected');
+                    socket.off('user-disconnected');
+                    socket.disconnect();
+                };
+            }
+        }
+    }, [currentUser, CurrentUserId]);
 
     useEffect(() => {
         if (isConnected) {
@@ -53,12 +62,17 @@ const VideoStream = () => {
             const myVideo = document.createElement('video'); // Create a new video tag to show our video
             myVideo.muted = true; // Mute ourselves on our end so there is no feedback loop
             myVideo.id = 'own';
-            // var getUserMedia =
-            //     navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
             myPeer.on('open', (userId) => {
                 if (iscaller) ring.current.play();
+                setTimeout(() => {
+                    if (!ring.current.paused) window.close();
+                }, 20000);
                 // When we first open the app, have us join a room
                 socket.emit('call-start', roomId, userId, iscaller);
+            });
+            socket.on('user-accept', () => {
+                ring.current.pause();
             });
             navigator.mediaDevices
                 .getUserMedia({
@@ -83,7 +97,7 @@ const VideoStream = () => {
                     socket.on('user-connected', (userId) => {
                         // If a new user connect
                         //connectToNewUser(userId, stream)
-                        setTimeout(connectToNewUser, 3000, userId, stream);
+                        setTimeout(connectToNewUser, 2000, userId, stream);
                         ring.current.pause();
                     });
                 })
@@ -123,14 +137,20 @@ const VideoStream = () => {
         localStream.getVideoTracks()[0].enabled = !camera;
         setCamera(!camera);
     };
+    if (
+        !window.localStorage.getItem('jwt') ||
+        error ||
+        (currentUser && CurrentUserId !== currentUser?.id)
+    )
+        return (
+            <div className="video-container d-flex justify-content-center align-items-center">
+                <h1 style={{ color: 'white' }}>401 Authorization Required</h1>
+            </div>
+        );
+
     return (
         <div className="video-container">
-            <audio
-                ref={ring}
-                src={require('../../Assets/ring.wav')}
-                loop={true}
-                style={{ display: 'none' }}
-            />
+            <audio ref={ring} src={audiocall} loop={true} style={{ display: 'none' }} />
             <div ref={videoGrid}></div>
             <div className="btn-container">
                 <Tooltip
@@ -142,10 +162,12 @@ const VideoStream = () => {
                         {audio ? <VolumeUpIcon /> : <VolumeOffIcon />}
                     </button>
                 </Tooltip>
+                <Tooltip title="End call" placement="top" arrow>
+                    <button onClick={() => window.close()} className="danger">
+                        <CallIcon />
+                    </button>
+                </Tooltip>
 
-                <button onClick={() => window.close()} className="danger">
-                    <CallIcon />
-                </button>
                 <Tooltip title={camera ? 'Turn off video' : 'Turn on video'} placement="top" arrow>
                     <button onClick={myPeerCamera}>
                         {camera ? <VideocamIcon /> : <VideocamOffIcon />}
@@ -156,22 +178,3 @@ const VideoStream = () => {
     );
 };
 export default VideoStream;
-// useEffect(() => {
-//     window.addEventListener('beforeunload', (e) => {
-//         e.preventDefault();
-//         console.log(socket);
-//         confirm('Press a button!');
-//         socket.emit('call-end', roomId, CurrentUserId, iscaller);
-//         return '';
-//     });
-// }, [roomId, CurrentUserId, iscaller]);
-// useEffect(() => {
-//     addEventListener('beforeunload', (event) => {
-//         event.preventDefault();
-//         if (confirm('Press a button!') === true) {
-//             console.log('OK');
-//         } else {
-//             console.log('cancel');
-//         }
-//     });
-// }, []);

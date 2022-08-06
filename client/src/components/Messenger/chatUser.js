@@ -1,6 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addMessage } from '../../redux/reducers/messengerSlice';
+import { SkeletonChatUser } from './skeleton';
+import Avatar from '@mui/material/Avatar';
+const Avt = require('../../Assets/avatar-thumbnail.jpg');
 
 import { Link } from 'react-router-dom';
 const ChatUser = ({ room, status, authId, socket }) => {
@@ -20,14 +23,13 @@ const ChatUser = ({ room, status, authId, socket }) => {
             };
         };
     };
-    if (!room) return <div className="messenger-body-header d-flex"></div>;
+    if (!room) return <SkeletonChatUser />;
     return (
         <div className="messenger-body-header d-flex">
             <Link to={`/@${room.members?.username}`} className="chatbox-image">
-                <img
-                    src={room.members?.image || require('../../Assets/avatar-thumbnail.jpg')}
-                    alt="Avatar"
-                />
+                <Avatar alt="avatar" src={room.members?.image}>
+                    <img width="30" height="30" alt="Avatar" src={Avt} />
+                </Avatar>
             </Link>
             <div className="chatbox-header-info d-flex justify-content-center flex-column">
                 <Link to={`/@${room.members?.username}`} className="chatbox-info-name">

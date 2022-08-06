@@ -2,6 +2,7 @@ FROM node:16-alpine AS builder
 
 WORKDIR /app
 ENV PORT=80
+#ENV REACT_APP_SERVER="http://localhost:5000"
 ENV REACT_APP_SERVER="https://namnh.api.internship.designveloper.com"
 
 COPY package*.json .

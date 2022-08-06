@@ -1,10 +1,9 @@
 const { getTag, Searchs } = require('../services/mongoose');
 const Default = (() => {
-    const getTags = async (req, res, next) => {
+    const getTags = async (req, res) => {
         try {
-            getTag()
-                .then((tags) => res.json({ tags }))
-                .catch(next);
+            const tags = await getTag();
+            res.json({ tags });
         } catch (err) {
             res.status(422).json({
                 errors: {
@@ -13,12 +12,11 @@ const Default = (() => {
             });
         }
     };
-    const Search = (req, res, next) => {
+    const Search = async (req, res) => {
         const keyword = req.query.keyword,
             id = req.payload ? req.payload.id : null;
-        Searchs(keyword, id)
-            .then((result) => res.json(result))
-            .catch(next);
+        const result = await Searchs(keyword, id);
+        res.json(result);
     };
     return {
         getTags,

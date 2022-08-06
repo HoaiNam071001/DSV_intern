@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import ArticleItem from './articleItem';
 import Pagination from '../pagination/pagination';
 import Skeleton from './skeletonlist';
+const noItem = require('../../Assets/no-item.png');
 const Articles = () => {
     const { articles } = useSelector(selectarticleListSlice);
     return (
@@ -13,7 +14,7 @@ const Articles = () => {
                     <Skeleton />
                 ) : articles.length === 0 ? (
                     <div className="text-center fs-3">
-                        <img width="100%" src={require('../../Assets/no-item.png')} />
+                        <img width="100%" src={noItem} />
                     </div>
                 ) : (
                     articles.map((article) => <ArticleItem key={article.slug} article={article} />)

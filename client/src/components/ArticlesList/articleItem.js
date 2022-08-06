@@ -8,7 +8,8 @@ import FavoriteIcon from '@mui/icons-material/FavoriteBorder';
 import Tooltip from '@mui/material/Tooltip';
 import dayjs from 'dayjs';
 import Avatar from '@mui/material/Avatar';
-
+const ThumnailArticle = require('../../Assets/blog.jpg');
+const Avt = require('../../Assets/avatar-thumbnail.jpg');
 const Favorite = ({ article }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -49,28 +50,29 @@ const ArticleItem = ({ article }) => {
         <>
             <div key={article.slug} className="feed-item">
                 <div className="row">
-                    <div className="col-4 thumnail-article">
+                    <div className="col-4 col-xl-3 thumnail-article">
                         <Avatar alt="thumnail-article" src={article.thumbnail}>
-                            <img alt="thumnail-article" src={require('../../Assets/blog.jpg')} />
+                            <img alt="thumnail-article" src={ThumnailArticle} />
                         </Avatar>
                     </div>
-                    <div className="col-8 feed-content">
+                    <div className="col-12 col-sm-8 col-xl-9 feed-content">
                         <div className="item-author d-flex align-items-center">
-                            <Link to={`/@${article.author.username}`}>
+                            <Link
+                                to={`/@${article.author.username}`}
+                                className="d-flex align-items-center"
+                            >
                                 <Avatar alt="author" src={article.author.image}>
-                                    <img
-                                        alt="author"
-                                        src={require('../../Assets/avatar-thumbnail.jpg')}
-                                    />
+                                    <img alt="author" src={Avt} />
                                 </Avatar>
                             </Link>
-                            <div className="col-auto">
+                            <div className="item-author-z">
                                 <Link
                                     to={`/@${article.author.username}`}
-                                    className="item-author-name"
+                                    className="item-author-name text-truncate"
                                 >
                                     {article.author.username}
                                 </Link>
+
                                 <div className="item-author-date">
                                     <Tooltip
                                         title={`createdAt:${dayjs(article.createdAt).format(

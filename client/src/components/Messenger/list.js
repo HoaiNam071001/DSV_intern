@@ -11,7 +11,8 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
 import Tooltip from '@mui/material/Tooltip';
-
+import Avatar from '@mui/material/Avatar';
+const Avt = require('../../Assets/avatar-thumbnail.jpg');
 const Item = ({ room, active, status }) => {
     const dispatch = useDispatch();
 
@@ -41,12 +42,9 @@ const Item = ({ room, active, status }) => {
                         },
                     }}
                 >
-                    <img
-                        src={room.members.image || require('../../Assets/avatar-thumbnail.jpg')}
-                        width="30"
-                        height="30"
-                        alt="Avatar"
-                    />
+                    <Avatar alt="avatar" src={room.members.image}>
+                        <img width="30" height="30" alt="author" src={Avt} />
+                    </Avatar>
                 </Badge>
             </div>
             <Tooltip title={room.members?.username} placement="right" arrow>

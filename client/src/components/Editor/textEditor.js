@@ -1,10 +1,12 @@
 import React from 'react';
 import JoditEditor from 'jodit-react';
 
-const TextEditor = ({ props }) => {
+const TextEditor = ({ body, setBody }) => {
     return (
         <JoditEditor
-            {...props}
+            value={body}
+            onBlur={(e) => setBody(e)}
+            tabIndex={1}
             config={{
                 placeholder: 'Write Your Article . . .',
                 readonly: false,

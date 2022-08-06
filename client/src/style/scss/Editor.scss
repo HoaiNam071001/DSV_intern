@@ -1,31 +1,5 @@
 @import './responsive.scss';
 
-.thumbnail-container {
-    & .image {
-        padding-bottom: 20px;
-        text-align: center;
-        & img {
-            width: 60%;
-            border-radius: 10px;
-            @include mobile {
-                width: 90%;
-            }
-        }
-    }
-    & .upload-thumbnail {
-        display: block;
-        text-align: center;
-        & label {
-            padding: 10px;
-            border-radius: 10px;
-            background-color: rgb(220, 220, 220);
-            &:hover {
-                background-color: rgb(226, 226, 226);
-                color: rgb(114, 114, 114);
-            }
-        }
-    }
-}
 .tag-item-article {
     background: rgb(112, 228, 255);
     background: linear-gradient(90deg, rgb(79, 144, 255) 0%, rgb(162, 0, 255) 100%);
@@ -65,4 +39,34 @@
     padding: 20px;
     border-radius: 10px;
     margin-bottom: 20px;
+    & .thumbnail-container {
+        padding-top: 20px;
+        & .image {
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            padding: 20px;
+            & img {
+                width: 100%;
+                border-radius: 10px;
+            }
+            & label {
+                position: absolute;
+                bottom: 0;
+                top: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                padding: 10px;
+                & * {
+                    font-size: 60px;
+                }
+                color: rgba(255, 255, 255, 0);
+                &:hover {
+                    background-color: rgba(151, 151, 151, 0.216);
+                    color: rgb(255, 255, 255);
+                }
+            }
+        }
+    }
 }

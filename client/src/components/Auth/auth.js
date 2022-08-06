@@ -76,26 +76,26 @@ const Auth = ({ isRegister }) => {
                                     label="Username"
                                     name="username"
                                     type="text"
-                                    placeholder="Enter my username"
+                                    placeholder="Enter my Username"
                                 />
                             )}
                             <Input
                                 label="Email Address"
                                 name="email"
                                 type="email"
-                                placeholder="admin@gmail.com"
+                                placeholder="Enter my Email"
                             />
 
                             <InputPassword
                                 label="Password"
                                 name="password"
-                                placeholder="Enter my password"
+                                placeholder="Enter my Password"
                             />
                             {isRegister && (
                                 <InputPassword
                                     label="Confirm Password"
-                                    name="repassword"
-                                    placeholder="Enter my password"
+                                    name="confirm"
+                                    placeholder="Enter my Password"
                                 />
                             )}
                             <button

@@ -4,9 +4,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import IconButton from '@mui/material/IconButton';
-
+import MarkAsUnreadIcon from '@mui/icons-material/MarkAsUnread';
+import BadgeIcon from '@mui/icons-material/Badge';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import JoinInnerIcon from '@mui/icons-material/JoinInner';
 import { useField } from 'formik';
-
+import KeyIcon from '@mui/icons-material/Key';
 const style = {
     height: 80,
     '& .MuiOutlinedInput-root': {
@@ -14,7 +17,8 @@ const style = {
         fontSize: 17,
         borderRadius: 2,
     },
-    '& label': { fontSize: 17 },
+    '& label': { fontSize: 17, fontWeight: 'bold' },
+    '& input': { margin: '7px', padding: '10px' },
 };
 export const Input = ({ label, ...props }) => {
     const [field, meta] = useField(props);
@@ -27,8 +31,17 @@ export const Input = ({ label, ...props }) => {
                 {...field}
                 {...props}
                 variant="outlined"
-                inputProps={{ maxLength: 70 }}
                 helperText={meta.touched ? meta.error : null}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            {props.name === 'username' && <BadgeIcon />}
+
+                            {props.name === 'email' && <MarkAsUnreadIcon />}
+                            {props.name === 'bio' && <AutoStoriesIcon />}
+                        </InputAdornment>
+                    ),
+                }}
             />
         </>
     );
@@ -48,8 +61,12 @@ export const InputPassword = ({ label, ...props }) => {
                 {...props}
                 variant="outlined"
                 helperText={meta.touched ? meta.error : null}
-                inputProps={{ maxLength: 100 }}
                 InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            {props.name === 'confirm' ? <JoinInnerIcon /> : <KeyIcon />}
+                        </InputAdornment>
+                    ),
                     endAdornment: (
                         <InputAdornment position="end">
                             <IconButton

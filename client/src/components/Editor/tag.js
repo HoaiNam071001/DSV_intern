@@ -3,17 +3,21 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import ClearIcon from '@mui/icons-material/Clear';
 let isEmpty = /^ *$/;
+import TagIcon from '@mui/icons-material/Tag';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const TagEditor = ({ tagList, setTagList }) => {
     const [tagIn, setTagin] = useState('');
     const handleTab = (e) => {
+        if (e.key === 'Enter') e.preventDefault();
         if (isEmpty.test(tagIn)) {
             setTagin('');
             return;
         }
         if (e.keyCode == 9) {
             e.preventDefault();
-            if (tagIn && !tagList.includes(tagIn.trim())) setTagList([...tagList, tagIn.trim()]);
+            if (tagList.length < 5 && tagIn && !tagList.includes(tagIn.trim()))
+                setTagList([...tagList, tagIn.trim()]);
             setTagin('');
         }
     };
@@ -33,13 +37,19 @@ const TagEditor = ({ tagList, setTagList }) => {
                 }}
                 label="Enter Tag"
                 variant="outlined"
-                multiline
-                maxRows={4}
                 value={tagIn}
                 onChange={(e) => setTagin(e.target.value)}
                 onKeyDown={handleTab}
                 inputProps={{ maxLength: 30 }}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <TagIcon />
+                        </InputAdornment>
+                    ),
+                }}
             />
+            <div className="mx-1">List at most 5 tags</div>
             <div className="d-flex">
                 {tagList.map((tag) => {
                     return (

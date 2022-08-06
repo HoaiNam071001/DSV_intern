@@ -22,6 +22,7 @@ const AlertDialog = ({ userCall, setCall, authId, socket }) => {
     };
     const handleAccept = () => {
         handleClose();
+        socket.emit('call-accept', userCall.id);
         const windowref = window.open(
             `/videocall?room=${userCall?.id}&auth=${authId}`,
             '',

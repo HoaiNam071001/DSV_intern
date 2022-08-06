@@ -1,8 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser, selectIsAuthenticated } from './redux/reducers/authSlice';
-import { setAuthorization } from './Services/Axios';
+
 import './style/App.css';
 
 import Header from './components/Header/header';
@@ -19,12 +17,6 @@ import Search from './pages/search';
 import BadRequest from './pages/badRequest';
 
 function App() {
-    const dispatch = useDispatch();
-    const isAuthenticated = useSelector(selectIsAuthenticated);
-    if (window.localStorage.getItem('jwt') && !isAuthenticated) {
-        setAuthorization(window.localStorage.getItem('jwt'));
-        dispatch(getUser());
-    }
     return (
         <React.Fragment>
             <Header />

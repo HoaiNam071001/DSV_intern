@@ -15,7 +15,7 @@ const Searchnav = () => {
         if (e.keyCode === 13) handleSearch();
     };
     return (
-        <div className="search-container d-flex align-items-center justify-content-center">
+        <div className="search-container d-flex align-items-center ">
             <input
                 placeholder="Enter Username or Email"
                 type="search"

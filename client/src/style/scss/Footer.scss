@@ -1,12 +1,12 @@
 @import './responsive.scss';
 
 .footer {
-    background-image: url(../Assets/footer-background.png);
+    //background-image: url(../Assets/footer-background.png);
     background-position: top left;
     background-repeat: no-repeat;
     background-size: 100vw;
     background-attachment: cover;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(151, 222, 255);
     & .contain-profile {
         margin: 5px;
         & .username {
@@ -29,26 +29,9 @@
             }
         }
     }
-    & .contact {
-        @include mobiletable {
-            display: none;
-        }
-        @include mobile {
-            display: none;
-        }
-        & .item {
-            margin: 5px;
-            & a {
-                & img {
-                    width: 40px;
-                    height: 40px;
-                }
-            }
-            & span {
-                color: rgb(0, 5, 64);
-                padding: 5px;
-                font-weight: bold;
-            }
-        }
+    & p {
+        font-size: 17px;
+        color: rgb(17, 0, 145);
+        font-weight: bold;
     }
 }

@@ -52,11 +52,17 @@ const authSlice = createSlice({
             .addCase(register.pending, (state) => {
                 state.errors = null;
                 state.status = Status.LOADING;
+            })
+            .addCase(getUser.pending, (state) => {
+                state.status = Status.LOADING;
             });
         builder
             .addCase(login.rejected, failureReducer)
             .addCase(register.rejected, failureReducer)
-            .addCase(updateUser.rejected, failureReducer);
+            .addCase(updateUser.rejected, failureReducer)
+            .addCase(getUser.rejected, (state) => {
+                state.status = Status.FAILURE;
+            });
     },
 });
 export const { setToken, logout, translate, setIdle } = authSlice.actions;
@@ -95,11 +101,15 @@ export const login = createAsyncThunk('auth/login', async ({ email, password }, 
  * Send a get current user request
  */
 export const getUser = createAsyncThunk('auth/getUser', async () => {
-    const result = await API.getUser();
-    const {
-        user: { token, ...user },
-    } = result.data;
-    return { token, user };
+    try {
+        const result = await API.getUser();
+        const {
+            user: { token, ...user },
+        } = result.data;
+        return { token, user };
+    } catch (error) {
+        return thunkApi.rejectWithValue(error.response.status);
+    }
 });
 
 export const updateUser = createAsyncThunk(
@@ -145,6 +155,7 @@ export const selectIsLoading = (state) => selectAuthSlice(state).status === Stat
 
 // Get is success
 export const selectIsSuccess = (state) => selectAuthSlice(state).status === Status.SUCCESS;
+export const selectIsError = (state) => selectAuthSlice(state).status === Status.FAILURE;
 
 export const selectIsSuccessUpdate = (state) =>
     selectAuthSlice(state).statusUpdate === Status.SUCCESS;

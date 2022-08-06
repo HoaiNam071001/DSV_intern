@@ -5,116 +5,123 @@ $desktop-width: 1024px;
 @import './responsive.scss';
 
 .init-web {
-    background-image: url(../Assets/bckground-main2.png);
-    background-size: 40vw;
-    background-repeat: no-repeat;
-    background-position: top left;
-    height: 40vw;
+    position: relative;
+    top: -15px;
+    background: rgb(184, 255, 251);
+    background: linear-gradient(90deg, rgba(184, 255, 251, 1) 0%, rgb(32, 158, 255) 100%);
     @include mobiletable {
         display: none;
     }
     @include mobile {
         display: none;
     }
-    & .title-page {
-        margin-top: 4vw;
-        color: rgb(255, 255, 255);
-        font-size: calc(30px + 3vw);
-        font-family: Arial;
-    }
-    & .message {
-        font-family: cursive;
-        font-size: calc(18px + 1vw);
-        color: rgb(0, 11, 130);
-    }
 
-    & a {
-        margin: 5px 10px;
-        background: rgb(91, 255, 52);
-        background: linear-gradient(90deg, rgba(91, 255, 52, 1) 0%, rgb(255, 226, 96) 100%);
-        width: 150px;
-        text-align: center;
-        display: block;
-        padding: 10px;
-        font-size: 20px;
-        text-decoration: none;
-        color: rgb(18, 26, 255);
-        border-radius: 50px;
-        font-weight: bold;
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-    @include desktop {
+    & .tab-init {
         & .title-page {
-            margin-left: 15%;
-            margin-top: 5vw;
-            font-size: calc(35px + 3vw);
+            color: rgb(255, 255, 255);
+            font-size: calc(30px + 3vw);
+            font-family: Arial;
         }
+
         & .message {
-            margin-left: 15%;
+            font-family: cursive;
+            font-size: calc(18px + 1vw);
+            color: rgb(0, 11, 130);
         }
+
         & a {
-            margin-left: 15%;
+            margin: 5px 10px;
+            background: rgb(0, 105, 242);
+            width: 150px;
+            text-align: center;
+            display: block;
+            padding: 10px;
+            font-size: 20px;
+            text-decoration: none;
+            color: rgb(255, 255, 255);
+            border-radius: 50px;
+            font-weight: bold;
+            &:hover {
+                opacity: 0.8;
+            }
         }
     }
-    @include mobiletable {
-        background-size: 60vw;
-        height: 55vw;
-    }
-    @include mobile {
-        background-size: 70%;
-        height: 65vw;
-    }
 }
 
-.tab-home-head {
+.articles-container-home {
     margin-bottom: 20px;
-}
-.btn-home-title {
-    border: 0px;
     background-color: rgb(255, 255, 255);
-    padding: 8px 10px;
-    color: #000;
-    width: 100%;
-    font-size: 20px;
-    font-weight: bold;
-    transition: all 0.3s;
-    border-radius: 20px;
-}
-.btn-home-title:hover {
-    transform: translateY(-2px);
-    opacity: 0.8;
-    box-shadow: 0px 2px 5px 0px rgb(137, 137, 137);
-}
-
-.btn-home-title-active {
-    color: $bg-blog;
-    box-shadow: 0px 1px 1px 0px rgb(137, 137, 137);
-}
-
-.tag-title {
-    color: rgb(0, 0, 0);
-    padding: 5px;
-    margin: 5px;
-}
-.tag-title:hover {
-    color: rgb(68, 0, 193);
-}
-.tag-container {
-    margin: 5px;
-    padding: 5px;
-    & .tag-item {
-        border-radius: 15px;
-        margin-right: 5px;
-        margin-bottom: 10px;
-        background-color: rgb(255, 255, 255);
-        color: rgb(0, 0, 0);
-        transition: transform 0.2s, box-shadow 0.2s;
+    border-radius: 10px;
+    & .tab-home-head {
+        margin-bottom: 20px;
+        padding: 10px 0 0 0;
+        border-radius: 10px 10px 0 0;
     }
-    & .tag-item:hover {
-        color: rgb(0, 19, 160);
-        transform: translateY(-1px);
-        box-shadow: 0px 1px 5px 1px rgb(193, 193, 193);
+    & .btn-home-title {
+        background-color: rgb(255, 255, 255);
+        border: 3px solid #fff;
+        padding: 8px 10px;
+        color: #000;
+        width: 100%;
+        font-size: calc(13px + 1vw);
+        font-weight: bold;
+        transition: all 0.3s;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        &:hover {
+            opacity: 0.7;
+        }
+    }
+
+    & .btn-home-title-active {
+        color: $bg-blog;
+        border-bottom: 3px solid $bg-blog;
+        // box-shadow: 0px 1px 1px 0px rgb(137, 137, 137);
+    }
+}
+
+.tags-c {
+    background-color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 1px 5px 1px rgb(226, 226, 226);
+    & hr {
+        margin: 0 0 5px 0;
+        color: rgb(100, 100, 100);
+    }
+    & .tag-title {
+        border-radius: 10px 10px 0 0;
+        background: rgb(255, 255, 255);
+        color: rgb(1, 1, 80);
+        padding: 5px;
+        font-weight: bold;
+        transition: all 0.3s;
+        &:hover {
+            color: rgb(132, 78, 233);
+        }
+    }
+    & .tag-container {
+        margin: 5px;
+        padding: 5px;
+        & .block-tags {
+            display: block;
+            padding: 5px;
+        }
+        & .tag-item {
+            border: 1px solid rgb(225, 225, 225);
+            border-radius: 15px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        & .tag-item:hover {
+            color: rgb(0, 19, 160);
+            transform: translateY(-1px);
+            box-shadow: 0px 1px 5px 1px rgb(193, 193, 193);
+        }
     }
 }

@@ -45,6 +45,7 @@ function Profile({ isFavoritePage }) {
         <div className="container">
             <div className="row profile-container">
                 <UserInfo profile={profile} author={selectUserAuthor} />
+                <div id="topscroll"></div>
                 <ProfileTabs username={profile.username} isFavorites={isFavoritePage} />
                 <div className="col-lg-8 offset-lg-2">
                     <ArticleList />

@@ -7,12 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { articlePageUnloaded, getArticle, selectArticle } from '../../redux/reducers/articleSlice';
 import { selectUser } from '../../redux/reducers/authSlice';
 import OptionArticle from './option';
-import InteractArticle from './interact';
+import Follow from './follow';
 import Skeleton from './skeletonDetail';
+import dayjs from 'dayjs';
+import Avatar from '@mui/material/Avatar';
+import Favorite from './btnFavorite';
+const avt = require('../../Assets/avatar-thumbnail.jpg');
 
 const Detail = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+
     const { article, inProgress, deleted, errors } = useSelector(selectArticle);
     const user = useSelector(selectUser);
     const { slug } = useParams();
@@ -37,15 +42,9 @@ const Detail = () => {
                 </Tooltip>
                 <div className="author-article d-flex">
                     <Link to={`/@${article?.author?.username}`}>
-                        <img
-                            src={
-                                article?.author?.image ||
-                                require('../../Assets/avatar-thumbnail.jpg')
-                            }
-                            alt="avatar_img"
-                            width="50"
-                            height="50"
-                        />
+                        <Avatar alt="avatar_img" src={article?.author?.image}>
+                            <img alt="thumnail-article" width="50" height="50" src={avt} />
+                        </Avatar>
                     </Link>
 
                     <div className="author-detail">
@@ -54,26 +53,29 @@ const Detail = () => {
                         </Link>
                         <div className="create-article">
                             <time dateTime={article.createdAt}>
-                                {new Date(article.createdAt).toDateString()}
+                                {dayjs(article.createdAt).format('DD/MM/YYYY HH:mm')}
                             </time>
                         </div>
+                    </div>
+                    <div className="ms-auto">
+                        <Favorite
+                            slug={slug}
+                            favorited={article.favorited}
+                            count={article.favoritesCount}
+                        />
                     </div>
                 </div>
                 {user &&
                     (user.username === article.author.username ? (
                         <OptionArticle slug={slug} deleted={deleted} />
                     ) : (
-                        <InteractArticle
+                        <Follow
                             username={article.author.username}
                             following={article.author.following}
-                            slug={slug}
-                            favorited={article.favorited}
-                            count={article.favoritesCount}
                         />
                     ))}
             </div>
             <div className="script-article">
-                {/* <div className="description-article">{article.description}</div> */}
                 <div className="tag-article d-flex">
                     {article &&
                         article.tagList.map((tag) => {

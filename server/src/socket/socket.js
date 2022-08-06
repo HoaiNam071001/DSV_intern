@@ -5,6 +5,7 @@ const Users = require('./user');
 const CreateMessage = ({ server, message, roomId }) => {
     return request(server).post('/api/messenger/create').send({ message, roomId }).expect('Content-Type', /json/);
 };
+
 const socket = (server) => {
     const io = require('socket.io')(server, {
         cors: {
@@ -41,6 +42,9 @@ const socket = (server) => {
                 socket.to(roomId).emit('receive', res.body, roomId);
                 callback(res.body);
             });
+        });
+        socket.on('call-accept', (roomId) => {
+            socket.to(roomId).emit('user-accept');
         });
         socket.on('call-start', (roomId, userId, iscaller) => {
             socket.join(roomId);

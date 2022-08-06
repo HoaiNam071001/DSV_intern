@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { deleteArticle } from '../../redux/reducers/articleSlice';
+import Tooltip from '@mui/material/Tooltip';
+
 const OptionArticle = ({ slug, deleted }) => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -15,18 +17,23 @@ const OptionArticle = ({ slug, deleted }) => {
         }
     }, [deleted, navigate]);
     return (
-        <div className="d-flex align-items-center mx-1">
-            <Link to={`/editor/${slug}`} className="btn-editor-article btn-article">
-                Editor Article
-            </Link>
-            <button
-                type="button"
-                className="btn-delete-article btn-article"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteModal"
-            >
-                Delete Article
-            </button>
+        <div className="d-flex align-items-center justify-content-center mx-1">
+            <Tooltip title="Edit this Article" placement="top" arrow>
+                <Link to={`/editor/${slug}`} className="btn-editor-article btn-article">
+                    Edit
+                </Link>
+            </Tooltip>
+
+            <Tooltip title="Delete this Article" placement="top" arrow>
+                <button
+                    type="button"
+                    className="btn-delete-article btn-article"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                >
+                    Delete
+                </button>
+            </Tooltip>
 
             <div
                 className="modal fade"

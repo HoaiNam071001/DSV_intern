@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
+import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 const ProfileTabs = ({ username, isFavorites }) => {
     return (
         <div className="row nav-link-profile">
@@ -11,7 +12,8 @@ const ProfileTabs = ({ username, isFavorites }) => {
                         !isFavorites ? 'bg-tab-active' : ''
                     }`}
                 >
-                    My Articles
+                    <RecentActorsIcon />
+                    &nbsp; My Articles
                 </Link>
             </div>
             <div className="col-6 col-lg-3 text-center">
@@ -21,7 +23,8 @@ const ProfileTabs = ({ username, isFavorites }) => {
                         isFavorites ? 'bg-tab-active' : ''
                     }`}
                 >
-                    My Favorites
+                    <ThumbUpIcon />
+                    &nbsp;My Favorites
                 </Link>
             </div>
         </div>

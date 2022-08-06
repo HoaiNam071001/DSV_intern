@@ -5,6 +5,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser } from '../../redux/reducers/authSlice';
 import { useNavigate } from 'react-router';
+import Avatar from '@mui/material/Avatar';
 
 const avatar = require('../../Assets/avatar-thumbnail.jpg');
 
@@ -40,14 +41,15 @@ const NavLogin = () => {
                     role="button"
                     data-bs-toggle="dropdown"
                 >
-                    <img
-                        title="Your Profile"
-                        width="40"
-                        height="40"
-                        className="rounded-circle"
-                        alt="avatar"
-                        src={currentUser.image || avatar}
-                    />
+                    <Avatar alt="avatar" src={currentUser.image}>
+                        <img
+                            width="40"
+                            height="40"
+                            className="rounded-circle"
+                            alt="avatar"
+                            src={avatar}
+                        />
+                    </Avatar>
                 </div>
 
                 <ul className="dropdown-menu dropdown-menu-end">
@@ -56,21 +58,24 @@ const NavLogin = () => {
                             to={`/@${currentUser?.username}`}
                             className="dropdown-item item-profile d-flex align-items-center"
                         >
-                            <img
-                                title="Your Profile"
-                                width="30"
-                                height="30"
-                                className="rounded-circle"
-                                alt="avatar"
-                                src={currentUser.image || avatar}
-                            />
-                            <span className="p-1 ">{currentUser?.username}</span>
+                            <Avatar alt="avatar" src={currentUser.image}>
+                                <img
+                                    width="30"
+                                    height="30"
+                                    className="rounded-circle"
+                                    alt="avatar"
+                                    src={avatar}
+                                />
+                            </Avatar>
+                            <span className="p-1 text-truncate" style={{ maxWidth: 150 }}>
+                                {currentUser?.username}
+                            </span>
                         </Link>
                     </li>
                     <li>
                         <Link to="/settings" className="dropdown-item">
                             <i className="bi bi-gear"></i>
-                            <span className="p-1 ">Settings</span>
+                            <span className="p-1 ">Edit Profile</span>
                         </Link>
                     </li>
                     <li>

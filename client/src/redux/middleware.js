@@ -12,7 +12,6 @@ const localStorageMiddleware = () => (next) => (action) => {
 
         case logout.type:
             window.localStorage.removeItem('jwt');
-            logout(undefined);
             setAuthorization('');
             break;
         default:

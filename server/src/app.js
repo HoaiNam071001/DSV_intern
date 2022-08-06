@@ -13,15 +13,16 @@ const socket = require('./socket/socket');
 
 const cors = require('cors');
 const connectDB = require('./database');
+
 connectDB();
 app.use(cors());
 // define : post
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 route(app);
-var server = app.listen(process.env.PORT || port, () => {
-    console.log(`Example app listening on port ${server.address().port}`);
-});
+
+const http = require('http');
+const server = http.createServer(app);
 
 socket(server);
 
@@ -37,4 +38,7 @@ app.use((err, req, res, next) => {
             error: [err.message],
         },
     });
+});
+server.listen(process.env.PORT || port, () => {
+    console.log(`Example app listening on port ${server.address().port}`);
 });
