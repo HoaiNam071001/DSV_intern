@@ -19,7 +19,7 @@ const Articles = (() => {
             const { limit = 20, offset = 0, favorited = null, tag = null, author = null } = req.query;
             const id = req.payload ? req.payload.id : null;
             var obj = {};
-            if (tag) obj.tagList = { $in: [tag] };
+            if (tag) obj.tagList = { $regex: tag, $options: 'i' };
 
             const [auth, favoriter] = await Article.getUsername(author, favorited);
             if (auth) obj.author = auth._id;

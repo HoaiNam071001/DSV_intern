@@ -50,7 +50,6 @@ export const Input = ({ label, ...props }) => {
                 {...field}
                 {...props}
                 variant="outlined"
-                inputProps={{ maxLength: 300 }}
                 helperText={meta.touched ? meta.error : null}
                 InputProps={{
                     startAdornment: (

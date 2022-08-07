@@ -132,14 +132,16 @@ const getProfile = (username, id) => Promise.all([UserfindOne({ username }), id 
 const getTag = () =>
     Article.find({})
         .select('tagList')
+        .sort({ createdAt: 'desc' })
         .then((res) => {
             const tags = res
                 .reduce((prev, cur) => {
                     return [...prev, ...cur.tagList];
                 }, [])
                 .reduce((acc, curr) => {
-                    if (!acc[curr]) acc[curr] = 1;
-                    else acc[curr] += 1;
+                    const tag = curr.toLowerCase();
+                    if (!acc[tag]) acc[tag] = 1;
+                    else acc[tag] += 1;
                     return acc;
                 }, {});
             const result = Object.keys(tags)

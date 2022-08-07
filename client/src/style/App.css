@@ -458,13 +458,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 10px;
+    padding: 10px 0;
     width: 100%;
     background-color: white;
     color: black;
     transition: all 0.2s;
     font-weight: bold;
-    font-size: 20px;
+    font-size: calc(12px + 1vw);
     border: 3px solid #ffffff; }
     .nav-link-profile .item-link-profile:hover {
       opacity: 0.5; }
@@ -485,7 +485,7 @@
 .text-body {
   background-color: white; }
   .text-body .jodit-react-container .jodit-workplace {
-    height: 300px !important;
+    height: 600px !important;
     overflow: scroll; }
 
 .btn-submit-editor {

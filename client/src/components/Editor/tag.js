@@ -14,7 +14,10 @@ const TagEditor = ({ tagList, setTagList }) => {
         }
         if (e.keyCode == 9) {
             e.preventDefault();
-            if (tagList.length < 5 && tagIn && !tagList.includes(tagIn.trim()))
+            const isExist = tagList.findIndex(
+                (tag) => tag.toLowerCase() === tagIn.trim().toLowerCase()
+            );
+            if (tagList.length < 5 && tagIn && isExist === -1)
                 setTagList([...tagList, tagIn.trim()]);
             setTagin('');
         }

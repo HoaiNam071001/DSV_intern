@@ -2,31 +2,30 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Message from '../components/Message';
 import ChangePassword from '../components/Auth/changePassword';
 import ChangeProfile from '../components/Auth/changeProfile';
 import {
     selectErrors,
-    selectIsAuthenticated,
     selectUser,
     updateUser,
     selectIsSuccessUpdate,
     setIdle,
 } from '../redux/reducers/authSlice';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 function Settings({ isPassword }) {
     const dispatch = useDispatch();
     const currentUser = useSelector(selectUser);
     const errors = useSelector(selectErrors);
-    const isAuthenticated = useSelector(selectIsAuthenticated);
     const isSuccess = useSelector(selectIsSuccessUpdate);
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const saveSettings = (user) => {
         dispatch(updateUser(user));
     };
-    if (!isAuthenticated) {
-        Navigate('/');
-    }
+    useEffect(() => {
+        if (!currentUser) return navigate('/');
+    }, [navigate, currentUser]);
+
     useEffect(() => {
         dispatch(setIdle());
     }, [isPassword, dispatch]);
