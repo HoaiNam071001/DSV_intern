@@ -3,13 +3,12 @@ import ClearIcon from '@mui/icons-material/Clear';
 import FileUploadIcon from '@mui/icons-material/FileUploadRounded';
 import { updateUser } from '../../redux/reducers/authSlice';
 import { useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { saveImage } from '../../common/utils';
 
 function Avatar({ image, setModal }) {
-    const notify = () => toast('Invalid image!');
     const [avatar, setAvatar] = useState();
     const dispatch = useDispatch();
     const [load, setLoad] = useState(false);
@@ -20,7 +19,7 @@ function Avatar({ image, setModal }) {
             if (/^image\/.*$/.test(files.type)) {
                 files.preview = URL.createObjectURL(files);
                 setAvatar(files);
-            } else notify();
+            } else toast('Invalid image!');
         }
     };
     const changephotonow = () => {
@@ -47,6 +46,7 @@ function Avatar({ image, setModal }) {
                         <button className="btn-exit" onClick={() => setModal(false)}>
                             <ClearIcon />
                         </button>
+                        <ToastContainer />
                         <h2 className="d-flex align-items-center">
                             <AccountCircleIcon style={{ fontSize: 45 }} /> Upload Avatar
                         </h2>
@@ -72,7 +72,6 @@ function Avatar({ image, setModal }) {
                                 </div>
                             </label>
                         </div>
-                        <ToastContainer />
                         <div className="d-flex flex-column align-items-center">
                             <button
                                 className="btn-save-img"
