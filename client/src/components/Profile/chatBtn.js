@@ -9,8 +9,9 @@ const OnChat = ({ id }) => {
     const dispatch = useDispatch();
 
     const handleChat = () => {
-        dispatch(getMessByUser({ userId: id }));
-        navigate(`/messages`);
+        dispatch(getMessByUser({ userId: id })).then(() => {
+            navigate('/messages');
+        });
     };
     return (
         <button
